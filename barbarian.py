@@ -99,6 +99,24 @@ class AncestralGuardian(Barbarian):
 		print(player.get_name(), player.get_level(), player.get_rage(), player.get_hit_dice())
 
 
+class Zealot(Barbarian):
+
+	def __init__(self, name):
+		self.fanatical_focus = True
+		self.zealous_presence = True
+		Barbarian.__init__(self, name)
+		
+	def create_Zealot_barbarian(self):
+		name = input("What is the barbarian's name?\n")
+		level = int(input("What level is this barbarian?\n"))
+		subclass = input("What subclass is " + name + "?\n")
+		player = Berserker(str(name))
+		player.set_level(level)
+		player.set_rage(level)
+		player.set_hit_dice(level)
+		print(player.get_name(), player.get_level(), player.get_rage(), player.get_hit_dice())
+
+
 
 
 
