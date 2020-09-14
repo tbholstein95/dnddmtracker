@@ -1,6 +1,7 @@
 from barbarian import Barbarian
+from barbarian import Berserker
 
 playerclass = input("Class?")
 if playerclass == "barbarian":
 	player = None
-	Barbarian.create_barbarian(player)
+	Berserker.create_berserker_barbarian(player)
