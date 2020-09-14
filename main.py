@@ -21,15 +21,19 @@ for x in range(number_of_players):
 		elif player_subclass == "Zealot":
 			p1 = Zealot.create_Zealot_barbarian(p1)
 
-	player_dictionary['p' + str(x)] = p1
+	player_dictionary['p' + str(x - 1)] = p1
 
 
 while running:
+	current_player = input("Who are you modifying?\n")
+	current_p1 = None
+	if current_player == 'p1':
+		current_p1 = player_dictionary.get('p1')
 	task = input("What would you like to do?\n")
 	task = task.capitalize()
 	if task == "Rage":
-		p1.use_b_rage()
-		print(p1.get_rage())
+		current_p1.use_b_rage()
+		print(current_p1.get_rage())
 
 	else:
 		running = False
