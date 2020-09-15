@@ -1,3 +1,4 @@
+from playercharacter import *
 from barbarian import *
 
 # BOOL
@@ -21,14 +22,12 @@ for x in range(number_of_players):
 		elif player_subclass == "Zealot":
 			p1 = Zealot.create_Zealot_barbarian(p1)
 
-	player_dictionary['p' + str(x - 1)] = p1
+	player_dictionary[f'p{x + 1}'] = p1
 
 
 while running:
 	current_player = input("Who are you modifying?\n")
-	current_p1 = None
-	if current_player == 'p1':
-		current_p1 = player_dictionary.get('p1')
+	current_p1 = player_dictionary.get(f'{current_player}')
 	task = input("What would you like to do?\n")
 	task = task.capitalize()
 	if task == "Rage":
