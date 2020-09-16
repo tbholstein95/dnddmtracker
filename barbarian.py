@@ -84,7 +84,6 @@ class Berserker(Barbarian):
 
 	def create_berserker_barbarian(self, name):
 		name = name
-		# name = input("What is the barbarian's name?\n")
 		level = int(input("What level is this barbarian?\n"))
 		player = Berserker()
 		player.set_level(level)
@@ -123,59 +122,170 @@ class Berserker(Barbarian):
 
 class AncestralGuardian(Barbarian):
 
-	def __init__(self, name):
-		self.consult_spirits = 1
-		Barbarian.__init__(self, name)
+	def __init__(self):
+		self.consult_spirits = False
+		Barbarian.__init__(self)
 
 	def get_consult_spirits(self):
 		return self.consult_spirits
 
-	def set_consult_spirits(self, amount):
-		self.consult_spirits = amount
+	def use_consult_spirits(self):
+		self.consult_spirits = True
 
-	def create_ancestral_barbarian(self):
-		name = input("What is the barbarian's name?\n")
+	def create_ancestral_barbarian(self, name):
+		name = name
 		level = int(input("What level is this barbarian?\n"))
-		player = AncestralGuardian(str(name))
+		player = AncestralGuardian()
 		player.set_level(level)
 		player.set_rage(level)
 		player.set_hit_dice(level)
+		player.set_name(name)
 		print("Name: " + player.get_name(), ' Level: ', player.get_level(), ' Rage: ', player.get_rage(
 
 		), ' Hit Dice: ', player.get_hit_dice(), 'Consult Spirits: ', player.get_consult_spirits())
 
+		return player
+
+	def list_ancestral_options(self):
+		selection = 0
+		selection = int(input("What action are you counting?\n" + "[1]: Rage \n " + "[2]: Consult Spirits \n " + (
+			"[3]: Use Hit Dice \n " + "[4]: Change Level\n" + "[5]: Exit\n")))
+		if selection == 1:
+			self.use_rage()
+			print(self.get_rage())
+
+		elif selection == 2:
+			if not self.get_consult_spirits():
+				print("Used Consult Spirits. Cannot again until Long Rest")
+				self.use_consult_spirits()
+				print(self.get_consult_spirits)
+			else:
+				print("Already used Consult Spirits this long rest")
+
+		elif selection == 3:
+			dice = int(input("How many dice?"))
+			self.use_hit_dice(dice)
+			print("Current hit dice: ", self.get_hit_dice())
+
+		elif selection == 4:
+			level = int(input("What level should this character be?"))
+			self.set_level(level)
+			print(self.get_level())
+
+		elif selection == 5:
+			return 0
+
 
 class Zealot(Barbarian):
 
-	def __init__(self, name):
-		self.fanatical_focus = True
-		self.zealous_presence = True
-		Barbarian.__init__(self, name)
+	def __init__(self):
+		self.fanatical_focus = False
+		self.zealous_presence = False
+		Barbarian.__init__(self)
 
 	def get_fanatical_focus(self):
 		return self.fanatical_focus
 
-	def set_fanatical_focus(self):
-		self.fanatical_focus = False
+	def use_fanatical_focus(self):
+		self.fanatical_focus = True
 
 	def get_zealous_presence(self):
 		return self.zealous_presence
 
-	def set_zealous_presence(self):
+	def use_zealous_presence(self):
 		self.fanatical_focus = True
 
-	def create_Zealot_barbarian(self):
-		name = input("What is the barbarian's name?\n")
+
+	def create_Zealot_barbarian(self, name):
+		name = name
 		level = int(input("What level is this barbarian?\n"))
-		player = Zealot(str(name))
+		player = Zealot()
 		player.set_level(level)
 		player.set_rage(level)
 		player.set_hit_dice(level)
+		player.set_name(name)
 		print("Name: " + player.get_name(), ' Level: ', player.get_level(), ' Rage: ', player.get_rage(
 
 		), ' Hit Dice: ', player.get_hit_dice(), 'Fanatical Focus: ', player.get_fanatical_focus(
 
 		), 'Zealous Presence: ', player.get_zealous_presence())
+
+		return player
+
+	def list_zealot_options(self):
+		selection = 0
+		selection = int(input("What action are you counting?\n" + "[1]: Rage \n " + "[2]: Use Fanatical Focus \n " + (
+			"[3]: Use Zealous Presence\n " + "[4]: Use Hit Dice \n " + "[5]: Change Level\n" + "[6]: Exit\n")))
+		if selection == 1:
+			self.use_rage()
+			print(self.get_rage())
+
+		elif selection == 2:
+			if not self.use_fanatical_focus():
+				print("Used Fanatical Focus. Cannot use again until Long Rest")
+				self.use_fanatical_focus()
+				print(self.get_fanatical_focus())
+			else:
+				print("Already used Fanatical Focus this long rest")
+
+		elif selection == 3:
+			if not self.use_zealous_presence():
+				print("Used Zealous Presence. Cannot use again until Long Rest")
+				self.use_zealous_presence()
+				print(self.get_zealous_presence())
+
+		elif selection == 4:
+			dice = int(input("How many dice?"))
+			self.use_hit_dice(dice)
+			print("Current hit dice: ", self.get_hit_dice())
+
+		elif selection == 5:
+			level = int(input("What level should this character be?"))
+			self.set_level(level)
+			print(self.get_level())
+
+		elif selection == 6:
+			return 0
+
+
+class Bland(Barbarian):
+
+	def __init__(self):
+		Barbarian.__init__(self)
+
+	def create_bland_barbarian(self, name):
+		name = name
+		level = int(input("What level is this barbarian?\n"))
+		player = Bland()
+		player.set_level(level)
+		player.set_rage(level)
+		player.set_hit_dice(level)
+		player.set_name(name)
+		print("Name: " + player.get_name(), ' Level: ', player.get_level(), ' Rage: ', player.get_rage(
+
+		), ' Hit Dice: ', player.get_hit_dice())
+
+		return player
+
+	def list_bland_options(self):
+		selection = 0
+		selection = int(input("What action are you counting?\n" + "[1]: Rage \n " + + (
+			"[2]: Use Hit Dice \n " + "[3]: Change Level\n" + "[4]: Exit\n")))
+		if selection == 1:
+			self.use_rage()
+			print(self.get_rage())
+		elif selection == 2:
+			dice = int(input("How many dice?"))
+			self.use_hit_dice(dice)
+			print("Current hit dice: ", self.get_hit_dice())
+		elif selection == 3:
+			level = int(input("What level should this character be?"))
+			self.set_level(level)
+			print(self.get_level())
+		elif selection == 4:
+			return 0
+
+
 
 def main_barb_making(name, dictionary):
 	name = name
@@ -186,11 +296,18 @@ def main_barb_making(name, dictionary):
 		p1 = p1.create_berserker_barbarian(name)
 		class_options = Berserker.list_berserker_options
 	elif player_subclass == "Ancestral":
-		p1 = AncestralGuardian.create_ancestral_barbarian(p1)
+		p1 = AncestralGuardian()
+		p1 = p1.create_ancestral_barbarian(name)
+		class_options = AncestralGuardian.list_ancestral_options
 	elif player_subclass == "Zealot":
-		p1 = Zealot.create_Zealot_barbarian(p1)
+		p1 = Zealot()
+		p1 = p1.create_Zealot_barbarian(name)
+		class_options = Zealot.list_zealot_options()
 
-
+	else:
+		p1 = Bland()
+		p1 = p1.create_bland_barbarian(name)
+		class_options = Bland.list_bland_options()
 
 	barb_dict[f'{p1.get_name()}'] = {"character": p1, "subclass": player_subclass,
 						 "options": class_options}
