@@ -1,7 +1,7 @@
 class Barbarian:
 
-	def __init__(self, name):
-		self.name = name
+	def __init__(self):
+		self.name = None
 		self.level = 0
 		self.max_rage = 0
 		self.rage = 0
@@ -28,6 +28,7 @@ class Barbarian:
 
 	def set_level(self, level):
 		self.level = level
+		self.set_rage(level)
 
 	def set_rage(self, level):
 		if level < 3:
@@ -61,31 +62,60 @@ class Barbarian:
 
 class Berserker(Barbarian):
 
-	def __init__(self, name):
-		self.frenzy = 0
-		Barbarian.__init__(self, name)
+	def __init__(self):
 
-	def set_frenzy(self):
+		self.frenzy = 0
+		Barbarian.__init__(self)
+
+	def use_frenzy(self):
 		self.frenzy += 1
+
+	def set_frenzy(self, amount):
+		self.frenzy = amount
 
 	def get_frenzy(self):
 		return self.frenzy
 
 	def use_b_rage(self):
 		self.rage -= 1
-		self.frenzy += 1
 
 	def create_berserker_barbarian(self):
 		name = input("What is the barbarian's name?\n")
 		level = int(input("What level is this barbarian?\n"))
-		player = Berserker(str(name))
+		player = Berserker()
 		player.set_level(level)
 		player.set_rage(level)
 		player.set_hit_dice(level)
+		player.set_name(name)
 		print('Name:' + player.get_name(), ' Level:', player.get_level(), ' Rage:', player.get_rage(
 
 		), ' Hit Dice:', player.get_hit_dice(), ' Frenzy:', player.get_frenzy())
+
 		return player
+
+
+	def list_berserker_options(self):
+		selection = 0
+		selection = int(input("What action are you counting?\n" + "[1]: Rage \n " + "[2]: Frenzy \n " + (
+			"[3]: Use Hit Dice \n " + "[4]: Change Level\n" + "[5]: Exit\n")))
+		if selection == 1:
+			self.use_b_rage()
+			print(self.get_rage())
+		elif selection == 2:
+			self.set_frenzy()
+			print(self.get_frenzy())
+		elif selection == 3:
+			dice = int(input("How many dice?"))
+			self.use_hit_dice(dice)
+			print("Current hit dice: ", self.get_hit_dice())
+		elif selection == 4:
+			level = int(input("What level should this character be?"))
+			self.set_level(level)
+			print(self.get_level())
+		elif selection == 5:
+			return 0
+
+
 
 
 class AncestralGuardian(Barbarian):
