@@ -1,3 +1,6 @@
+barb_dict = {}
+
+
 class Barbarian:
 
 	def __init__(self):
@@ -79,8 +82,9 @@ class Berserker(Barbarian):
 	def use_b_rage(self):
 		self.rage -= 1
 
-	def create_berserker_barbarian(self):
-		name = input("What is the barbarian's name?\n")
+	def create_berserker_barbarian(self, name):
+		name = name
+		# name = input("What is the barbarian's name?\n")
 		level = int(input("What level is this barbarian?\n"))
 		player = Berserker()
 		player.set_level(level)
@@ -102,7 +106,7 @@ class Berserker(Barbarian):
 			self.use_b_rage()
 			print(self.get_rage())
 		elif selection == 2:
-			self.set_frenzy()
+			self.use_frenzy()
 			print(self.get_frenzy())
 		elif selection == 3:
 			dice = int(input("How many dice?"))
@@ -114,7 +118,6 @@ class Berserker(Barbarian):
 			print(self.get_level())
 		elif selection == 5:
 			return 0
-
 
 
 
@@ -173,3 +176,24 @@ class Zealot(Barbarian):
 		), ' Hit Dice: ', player.get_hit_dice(), 'Fanatical Focus: ', player.get_fanatical_focus(
 
 		), 'Zealous Presence: ', player.get_zealous_presence())
+
+def main_barb_making(name, dictionary):
+	name = name
+	player_subclass = input("What is their subclass?")
+	player_subclass = player_subclass.capitalize()
+	if player_subclass == "Berserker":
+		p1 = Berserker()
+		p1 = p1.create_berserker_barbarian(name)
+		class_options = Berserker.list_berserker_options
+	elif player_subclass == "Ancestral":
+		p1 = AncestralGuardian.create_ancestral_barbarian(p1)
+	elif player_subclass == "Zealot":
+		p1 = Zealot.create_Zealot_barbarian(p1)
+
+
+
+	barb_dict[f'{p1.get_name()}'] = {"character": p1, "subclass": player_subclass,
+						 "options": class_options}
+
+	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass,
+						 "options": class_options}
