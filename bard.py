@@ -58,8 +58,9 @@ class Bard:
 	def set_hit_dice(self, level):
 		self.hit_dice = level
 
-	def set_charisma(self, amount):
-		self.charisma = amount
+	def set_charisma(self):
+		charisma_to_be = int(input("What should this Bard's charisma be?"))
+		self.charisma = charisma_to_be
 
 	def set_spell_slots(self, level):
 		if level == 1:
@@ -138,7 +139,7 @@ class Bard:
 
 
 
-class Lore(Bard):
+class Glamour(Bard):
 
 	def __init__(self):
 		self.enthralling_performance = False
@@ -184,13 +185,12 @@ class Lore(Bard):
 		self.unbreakable_majesty = False
 		print("Reset Unbreakable Majesty")
 
-	def create_lore_bard(self, name):
+	def create_glamour_bard(self, name):
 		name = name
 		level = int(input("What level is this Bard?"))
-		charisma = int(input("How much Charisma does this Bard have?"))
 		player = Bard()
 		player.set_level(level)
-		player.set_charisma(charisma)
+		player.set_charisma()
 		player.set_name(name)
 
 		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Bardic Inspiration:", + (
@@ -198,11 +198,11 @@ class Lore(Bard):
 
 		return player
 
-	def list_lore_options(self):
+	def list_glamour_options(self):
 		selection = 0
 		selection = input("What action are you counting?\n" + "[1]: Use Bardic Inspiration\n" + (
 			"[2]: Use Enthralling Performance\n" + "[3]: Use Mantle of Majesty\n" + "[4]: Use Unbreakable Majesty\n" + (
-				"[5]: Use Hit Dice\n" + "[6]: Change Level\n" + "[7]: Exit")))
+				"[5]: Use Hit Dice\n" + "[6]: Change Level\n" + "[7]: Change Charisma" + "[8]: Exit")))
 
 		if selection == 1:
 			self.use_bardic_inspiration()
@@ -223,9 +223,50 @@ class Lore(Bard):
 			level_should_be = int(input("What level should this Bard be now?"))
 			self.set_level(level_should_be)
 		elif selection == 7:
+			self.set_charisma()
+		elif selection == 8:
 			return 0
 
+class Swords(Bard):
+	def __init__(self):
+		self.blade_flourish = False
+		Bard.__init__(self)
 
+	def get_blade_flourish(self):
+		return self.blade_flourish
+
+	def use_blade_flourish(self):
+		available = self.get_blade_flourish()
+		if not available:
+			self.blade_flourish = True
+			print("Used Blade Flourish!")
+		else:
+			print("Blade Flourish already used this turn")
+
+	def reset_blade_flourish(self):
+		self.blade_flourish = False
+
+	def list_swords_options(self):
+		selection = 0
+		selection = input("What actions are you counting?\n" + "[1]: Use Bardic Inspiration\n" + (
+			"[2]: Use Blade Flourish\n" + "[3]: Use Hit Dice\n" + "[4]: Change Level\n" + (
+				"[5]: Change Charisma" + "[6]: Exit\n")))
+
+		if selection == 1:
+			self.use_bardic_inspiration()
+			print("Used Bardic Inspiration")
+		if selection == 2:
+			self.use_blade_flourish()
+		if selection == 3:
+			dice_to_use = int(input("How many dice did the Bard use?"))
+			self.use_hit_dice(dice_to_use)
+		if selection == 4:
+			level_to_be = int(input("What level should this Bard be?"))
+			self.set_level(level_to_be)
+		if selection == 5:
+			self.set_charisma()
+		if selection == 6:
+			return 0
 
 
 
