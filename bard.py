@@ -188,7 +188,7 @@ class Glamour(Bard):
 	def create_glamour_bard(self, name):
 		name = name
 		level = int(input("What level is this Bard?"))
-		player = Bard()
+		player = Glamour()
 		player.set_level(level)
 		player.set_charisma()
 		player.set_name(name)
@@ -245,6 +245,19 @@ class Swords(Bard):
 
 	def reset_blade_flourish(self):
 		self.blade_flourish = False
+
+	def create_swords_bard(self, name):
+		name = name
+		level = int(input("What level should this Bard be?"))
+		player = Swords()
+		player.set_level(level)
+		player.set_charisma()
+		player.set_name(name)
+
+		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Bardic Inspiration:", + (
+			player.get_current_bardic_inspiration(), "Charisma:", + player.get_charisma()))
+
+		return player
 
 	def list_swords_options(self):
 		selection = 0
