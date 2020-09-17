@@ -1,4 +1,4 @@
-from playercharacter import *
+from Classes.playercharacter import *
 barb_dict = {}
 
 

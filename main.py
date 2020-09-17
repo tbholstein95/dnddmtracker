@@ -1,6 +1,5 @@
-from playercharacter import *
-from barbarian import *
-from bard import *
+from Classes.subclasses.playerclasses.barbarian import *
+from Classes.subclasses.playerclasses.bard import *
 
 # VAR
 player_dictionary = {}
