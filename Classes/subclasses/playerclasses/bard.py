@@ -5,9 +5,6 @@ bard_dict = {}
 class Bard(FullCaster):
 
 	def __init__(self):
-		# self.name = None
-		# self.level = 0
-		# self.hit_dice = 0
 		self.charisma = 0
 		self.counter_charm = False
 		self.max_bardic_inspiration = 0
