@@ -101,7 +101,7 @@ class Berserker(Barbarian):
 
 	def create_berserker_barbarian(self, name):
 		name = name
-		level = int(input("What level is this barbarian?\n"))
+		level = int(input("What level is this Barbarian?\n"))
 		player = Berserker()
 		player.set_level(level)
 		player.set_rage(level)
