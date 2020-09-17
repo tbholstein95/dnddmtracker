@@ -1,5 +1,6 @@
 from playercharacter import *
 from barbarian import *
+from bard import *
 
 # VAR
 player_dictionary = {}
@@ -15,6 +16,8 @@ def main():
 		player_class = player_class.capitalize()
 		if player_class == "Barbarian":
 			main_barb_making(player_name, player_dictionary)
+		if player_class == "Bard":
+			main_bard_making(player_name, player_dictionary)
 
 	while running:
 		current_player = input("Who are you modifying?\n")
@@ -24,8 +27,11 @@ def main():
 			break
 		# set current player
 		current_mod = player_dictionary[f'{current_player}']["character"]
+		print(current_mod)
+		print(player_dictionary)
 		# get current player's options
 		player_dictionary[f'{current_player}']['options'](current_mod)
+
 
 if __name__ == '__main__':
 	main()

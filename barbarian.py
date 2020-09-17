@@ -1,34 +1,36 @@
+from playercharacter import *
 barb_dict = {}
 
 
-class Barbarian:
+class Barbarian(PlayerCharacter):
 
 	def __init__(self):
-		self.name = None
-		self.level = 0
+		# self.name = None
+		# self.level = 0
 		self.max_rage = 0
 		self.rage = 0
-		self.hit_dice = 0
+		# self.hit_dice = 0
 		self.is_rage = False
 		self.reckless_strikes = False
+		PlayerCharacter.__init__(self)
 
-	def get_name(self):
-		return self.name
-
-	def get_level(self):
-		return self.level
+	# def get_name(self):
+	# 	return self.name
+	#
+	# def get_level(self):
+	# 	return self.level
 
 	def get_rage(self):
 		return self.rage
 
 	def get_max_rage(self):
 		return self.max_rage
+	#
+	# def get_hit_dice(self):
+	# 	return self.hit_dice
 
-	def get_hit_dice(self):
-		return self.hit_dice
-
-	def set_name(self, name):
-		self.name = name
+	# def set_name(self, name):
+	# 	self.name = name
 
 	def set_level(self, level):
 		self.level = level
@@ -47,11 +49,11 @@ class Barbarian:
 		elif level >= 20:
 			self.rage = self.max_rage = 100
 
-	def set_hit_dice(self, level):
-		self.hit_dice = level
+	# def set_hit_dice(self, level):
+	# 	self.hit_dice = level
 
-	def use_hit_dice(self, amount):
-		self.hit_dice -= amount
+	# def use_hit_dice(self, amount):
+	# 	self.hit_dice -= amount
 
 	def use_rage(self):
 		self.rage -= 1
@@ -83,7 +85,6 @@ class Barbarian:
 class Berserker(Barbarian):
 
 	def __init__(self):
-
 		self.frenzy = 0
 		Barbarian.__init__(self)
 
@@ -309,7 +310,6 @@ class Bland(Barbarian):
 		if selection == 1:
 			self.use_rage()
 			print(self.get_rage())
-
 		elif selection == 2:
 			self.use_reckless_strikes()
 

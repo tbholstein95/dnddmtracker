@@ -1,6 +1,6 @@
 class PlayerCharacter:
-	def __init__(self, name):
-		self.name = name
+	def __init__(self):
+		self.name = None
 		self.level = 0
 		self.hit_dice = 0
 
