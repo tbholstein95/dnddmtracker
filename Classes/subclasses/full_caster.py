@@ -194,3 +194,4 @@ class FullCaster(PlayerCharacter):
 	def copy_slots(self, li1):
 		li_copy = li1[:]
 		return li_copy
+

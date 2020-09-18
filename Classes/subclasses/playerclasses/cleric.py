@@ -70,7 +70,7 @@ class Cleric(FullCaster):
 		player.set_level()
 		player.set_name(name)
 		player.set_spell_slots(level)
-
+		player.set_hit_dice(level)
 		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Slots" + player.get_cur_spell_slot(level))
 
 		return player
@@ -127,7 +127,7 @@ class Knowledge(Cleric):
 		player.set_level()
 		player.set_name(name)
 		player.set_spell_slots(level)
-
+		player.set_hit_dice(level)
 		print("Name:" + player.get_name(), "Level:", + player.get_level())
 
 		return player
@@ -205,7 +205,7 @@ class Light(Cleric):
 		player.set_wisdom()
 		player.set_max_warding_flare()
 		player.reset_current_warding_flare()
-
+		player.set_hit_dice(level)
 		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Wisdom:", + player.get_wisdom(), "Warding:", (
 			+ player.get_max_warding_flare(), "Slots" + player.get_cur_spell_slot(level)))
 
@@ -288,7 +288,7 @@ class Tempest(Cleric):
 		player.set_wisdom()
 		player.set_max_wrath_of_the_storm()
 		player.reset_cur_wrath_of_the_storm()
-
+		player.set_hit_dice(level)
 		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Wisdom:", + player.get_wisdom(), "Warding:", (
 			+ player.get_max_wrath_of_the_storm(), "Slots" + player.get_cur_spell_slot(level)))
 
@@ -373,7 +373,7 @@ class War(Cleric):
 		player.set_wisdom()
 		player.set_max_bonus_attack()
 		player.reset_cur_bonus_attack()
-
+		player.set_hit_dice(level)
 		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Wisdom:", + player.get_wisdom(),
 		      "Warding:", (
 			      + player.get_max_bonus_attack(), "Slots" + player.get_cur_spell_slot(level)))
@@ -482,7 +482,7 @@ class Grave(Cleric):
 		player.set_max_eyes_of_the_grave()
 		player.reset_cur_sentinel_at_deaths_door()
 		player.reset_cur_eyes_of_the_grave()
-
+		player.set_hit_dice(level)
 		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Wisdom:", + player.get_wisdom(), (
 			"Eyes of the Grave:", + player.get_max_eyes_of_the_grave(), (
 				"Sentinel:", + player.get_max_sentinel_at_deaths_door(), "Slots" + player.get_cur_spell_slot(level))))
