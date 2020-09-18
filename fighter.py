@@ -152,6 +152,6 @@ class BattleMaster(Fighter):
 			return 0
 
 class Eldritch(Fighter):
-	
+
 
 
