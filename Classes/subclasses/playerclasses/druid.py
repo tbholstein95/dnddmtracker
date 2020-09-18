@@ -1,4 +1,5 @@
 from Classes.subclasses.full_caster import *
+import math
 
 druid_dict = {}
 
@@ -87,7 +88,7 @@ class Land(Druid):
 			return
 		else:
 			cur_level = self.get_level()
-			restore_up_to = cur_level / 2
+			restore_up_to = math.ceil(cur_level // 2)
 			temp_restore_up_to = restore_up_to
 			print(f"Player can restore up to {restore_up_to} combined spell slot levels")
 			while temp_restore_up_to > 0:
@@ -411,3 +412,34 @@ class Shepherd(Druid):
 		elif selection == 10:
 			print("backing")
 			return 0
+
+def main_druid_making(name, dictionary):
+	name = name
+	player_subclass = input("What is their subclass?")
+	player_subclass = player_subclass.capitalize()
+	if player_subclass == "Land":
+		p1 = Land()
+		p1 = p1.create_land_druid(name)
+		class_options = Land.list_land_options
+	elif player_subclass == "Moon":
+		p1 = Moon()
+		p1 = p1.create_moon_druid(name)
+		class_options = Moon.list_moon_options
+	elif player_subclass == "Dream":
+		p1 = Dream()
+		p1 = p1.create_dream_druid(name)
+		class_options = Dream.list_dream_options
+	elif player_subclass == "Shepherd":
+		p1 = Shepherd()
+		p1 = p1.create_shepherd_druid(name)
+		class_options = Shepherd.list_shepherd_options
+	else:
+		p1 = Druid()
+		p1 = p1.create_druid(name)
+		class_options = Druid.list_druid_options
+
+	druid_dict[f'{p1.get_name()}'] = {"character": p1, "subclass": player_subclass,
+					 "options": class_options}
+
+	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass,
+				 "options": class_options}
