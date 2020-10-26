@@ -151,7 +151,8 @@ class BattleMaster(Fighter):
 		elif selection == 10:
 			return 0
 
-class Eldritch(Fighter):
-
+# TODO : Finish this after half-caster class is created.
+# class Eldritch(Fighter):
+# 	return
 
 
