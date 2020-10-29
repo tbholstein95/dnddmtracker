@@ -195,3 +195,22 @@ class FullCaster(PlayerCharacter):
 		li_copy = li1[:]
 		return li_copy
 
+	def add_spell_slot(self, level):
+		if level == 1:
+			self.cur_level_one_spell_slots += 1
+		elif level == 2:
+			self.cur_level_two_spell_slots += 1
+		elif level == 3:
+			self.cur_level_three_spell_slots += 1
+		elif level == 4:
+			self.cur_level_four_spell_slots += 1
+		elif level == 5:
+			self.cur_level_five_spell_slots += 1
+		elif level == 6:
+			self.cur_level_six_spell_slots += 1
+		elif level == 7:
+			self.cur_level_seven_spell_slots += 1
+		elif level == 8:
+			self.cur_level_eight_spell_slots += 1
+		elif level == 9:
+			self.cur_level_nine_spell_slots += 1
