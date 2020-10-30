@@ -1,6 +1,6 @@
 from Classes.playercharacter import *
 
-
+#TODO: Rework as well as half-caster
 class FullCaster(PlayerCharacter):
 	def __init__(self):
 		self.max_level_one_spell_slots = 0
