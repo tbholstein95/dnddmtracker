@@ -3,6 +3,7 @@ from Classes.subclasses.playerclasses.bard import *
 from Classes.subclasses.playerclasses.cleric import *
 from Classes.subclasses.playerclasses.druid import *
 from Classes.subclasses.playerclasses.monk import *
+from Classes.subclasses.playerclasses.sorcerer import *
 # VAR
 player_dictionary = {}
 
@@ -25,6 +26,9 @@ def main():
 			main_druid_making(player_name, player_dictionary)
 		if player_class == "Monk":
 			main_monk_making(player_name, player_dictionary)
+		if player_class == "Sorcerer":
+			main_sorcerer_making(player_name, player_dictionary)
+
 
 	while running:
 		current_player = input("Who are you modifying?\n")
