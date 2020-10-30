@@ -190,6 +190,7 @@ class FullCaster(PlayerCharacter):
 		else:
 			self.use_cur_spell_slot(slot_to_use)
 			print(f"Used Level {slot_to_use} spell")
+		return slot_to_use
 
 	def copy_slots(self, li1):
 		li_copy = li1[:]
