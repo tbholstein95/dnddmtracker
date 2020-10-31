@@ -98,6 +98,63 @@ class Paladin(HalfCaster):
 		else:
 			print("Not enough Cleansing Touch points left")
 
+	def list_paladin_options(self):
+		selection = int(
+			input("What action are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Use Divine Sense\n" +
+
+			      "[3]: Reset Divine Sense\n" + "[4]: Use Lay on Hands to Heal\n" + "[5]: Use Lay on Hands to Cure Poison/Disease\n" +
+
+			      "[6]: Reset Lay on Hands Pool\n" + "[7]: Use Channel Divinity\n" + "[8]: Reset Channel Divinity\n" + "[9] Use Cleansing Touch\n" +
+
+			      "[10]: Reset Cleansing Touch\n" + "[11]: Use Hit Dice\n" + "[12]: Reset Hit Dice\n" + "[13]: Change Level\n" + "[14]: Exit\n"))
+
+		if selection == 1:
+			self.use_cur_spell_slot()
+		elif selection == 2:
+			self.use_divine_sense()
+		elif selection == 3:
+			self.set_current_divine_sense()
+		elif selection == 4:
+			self.use_lay_on_hands_to_heal()
+		elif selection == 5:
+			self.use_lay_on_hands_remove_poison()
+		elif selection == 6:
+			self.set_current_lay_on_hands_pool()
+		elif selection == 7:
+			self.use_channel_divinity()
+		elif selection == 8:
+			self.reset_channel_divinity()
+		elif selection == 9:
+			self.use_cleansing_touch()
+		elif selection == 10:
+			self.set_current_cleansing_touch()
+		elif selection == 11:
+			self.use_hit_dice()
+		elif selection == 12:
+			self.reset_current_hit_dice()
+		elif selection == 13:
+			self.set_level()
+			self.set_hit_dice(self.get_level())
+			self.set_current_spell_slots(self.get_level())
+		elif selection == 14:
+			print("Leaving")
+			return
+
+	def create_paladin(self, name):
+		name = name
+		level = int(input("What level is this cleric?"))
+		player = Devotion()
+		player.set_charisma()
+		player.set_level()
+		player.set_name(name)
+		player.set_max_spell_slots(level)
+		player.set_current_spell_slots(level)
+		player.set_hit_dice(level)
+		print("Name:" + player.get_name(), "Level:", + player.get_level(),
+		      "Slots" + player.get_current_spell_slot(level))
+
+		return player
+
 class Devotion(Paladin):
 	def __init__(self):
 		self.holy_nimbus = False
@@ -185,7 +242,7 @@ class Ancient(Paladin):
 		self.elder_champion = False
 		Paladin.__init__(self)
 
-	def use_elder_chamption(self):
+	def use_elder_champion(self):
 		if not self.elder_champion:
 			print("Used Elder Champion")
 			self.elder_champion = True
@@ -343,3 +400,30 @@ class Vengeance(Paladin):
 		      "Slots" + player.get_current_spell_slot(level))
 
 		return player
+
+def main_paladin_making(name, dictionary):
+	name = name
+	player_subclass = input("What is their subclass?")
+	player_subclass = player_subclass.capitalize()
+	if player_subclass == "Devotion":
+		p1 = Devotion()
+		p1 = p1.create_devotion_paladin(name)
+		class_options = Devotion.list_devotion_options
+	elif player_subclass == "Ancient":
+		p1 = Ancient()
+		p1 = p1.create_ancients_paladin(name)
+		class_options = Ancient.list_ancients_options
+	elif player_subclass == "Vengeance":
+		p1 = Vengeance()
+		p1 = p1.create_vengeance_paladin(name)
+		class_options = Vengeance.list_vengeance_options
+	else:
+		p1 = Paladin()
+		p1 = p1.create_paladin(name)
+		class_options = Paladin.list_paladin_options
+
+	paladin_dict[f'{p1.get_name()}'] = {"character": p1, "subclass": player_subclass,
+					 "options": class_options}
+
+	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass,
+				 "options": class_options}
