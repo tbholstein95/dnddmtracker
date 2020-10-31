@@ -49,10 +49,9 @@ class Bard(FullCaster):
 		self.set_cur_bardic_inspiration(self.get_charisma)
 
 	def change_level_option(self):
-		level_should_be = int(input("What level should this Bard be now?"))
-		self.set_level(level_should_be)
+		self.set_level()
 		self.set_charisma()
-		self.set_spell_slots(level_should_be)
+		self.set_spell_slots(self.get_level())
 		self.set_max_bardic_inspiration()
 		self.set_cur_bardic_inspiration(self.get_charisma)
 
@@ -107,15 +106,14 @@ class Glamour(Bard):
 
 	def create_glamour_bard(self, name):
 		name = name
-		level = int(input("What level is this Bard?"))
 		player = Glamour()
-		player.set_level(level)
+		player.set_level()
 		player.set_charisma()
 		player.set_name(name)
-		player.set_spell_slots(level)
+		player.set_spell_slots(self.get_level())
 		player.set_max_bardic_inspiration()
 		player.set_cur_bardic_inspiration(player.get_charisma())
-		player.set_hit_dice(level)
+		player.set_hit_dice(self.get_level())
 
 		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Bardic Inspiration:", (
 			player.get_current_bardic_inspiration(), "Charisma:", + player.get_charisma()))
@@ -171,15 +169,14 @@ class Swords(Bard):
 
 	def create_swords_bard(self, name):
 		name = name
-		level = int(input("What level should this Bard be?"))
 		player = Swords()
-		player.set_level(level)
+		player.set_level()
 		player.set_charisma()
 		player.set_name(name)
-		player.set_spell_slots(level)
+		player.set_spell_slots(self.get_level())
 		player.set_max_bardic_inspiration()
 		player.set_cur_bardic_inspiration(player.get_charisma())
-		player.set_hit_dice(level)
+		player.set_hit_dice(self.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Bardic Inspiration:", (
 			player.get_current_bardic_inspiration(), "Charisma:", + player.get_charisma()))
 
@@ -197,8 +194,7 @@ class Swords(Bard):
 		if selection == 2:
 			self.use_blade_flourish()
 		if selection == 3:
-			dice_to_use = int(input("How many dice did the Bard use?"))
-			self.use_hit_dice(dice_to_use)
+			self.use_hit_dice()
 		if selection == 4:
 			self.change_level_option()
 		if selection == 5:
@@ -351,8 +347,7 @@ class BlandBard(Bard):
 			self.use_bardic_inspiration()
 			print("Used Bardic Inspiration")
 		if selection == 2:
-			dice_to_use = int(input("How many dice did the Bard use?"))
-			self.use_hit_dice(dice_to_use)
+			self.use_hit_dice()
 		if selection == 3:
 			self.change_level_option()
 		if selection == 4:

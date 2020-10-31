@@ -27,7 +27,7 @@ class Ranger(HalfCaster):
 
 	def create_ranger(self, name):
 		name = name
-		level = int(input("What level is this cleric?"))
+		level = int(input("What level is this Ranger?"))
 		player = Ranger()
 		player.set_level()
 		player.set_name(name)

@@ -28,7 +28,7 @@ class Wizard(FullCaster):
 
 	def create_wizard(self, name):
 		name = name
-		level = int(input("What level is this cleric?"))
+		level = int(input("What level is this Wizard?"))
 		player = Wizard()
 		player.set_level()
 		player.set_name(name)
@@ -72,7 +72,7 @@ class Abjuration(Wizard):
 			return
 	def create_abjuration_wizard(self, name):
 		name = name
-		level = int(input("What level is this cleric?"))
+		level = int(input("What level is this Wizard?"))
 		player = Abjuration()
 		player.set_level()
 		player.set_name(name)
@@ -158,7 +158,7 @@ class Divination(Wizard):
 
 	def create_divination_wizard(self, name):
 		name = name
-		level = int(input("What level is this cleric?"))
+		level = int(input("What level is this Wizard?"))
 		player = Divination()
 		player.set_level()
 		player.set_name(name)
@@ -235,7 +235,7 @@ class Enchantment(Wizard):
 
 	def create_enchantment_wizard(self, name):
 		name = name
-		level = int(input("What level is this cleric?"))
+		level = int(input("What level is this Wizard?"))
 		player = Enchantment()
 		player.set_level()
 		player.set_name(name)
@@ -290,7 +290,7 @@ class Illusion(Wizard):
 
 	def create_illusion_wizard(self, name):
 		name = name
-		level = int(input("What level is this cleric?"))
+		level = int(input("What level is this Wizard?"))
 		player = Enchantment()
 		player.set_level()
 		player.set_name(name)
@@ -369,7 +369,7 @@ class Transmutation(Wizard):
 
 	def create_transmutation_wizard(self, name):
 		name = name
-		level = int(input("What level is this cleric?"))
+		level = int(input("What level is this Wizard?"))
 		player = Enchantment()
 		player.set_level()
 		player.set_name(name)

@@ -142,7 +142,7 @@ class Paladin(HalfCaster):
 
 	def create_paladin(self, name):
 		name = name
-		level = int(input("What level is this cleric?"))
+		level = int(input("What level is this Paladin?"))
 		player = Devotion()
 		player.set_charisma()
 		player.set_level()
@@ -224,7 +224,7 @@ class Devotion(Paladin):
 
 	def create_devotion_paladin(self, name):
 		name = name
-		level = int(input("What level is this cleric?"))
+		level = int(input("What level is this Paladin?"))
 		player = Devotion()
 		player.set_charisma()
 		player.set_level()
@@ -289,7 +289,7 @@ class Ancient(Paladin):
 		elif selection == 10:
 			self.set_current_cleansing_touch()
 		elif selection == 11:
-			self.use_elder_chamption()
+			self.use_elder_champion()
 		elif selection == 12:
 			self.reset_elder_champion()
 		elif selection == 13:
@@ -306,7 +306,7 @@ class Ancient(Paladin):
 
 	def create_ancients_paladin(self, name):
 		name = name
-		level = int(input("What level is this cleric?"))
+		level = int(input("What level is this Paladin?"))
 		player = Devotion()
 		player.set_charisma()
 		player.set_level()
@@ -381,6 +381,7 @@ class Vengeance(Paladin):
 		elif selection == 15:
 			self.set_level()
 			self.set_hit_dice(self.get_level())
+			self.set_max_spell_slots(self.get_level())
 			self.set_current_spell_slots(self.get_level())
 		elif selection == 16:
 			print("Leaving")
@@ -388,7 +389,7 @@ class Vengeance(Paladin):
 
 	def create_vengeance_paladin(self, name):
 		name = name
-		level = int(input("What level is this cleric?"))
+		level = int(input("What level is this Paladin?"))
 		player = Devotion()
 		player.set_charisma()
 		player.set_level()
