@@ -408,7 +408,33 @@ class Old(Warlock):
 		      "Slots" + player.max_slots)
 
 		return player
-	
+
+def main_warlock_making(name, dictionary):
+	name = name
+	player_subclass = input("What is their subclass?")
+	player_subclass = player_subclass.capitalize()
+	if player_subclass == "Archfey":
+		p1 = Archfey()
+		p1 = p1.create_archfey_warlock(name)
+		class_options = Archfey.list_archfey_options
+	elif player_subclass == "Fiend":
+		p1 = Fiend()
+		p1 = p1.create_fiend_warlock(name)
+		class_options = Fiend.list_fiend_options
+	elif player_subclass == "Old":
+		p1 = Old()
+		p1 = p1.create_old_warlock(name)
+		class_options = Old.list_old_options
+	else:
+		p1 = Warlock()
+		p1 = p1.create_warlock(name)
+		class_options = Warlock.list_warlock_options
+
+	warlock_dict[f'{p1.get_name()}'] = {"character": p1, "subclass": player_subclass,
+					 "options": class_options}
+
+	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass,
+				 "options": class_options}
 
 
 

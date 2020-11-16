@@ -14,27 +14,11 @@ class Barbarian(PlayerCharacter):
 		self.reckless_strikes = False
 		PlayerCharacter.__init__(self)
 
-	# def get_name(self):
-	# 	return self.name
-	#
-	# def get_level(self):
-	# 	return self.level
-
 	def get_rage(self):
 		return self.rage
 
 	def get_max_rage(self):
 		return self.max_rage
-	#
-	# def get_hit_dice(self):
-	# 	return self.hit_dice
-
-	# def set_name(self, name):
-	# 	self.name = name
-
-	def set_level(self, level):
-		self.level = level
-		self.set_rage(level)
 
 	def set_rage(self, level):
 		if level < 3:
@@ -48,12 +32,6 @@ class Barbarian(PlayerCharacter):
 			self.max_rage = 5
 		elif level >= 20:
 			self.rage = self.max_rage = 100
-
-	# def set_hit_dice(self, level):
-	# 	self.hit_dice = level
-
-	# def use_hit_dice(self, amount):
-	# 	self.hit_dice -= amount
 
 	def use_rage(self):
 		self.rage -= 1
@@ -102,11 +80,10 @@ class Berserker(Barbarian):
 
 	def create_berserker_barbarian(self, name):
 		name = name
-		level = int(input("What level is this Barbarian?\n"))
 		player = Berserker()
-		player.set_level(level)
-		player.set_rage(level)
-		player.set_hit_dice(level)
+		player.set_level()
+		player.set_rage(self.get_level())
+		player.set_hit_dice(self.get_level())
 		player.set_name(name)
 		print('Name:' + player.get_name(), ' Level:', player.get_level(), ' Rage:', player.get_rage(
 
@@ -130,14 +107,13 @@ class Berserker(Barbarian):
 		elif selection == 4:
 			self.reset_reckless_strikes()
 		elif selection == 5:
-			dice = int(input("How many dice?"))
-			self.use_hit_dice(dice)
+			self.use_hit_dice()
 			print("Current hit dice: ", self.get_hit_dice())
 		elif selection == 6:
-			level = int(input("What level should this character be?"))
-			self.set_level(level)
-			print(self.get_level())
+			self.set_level()
+			print("Barbarian is now level ", self.get_level())
 		elif selection == 7:
+			print("Leaving")
 			return 0
 
 
