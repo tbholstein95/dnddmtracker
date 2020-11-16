@@ -63,22 +63,28 @@ class Bard(FullCaster):
 
 	def list_bard_options(self):
 		selection = int(
-			input("What actions are you counting?\n" + "[1]: Use Bardic Inspiration\n" + "[2]: Use Hit Dice\n" +
+			input("What actions are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Reset Spells\n" +
 
-			"[3]: Reset Hit Dice" + "[4]: Change Level\n" + "[5]: Change Charisma" + "[6]: Exit\n"))
+			"[3]: Use Bardic Inspiration\n" + "[4]: Use Hit Dice\n" + "[5]: Reset Hit Dice\n" +
+
+			"[6]: Change Level\n" + "[7]: Change Charisma\n" + "[8]: Exit\n"))
 
 		if selection == 1:
+			self.use_cur_spell_slot()
+		if selection == 2:
+			self.set_spell_slots(self.get_level())
+		if selection == 3:
 			self.use_bardic_inspiration()
 			print("Used Bardic Inspiration")
-		if selection == 2:
-			self.use_hit_dice()
-		if selection == 3:
-			self.reset_current_hit_dice()
 		if selection == 4:
-			self.change_level_option()
+			self.use_hit_dice()
 		if selection == 5:
-			self.charisma_option()
+			self.reset_current_hit_dice()
 		if selection == 6:
+			self.change_level_option()
+		if selection == 7:
+			self.charisma_option()
+		if selection == 8:
 			print("Leaving")
 			return
 
@@ -240,27 +246,35 @@ class Swords(Bard):
 
 	def list_swords_options(self):
 		selection = int(
-			input("What actions are you counting?\n" + "[1]: Use Bardic Inspiration\n" + "[2]: Reset Bardic Inspiration" +
+			input("What actions are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Reset Spell Slot\n" +
 
-			"[3]: Use Blade Flourish\n" + "[4]: Reset Blade Flourish" +  "[5]: Use Hit Dice\n" + "[6]: Change Level\n" +
+			"[3]: Use Bardic Inspiration\n" + "[4]: Reset Bardic Inspiration\n" + "[5]: Use Blade Flourish\n" +
 
-			"[7]: Change Charisma\n" + "[8]: Exit\n"))
+			"[6]: Reset Blade Flourish\n" +  "[7]: Use Hit Dice\n" + "[8]: Reset Hit Dice"
+
+			+ "[8]: Change Level\n" + "[9]: Change Charisma\n" + "[10]: Exit\n"))
 
 		if selection == 1:
-			self.use_bardic_inspiration()
+			self.use_cur_spell_slot()
 		if selection == 2:
-			self.reset_bardic_inspiration()
+			self.set_spell_slots(self.get_level())
 		if selection == 3:
-			self.use_blade_flourish()
+			self.use_bardic_inspiration()
 		if selection == 4:
-			self.reset_blade_flourish()
+			self.reset_bardic_inspiration()
 		if selection == 5:
-			self.use_hit_dice()
+			self.use_blade_flourish()
 		if selection == 6:
-			self.change_level_option()
+			self.reset_blade_flourish()
 		if selection == 7:
-			self.charisma_option()
+			self.use_hit_dice()
 		if selection == 8:
+			self.reset_current_hit_dice()
+		if selection == 9:
+			self.change_level_option()
+		if selection == 10:
+			self.charisma_option()
+		if selection == 11:
 			print("Leaving")
 			return
 
@@ -348,49 +362,55 @@ class Whispers(Bard):
 		self.set_shadow_lore(False)
 
 	def list_whispers_options(self):
-		selection = input("What action are you counting?\n" + "[1]: Use Bardic Inspiration\n" + "[2]: Reset Bardic Inspiration\n" +
+		selection = input("What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Reset Spells\n" +
 
-			"[2]: Use Psychic Blades\n" + "[3]: Reset Psychic Blades\n" + "[4]: Use Words of Terror\n" +
+			"[3]: Use Bardic Inspiration\n" + "[4]: Reset Bardic Inspiration\n" + "[5]: Use Psychic Blades\n" +
 
-			"[5]: Reset Words of Terror\n" + "[6]: Use Mantle of Whispers\n" + "[7]: Reset Mantle of Whispers" +
+			"[6]: Reset Psychic Blades\n" + "[7]: Use Words of Terror\n" + "[8]: Reset Words of Terror\n" +
 
-			"[8]: Use Shadow Lore\n" + "[9]: Reset Shadow Lore\n" + "[10]: Use Hit Dice\n" +
+			"[9]: Use Mantle of Whispers\n" + "[10]: Reset Mantle of Whispers\n" + "[11]: Use Shadow Lore\n" +
 
-			"[11]: Change Level\n" + "[12]: Change Charisma\n" + "[13]: Exit\n")
+			"[12]: Reset Shadow Lore\n" + "[13]: Use Hit Dice\n" + "[14]: Change Level\n" +
+
+			"[15]: Change Charisma\n" + "[16]: Exit\n")
 
 		if selection == 1:
+			self.use_cur_spell_slot()
+		if selection ==2:
+			self.set_spell_slots(self.get_level())
+		if selection == 3:
 			self.use_bardic_inspiration()
 			print(self.get_current_bardic_inspiration(), "Current Bardic Inspiration")
-		elif selection == 2:
-			self.reset_bardic_inspiration()
-		elif selection == 3:
-			self.use_psychic_blades()
-			print(self.get_current_bardic_inspiration(), "Current Bardic Inspiration")
 		elif selection == 4:
-			self.reset_psychic_blades()
+			self.reset_bardic_inspiration()
 		elif selection == 5:
+			self.use_psychic_blades()
+			print(self.get_psychic_blades(), "Current Psychic Blades")
+		elif selection == 6:
+			self.reset_psychic_blades()
+		elif selection == 7:
 			self.use_words_of_terror()
 			print(self.get_words_of_terror(), "Current Words of Terror")
-		elif selection == 6:
+		elif selection == 8:
 			self.reset_words_of_terror()
-		elif selection == 7:
+		elif selection == 9:
 			self.use_mantle_of_whispers()
 			print(self.get_mantle_of_whispers())
-		elif selection == 8:
+		elif selection == 10:
 			self.reset_mantle_of_whispers()
-		elif selection == 9:
+		elif selection == 11:
 			self.use_shadow_lore()
 			print(self.get_shadow_lore(), "Current Shadow Lore")
-		elif selection == 10:
+		elif selection == 12:
 			self.reset_shadow_lore()
-		elif selection == 11:
+		elif selection == 13:
 			dice_to_use = int(input("How many dice did Bard use?"))
 			self.set_hit_dice(dice_to_use)
-		elif selection == 12:
-			self.reset_current_hit_dice()
-		elif selection == 13:
-			self.change_level_option()
 		elif selection == 14:
+			self.reset_current_hit_dice()
+		elif selection == 15:
+			self.change_level_option()
+		elif selection == 16:
 			self.charisma_option()
 		elif selection == 15:
 			print("Leaving")
