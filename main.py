@@ -38,6 +38,8 @@ def main():
 			main_paladin_making(player_name, player_dictionary)
 		if player_class == "Ranger":
 			main_ranger_making(player_name, player_dictionary)
+		if player_class == "Rogue":
+			main_rogue_making(player_name, player_dictionary)
 		if player_class == "Sorcerer":
 			main_sorcerer_making(player_name, player_dictionary)
 		if player_class == "Wizard":
