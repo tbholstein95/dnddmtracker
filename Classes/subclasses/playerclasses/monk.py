@@ -7,7 +7,7 @@ class Monk(PlayerCharacter):
 		self.max_ki_points = 0
 		self.current_ki_points = 0
 		self.empty_body = False
-		PlayerCharacter.__init__(self)
+		super().__init__()
 
 	def set_max_ki_points(self, level):
 		if level > 1:
@@ -60,7 +60,6 @@ class Monk(PlayerCharacter):
 		return player
 
 	def list_basic_monk_options(self):
-		selection = 0
 		selection = int(input("What action are you counting?\n" + "[1]: Use Ki Point \n " + "[2]: Restore Ki \n " + (
 			"[3]: Use Empty Body \n " + "[4]: Use Hit Dice \n " + "[5]: Change Level\n" + (
 				"[6]: Reset Hit Dice" + "[7]:Reset Ki" + "[8]: Exit\n"))))
@@ -89,7 +88,7 @@ class OpenHand(Monk):
 
 	def __init__(self):
 		self.wholeness = False
-		Monk.__init__(self)
+		super().__init__()
 
 	def use_quivering_palm(self):
 		current_ki = self.get_current_ki_points()
@@ -120,7 +119,6 @@ class OpenHand(Monk):
 		return player
 
 	def list_open_hand_options(self):
-		selection = 0
 		selection = int(input("What action are you counting?\n" + "[1]: Use Ki Point \n " + "[2]: Restore Ki \n " + (
 			"[3]: Use Empty Body \n " + "[4]: Use Quivering Palm" +"[5]: Use Wholeness" + "[6]: Use Hit Dice \n " + "[7]: Change Level\n" + (
 				"[8]: Reset Hit Dice" + "[9]:Reset Ki" + "[10]: Exit\n"))))
@@ -151,8 +149,7 @@ class OpenHand(Monk):
 
 class FourElements(Monk):
 	def __init__(self):
-
-		Monk.__init__(self)
+		super().__init__()
 
 	def use_elemental_discipline(self, amount):
 		maximum_ki_expend = ''

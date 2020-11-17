@@ -8,7 +8,7 @@ class Druid(FullCaster):
 	def __init__(self):
 		self.max_wild_shape = 2
 		self.current_wild_shape = 2
-		FullCaster.__init__(self)
+		super().__init__()
 
 	def get_max_wild_shape(self):
 		return self.max_wild_shape
@@ -32,7 +32,6 @@ class Druid(FullCaster):
 			self.current_wild_shape -= 1
 
 	def list_druid_options(self):
-		selection = 0
 		selection = int(input("What action are you counting?\n" + "[1]: Use Wildshape\n" + (
 
 			"[2]: Reset Wildshape\n" + "[3]: Use Hit Dice\n" + "[4]: Reset Hit Dice" + "[5]: Change Level\n" + "[6]: Exit\n")))
@@ -74,7 +73,7 @@ class Druid(FullCaster):
 class Land(Druid):
 	def __init__(self):
 		self.natural_recovery = False
-		Druid.__init__(self)
+		super().__init__()
 
 	def get_natural_recovery(self):
 		return self.natural_recovery
@@ -120,7 +119,6 @@ class Land(Druid):
 		return player
 
 	def list_land_options(self):
-		selection = 0
 		selection = int(input("What action are you counting?\n" + "[1]: Use Wildshape\n" + (
 
 			"[2]: Reset Wildshape\n" + "[3]: Use Natural Recovery\n" + "[4]: Reset Natural Recovery\n" +
@@ -152,7 +150,7 @@ class Land(Druid):
 
 class Moon(Druid):
 	def __init__(self):
-		Druid.__init__(self)
+		super().__init__()
 
 	def use_combat_wildshape_heal(self):
 		to_use = int(input("What level spell slot is the player using?"))
@@ -160,7 +158,7 @@ class Moon(Druid):
 		if current_slot == 0:
 			print("No remaining slots of this level")
 		else:
-			self.use_cur_spell_slot(to_use)
+			self.use_cur_spell_slot()
 
 	def create_moon_druid(self, name):
 		name = name
@@ -176,7 +174,6 @@ class Moon(Druid):
 		return player
 
 	def list_moon_options(self):
-		selection = 0
 		selection = int(input("What action are you counting?\n" + "[1]: Use Wildshape\n" + (
 
 			"[2]: Reset Wildshape\n" + "[3]: Use Combat WildShape Heal" + "[4]: Use Hit Dice\n" +
@@ -211,7 +208,7 @@ class Dream(Druid):
 		self.max_hidden_paths = 0
 		self.current_hidden_paths = 0
 		self.walker_in_dreams = False
-		Druid.__init__(self)
+		super().__init__()
 
 	def set_wisdom(self):
 		amount = int(input("What is this Druid's wisdom modifier?"))
@@ -295,7 +292,6 @@ class Dream(Druid):
 		return player
 
 	def list_dream_options(self):
-		selection = 0
 		selection = int(input("What action are you counting?\n" + "[1]: Use Wildshape\n" + (
 
 			"[2]: Reset Wildshape\n" + "[3]: Use Balm of the Summer Court\n" + "[4]: Reset Balm of the Summer court\n" +
@@ -334,7 +330,7 @@ class Shepherd(Druid):
 	def __init__(self):
 		self.spirit_totem = False
 		self.faithful_summons = False
-		Druid.__init__(self)
+		super().__init__()
 
 	def get_spirit_totem(self):
 		return self.spirit_totem
@@ -349,7 +345,6 @@ class Shepherd(Druid):
 		self.faithful_summons = truefalse
 
 	def use_spirit_totem(self):
-		current_spirit = self.get_spirit_totem()
 		if self.get_spirit_totem:
 			print("Already used this Short/Long Rest")
 			return
@@ -380,7 +375,6 @@ class Shepherd(Druid):
 		return player
 
 	def list_shepherd_options(self):
-		selection = 0
 		selection = int(input("What action are you counting?\n" + "[1]: Use Wildshape\n" + (
 
 			"[2]: Reset Wildshape\n" + "[3]: Use Spirit Totem" + "[4]: Reset Spirit Totem" + "[5]: Use Faithful Summons" +

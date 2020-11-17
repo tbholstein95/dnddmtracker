@@ -4,14 +4,14 @@ wizard_dict = {}
 class Wizard(FullCaster):
 	def __init__(self):
 		self.signature_spells = 2
-		FullCaster.__init__(self)
+		super().__init__()
 
 	def list_wizard_options(self):
 		selection = int(
 			input("What action are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Use Hit Dice\n" +
 
 			      "[3]: Reset Hit Dice\n" + "[4]: Change Level\n" + "[5]: Exit\n"))
-
+		#TODO: Fix use spell slot
 		if selection == 1:
 			self.use_spell_slot()
 		elif selection == 2:
@@ -42,7 +42,7 @@ class Wizard(FullCaster):
 class Abjuration(Wizard):
 	def __init__(self):
 		self.arcane_ward = False
-		Wizard.__init__(self)
+		super().__init__()
 
 	def use_arcane_ward(self):
 		if not self.arcane_ward:
@@ -59,7 +59,7 @@ class Abjuration(Wizard):
 		selection = int(input("What action are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Use Hit Dice\n" +
 
 		"[3]: Change Level\n" + "[16]: Exit\n"))
-
+		#TODO: Fix spell slot
 		if selection == 1:
 			self.use_spell_slot()
 		elif selection == 2:
@@ -87,8 +87,8 @@ class Divination(Wizard):
 		self.max_portent = 0
 		self.current_portent = 0
 		self.third_eye = False
-		Wizard.__init__(self)
-
+		super().__init__()
+	#TODO: Fix spell slot
 	def use_expert_divination(self):
 		if self.get_level() >= 6:
 			spell_level = self.use_spell_slot()
@@ -134,7 +134,7 @@ class Divination(Wizard):
 		"[3]: Use Portent\n" + "[4]: Reset Current Portents\n" + "[5]: Use Hit Dice\n" + "[6]: Reset Hit Dice\n" +
 
 		"[7]: Change Level\n" + "[8]: Exit\n"))
-
+		#todo: Fix use spell slot
 		if selection == 1:
 			self.use_spell_slot()
 		elif selection == 2:
@@ -173,7 +173,7 @@ class Enchantment(Wizard):
 	def __init__(self):
 		self.hypnotic_gaze = False
 		self.instinctive_charm = False
-		Wizard.__init__(self)
+		super().__init__()
 
 	def use_hypnotic_gaze(self):
 		if not self.hypnotic_gaze:
@@ -210,7 +210,7 @@ class Enchantment(Wizard):
 		"[3]: Reset Hypnotic Gaze\n" + "[4]: Use Instinctive Charm\n" + "[5]: Reset Instinctive Charm\n" +
 
 		"[6]: Use Hit Dice\n" + "[7]: Reset Hit Dice\n" + "[8]: Change Level\n" + "[9]: Exit\n"))
-
+		#TODO: Fix use spell slot
 		if selection == 1:
 			self.use_spell_slot()
 		elif selection == 2:
@@ -248,7 +248,7 @@ class Enchantment(Wizard):
 class Illusion(Wizard):
 	def __init__(self):
 		self.illusory_self = False
-		Wizard.__init__(self)
+		super().__init__()
 
 	def use_illusory_self(self):
 		if not self.illusory_self:
@@ -269,7 +269,7 @@ class Illusion(Wizard):
 			input("What action are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Use Illusory Self\n" +
 
 			      "[3]: Reset Illusory Self\n" + "[4]: Use Hit Dice\n" + "[5]: Reset Hit Dice\n" + "[6]: Change Level\n" + "[7]: Exit\n"))
-
+		#TODO: fix use spell slot
 		if selection == 1:
 			self.use_spell_slot()
 		elif selection == 2:
@@ -305,7 +305,7 @@ class Transmutation(Wizard):
 	def __init__(self):
 		self.shapechange = False
 		self.create_transmuter_stone = False
-		Wizard.__init__(self)
+		super().__init__()
 
 	def use_shapechange(self):
 		if not self.shapechange:
@@ -344,7 +344,7 @@ class Transmutation(Wizard):
 			      "[3]: Reset Shapechange\n" + "[4]: Use Master Transmuter\n" + "[5]: Reset Use Master Transmuter\n" +
 
 			      "[6]: Use Hit Dice\n" + "[7]: Reset Hit Dice\n" + "[8]: Change Level\n" + "[9]: Exit\n"))
-
+		#TODO: fix spell slot
 		if selection == 1:
 			self.use_spell_slot()
 		elif selection == 2:

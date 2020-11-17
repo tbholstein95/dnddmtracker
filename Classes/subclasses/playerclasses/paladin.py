@@ -11,7 +11,7 @@ class Paladin(HalfCaster):
 		self.channel_divinity = False
 		self.max_cleansing_touch = 0
 		self.current_cleansing_touch = 0
-		HalfCaster.__init__(self)
+		super().__init__()
 
 	def set_charisma(self):
 		char = int(input("What is this Paladin's charisma modifier?"))
@@ -158,7 +158,7 @@ class Paladin(HalfCaster):
 class Devotion(Paladin):
 	def __init__(self):
 		self.holy_nimbus = False
-		Paladin.__init__(self)
+		super().__init__()
 
 	def use_holy_nimbus(self):
 		if not self.holy_nimbus:
@@ -240,7 +240,7 @@ class Devotion(Paladin):
 class Ancient(Paladin):
 	def __init__(self):
 		self.elder_champion = False
-		Paladin.__init__(self)
+		super().__init__()
 
 	def use_elder_champion(self):
 		if not self.elder_champion:
@@ -322,7 +322,7 @@ class Ancient(Paladin):
 class Vengeance(Paladin):
 	def __init__(self):
 		self.avenging_angel = False
-		Paladin.__init__(self)
+		super().__init__()
 
 	def use_avenging_angel(self):
 		if not self.avenging_angel:

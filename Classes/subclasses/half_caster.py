@@ -14,10 +14,11 @@ class HalfCaster(PlayerCharacter):
 		self.cur_level_three_spell_slots = 0
 		self.cur_level_four_spell_slots = 0
 		self.cur_level_five_spell_slots = 0
-		PlayerCharacter.__init__(self)
+
 
 		self.max_slots = [0] * 21
 		self.current_slots = [0] * 21
+		super().__init__()
 
 	def set_max_spell_slots(self, level):
 		if level == 1:

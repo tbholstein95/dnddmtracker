@@ -9,7 +9,7 @@ class Bard(FullCaster):
 		self.counter_charm = False
 		self.max_bardic_inspiration = 0
 		self.current_bardic_inspiration = 0
-		FullCaster.__init__(self)
+		super().__init__()
 
 	def get_max_bardic_inspiration(self):
 		return self.max_bardic_inspiration
@@ -25,10 +25,16 @@ class Bard(FullCaster):
 
 	def set_max_bardic_inspiration(self):
 		cur_charisma = self.get_charisma()
+		if cur_charisma < 1:
+			cur_charisma = 1
 		self.max_bardic_inspiration = cur_charisma
 
 	def set_cur_bardic_inspiration(self, amount):
 		self.current_bardic_inspiration = amount
+
+	def reset_bardic_inspiration(self):
+		self.current_bardic_inspiration = self.get_max_bardic_inspiration()
+		print("Reset Bardic Inspiration")
 
 	def use_bardic_inspiration(self):
 		if self.check_bardic_inspiration():
@@ -55,6 +61,47 @@ class Bard(FullCaster):
 		self.set_max_bardic_inspiration()
 		self.set_cur_bardic_inspiration(self.get_charisma)
 
+	def list_bard_options(self):
+		selection = int(
+			input("What actions are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Reset Spells\n" +
+
+			"[3]: Use Bardic Inspiration\n" + "[4]: Use Hit Dice\n" + "[5]: Reset Hit Dice\n" +
+
+			"[6]: Change Level\n" + "[7]: Change Charisma\n" + "[8]: Exit\n"))
+
+		if selection == 1:
+			self.use_cur_spell_slot()
+		if selection == 2:
+			self.set_spell_slots(self.get_level())
+		if selection == 3:
+			self.use_bardic_inspiration()
+			print("Used Bardic Inspiration")
+		if selection == 4:
+			self.use_hit_dice()
+		if selection == 5:
+			self.reset_current_hit_dice()
+		if selection == 6:
+			self.change_level_option()
+		if selection == 7:
+			self.charisma_option()
+		if selection == 8:
+			print("Leaving")
+			return
+
+	def create_bard(self, name):
+		name = name
+		level = int(input("What level should this Bard be?"))
+		player = Bard()
+		player.set_level()
+		player.set_charisma()
+		player.set_name(name)
+		player.set_spell_slots(level)
+		player.set_hit_dice(level)
+		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Bardic Inspiration:", (
+			player.get_current_bardic_inspiration(), "Charisma:", + player.get_charisma()))
+
+		return player
+
 
 
 
@@ -64,7 +111,7 @@ class Glamour(Bard):
 		self.enthralling_performance = False
 		self.mantle_of_majesty = False
 		self.unbreakable_majesty = False
-		Bard.__init__(self)
+		super().__init__()
 
 	def use_of_enthralling_performance(self):
 		self.enthralling_performance = True
@@ -121,37 +168,52 @@ class Glamour(Bard):
 		return player
 
 	def list_glamour_options(self):
-		selection = 0
-		selection = int(input("What action are you counting?\n" + "[1]: Use Bardic Inspiration\n" + (
-			"[2]: Use Enthralling Performance\n" + "[3]: Use Mantle of Majesty\n" + "[4]: Use Unbreakable Majesty\n" + (
-				"[5]: Use Hit Dice\n" + "[6]: Change Level\n" + "[7]: Change Charisma\n" + "[8]: Exit\n"))))
+		selection = int(
+			input("What action are you counting?\n" + "[1]: Use Spell\n" + "[2]: Reset Spell Slots\n" + "[3]: Use Bardic Inspiration\n" +
+
+			"[4: Use Enthralling Performance\n" + "[5]: Reset Enthralling Performance" + "[5]: Use Mantle of Majesty\n" + "[6]: Use Unbreakable Majesty\n" +
+
+			"[7]: Use Hit Dice\n" + "[8]: Reset Hit Dice\n" + "[9]: Change Level\n" + "[10]: Change Charisma\n" + "[11]: Exit\n"))
 
 		if selection == 1:
+			self.use_cur_spell_slot()
+		if selection == 2:
+			self.set_spell_slots(self.get_level())
+		if selection == 3:
 			self.use_bardic_inspiration()
 			print(self.get_current_bardic_inspiration(), "Current Bardic Inspiration")
-		elif selection == 2:
+		if selection == 4:
+			self.reset_bardic_inspiration()
+		elif selection == 4:
 			self.use_enthralling_performance()
 			print(self.get_current_bardic_inspiration(), "Current Bardic Inspiration")
-		elif selection == 3:
-			self.use_mantle_of_majesty()
-			print(self.mantle_of_majesty)
-		elif selection == 4:
-			self.use_unbreakable_majesty()
-			print(self.unbreakable_majesty)
 		elif selection == 5:
+			print("Reset Enthralling Performance")
+			self.reset_enthralling_performance()
+		elif selection == 6:
+			self.use_mantle_of_majesty()
+		elif selection == 7:
+			self.reset_mantle_of_majesty()
+		elif selection == 8:
+			self.use_unbreakable_majesty()
+		elif selection == 9:
+			self.reset_unbreakable_majesty()
+		elif selection == 10:
 			dice_to_use = int(input("How many dice did Bard use?"))
 			self.set_hit_dice(dice_to_use)
-		elif selection == 6:
+		elif selection == 11:
+			self.reset_current_hit_dice()
+		elif selection == 12:
 			self.change_level_option()
-		elif selection == 7:
+		elif selection == 13:
 			self.charisma_option()
-		elif selection == 8:
+		elif selection == 14:
 			return 0
 
 class Swords(Bard):
 	def __init__(self):
 		self.blade_flourish = False
-		Bard.__init__(self)
+		super().__init__()
 
 	def get_blade_flourish(self):
 		return self.blade_flourish
@@ -183,24 +245,38 @@ class Swords(Bard):
 		return player
 
 	def list_swords_options(self):
-		selection = 0
-		selection = int(input("What actions are you counting?\n" + "[1]: Use Bardic Inspiration\n" + (
-			"[2]: Use Blade Flourish\n" + "[3]: Use Hit Dice\n" + "[4]: Change Level\n" + (
-				"[5]: Change Charisma\n" + "[6]: Exit\n"))))
+		selection = int(
+			input("What actions are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Reset Spell Slot\n" +
+
+			"[3]: Use Bardic Inspiration\n" + "[4]: Reset Bardic Inspiration\n" + "[5]: Use Blade Flourish\n" +
+
+			"[6]: Reset Blade Flourish\n" +  "[7]: Use Hit Dice\n" + "[8]: Reset Hit Dice"
+
+			+ "[8]: Change Level\n" + "[9]: Change Charisma\n" + "[10]: Exit\n"))
 
 		if selection == 1:
-			self.use_bardic_inspiration()
-			print("Used Bardic Inspiration")
+			self.use_cur_spell_slot()
 		if selection == 2:
-			self.use_blade_flourish()
+			self.set_spell_slots(self.get_level())
 		if selection == 3:
-			self.use_hit_dice()
+			self.use_bardic_inspiration()
 		if selection == 4:
-			self.change_level_option()
+			self.reset_bardic_inspiration()
 		if selection == 5:
-			self.charisma_option()
+			self.use_blade_flourish()
 		if selection == 6:
-			return 0
+			self.reset_blade_flourish()
+		if selection == 7:
+			self.use_hit_dice()
+		if selection == 8:
+			self.reset_current_hit_dice()
+		if selection == 9:
+			self.change_level_option()
+		if selection == 10:
+			self.charisma_option()
+		if selection == 11:
+			print("Leaving")
+			return
 
 
 class Whispers(Bard):
@@ -209,7 +285,7 @@ class Whispers(Bard):
 		self.words_of_terror = False
 		self.mantle_of_whispers = False
 		self.shadow_lore = False
-		Bard.__init__(self)
+		super().__init__()
 
 	def get_psychic_blades(self):
 		return self.psychic_blades
@@ -286,79 +362,64 @@ class Whispers(Bard):
 		self.set_shadow_lore(False)
 
 	def list_whispers_options(self):
-		selection = 0
-		selection = input("What action are you counting?\n" + "[1]: Use Bardic Inspiration\n" + (
+		selection = input("What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Reset Spells\n" +
 
-			"[2]: Use Psychic Blades\n" + "[3]: Use Words of Terror\n" + "[4]: Use Mantle of Whispers\n" + (
+			"[3]: Use Bardic Inspiration\n" + "[4]: Reset Bardic Inspiration\n" + "[5]: Use Psychic Blades\n" +
 
-				"[5]: Use Shadow Lore\n" + "[6]: Use Hit Dice\n" + "[7]: Change Level\n" + (
+			"[6]: Reset Psychic Blades\n" + "[7]: Use Words of Terror\n" + "[8]: Reset Words of Terror\n" +
 
-					"[8]: Change Charisma\n" + "[9]: Exit\n"))))
+			"[9]: Use Mantle of Whispers\n" + "[10]: Reset Mantle of Whispers\n" + "[11]: Use Shadow Lore\n" +
+
+			"[12]: Reset Shadow Lore\n" + "[13]: Use Hit Dice\n" + "[14]: Change Level\n" +
+
+			"[15]: Change Charisma\n" + "[16]: Exit\n")
 
 		if selection == 1:
+			self.use_cur_spell_slot()
+		if selection ==2:
+			self.set_spell_slots(self.get_level())
+		if selection == 3:
 			self.use_bardic_inspiration()
 			print(self.get_current_bardic_inspiration(), "Current Bardic Inspiration")
-		elif selection == 2:
+		elif selection == 4:
+			self.reset_bardic_inspiration()
+		elif selection == 5:
 			self.use_psychic_blades()
-			print(self.get_current_bardic_inspiration(), "Current Bardic Inspiration")
-		elif selection == 3:
+			print(self.get_psychic_blades(), "Current Psychic Blades")
+		elif selection == 6:
+			self.reset_psychic_blades()
+		elif selection == 7:
 			self.use_words_of_terror()
 			print(self.get_words_of_terror(), "Current Words of Terror")
-		elif selection == 4:
+		elif selection == 8:
+			self.reset_words_of_terror()
+		elif selection == 9:
 			self.use_mantle_of_whispers()
 			print(self.get_mantle_of_whispers())
-		elif selection == 5:
+		elif selection == 10:
+			self.reset_mantle_of_whispers()
+		elif selection == 11:
 			self.use_shadow_lore()
 			print(self.get_shadow_lore(), "Current Shadow Lore")
-		elif selection == 6:
+		elif selection == 12:
+			self.reset_shadow_lore()
+		elif selection == 13:
 			dice_to_use = int(input("How many dice did Bard use?"))
 			self.set_hit_dice(dice_to_use)
-		elif selection == 7:
+		elif selection == 14:
+			self.reset_current_hit_dice()
+		elif selection == 15:
 			self.change_level_option()
-		elif selection == 8:
+		elif selection == 16:
 			self.charisma_option()
-		elif selection == 9:
-			return 0
+		elif selection == 15:
+			print("Leaving")
+			return
 
 	def create_whispers_bard(self, name):
 		name = name
 		level = int(input("What level should this Bard be?"))
 		player = Whispers()
-		player.set_level()
-		player.set_charisma()
-		player.set_name(name)
-		player.set_spell_slots(level)
-		player.set_hit_dice(level)
-		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Bardic Inspiration:", (
-			player.get_current_bardic_inspiration(), "Charisma:", + player.get_charisma()))
-
-		return player
-
-class BlandBard(Bard):
-	def __init__(self):
-		Bard.__init__(self)
-
-	def list_blandbard_options(self):
-		selection = 0
-		selection = input("What actions are you counting?\n" + "[1]: Use Bardic Inspiration\n" + (
-			"[2]: Use Hit Dice\n" + "[3]: Change Level\n" + ("[4]: Change Charisma" + "[5]: Exit\n")))
-
-		if selection == 1:
-			self.use_bardic_inspiration()
-			print("Used Bardic Inspiration")
-		if selection == 2:
-			self.use_hit_dice()
-		if selection == 3:
-			self.change_level_option()
-		if selection == 4:
-			self.charisma_option()
-		if selection == 5:
-			return 0
-
-	def create_bland_bard(self, name):
-		name = name
-		level = int(input("What level should this Bard be?"))
-		player = BlandBard()
 		player.set_level()
 		player.set_charisma()
 		player.set_name(name)
@@ -387,9 +448,9 @@ def main_bard_making(name, dictionary):
 		p1 = p1.create_whispers_bard(name)
 		class_options = Whispers.list_whispers_options
 	else:
-		p1 = BlandBard()
-		p1 = p1.create_bland_bard(name)
-		class_options = BlandBard.list_blandbard_options
+		p1 = Bard()
+		p1 = p1.create_bard(name)
+		class_options = Bard.list_bard_options
 
 	bard_dict[f'{p1.get_name()}'] = {"character": p1, "subclass": player_subclass,
 					 "options": class_options}

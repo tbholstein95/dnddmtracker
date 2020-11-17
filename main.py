@@ -8,12 +8,13 @@ from Classes.subclasses.playerclasses.paladin import *
 from Classes.subclasses.playerclasses.ranger import *
 from Classes.subclasses.playerclasses.rogue import *
 from Classes.subclasses.playerclasses.sorcerer import *
+from Classes.subclasses.playerclasses.warlock import *
 from Classes.subclasses.playerclasses.wizard import *
 
 # VAR
 player_dictionary = {}
 
-
+##TODO create a making function or class to handle all of the player creations. Maybe factory?
 def main():
 	running = True
 	number_of_players = int(input("How many players are in your party?"))
@@ -42,6 +43,8 @@ def main():
 			main_rogue_making(player_name, player_dictionary)
 		if player_class == "Sorcerer":
 			main_sorcerer_making(player_name, player_dictionary)
+		if player_class == "Warlock":
+			main_warlock_making(player_name, player_dictionary)
 		if player_class == "Wizard":
 			main_wizard_making(player_name, player_dictionary)
 

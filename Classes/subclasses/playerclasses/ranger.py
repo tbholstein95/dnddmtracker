@@ -3,7 +3,7 @@ ranger_dict = {}
 
 class Ranger(HalfCaster):
 	def __init__(self):
-		HalfCaster.__init__(self)
+		super().__init__()
 
 	def list_ranger_options(self):
 		selection = int(
