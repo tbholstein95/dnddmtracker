@@ -6,7 +6,7 @@ class Rogue(PlayerCharacter):
 
 	def __init__(self):
 		self.stroke_of_luck = False
-		PlayerCharacter.__init__(self)
+		super().__init__()
 
 	def get_stroke_of_luck(self):
 		return self.stroke_of_luck
@@ -59,7 +59,7 @@ class Rogue(PlayerCharacter):
 		return player
 
 
-
+#TODO Make sure this multiple inheritance is correct
 class Arcane(Rogue, HalfCaster):
 	def __init__(self):
 		self.spell_thief = False

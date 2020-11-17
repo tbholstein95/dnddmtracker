@@ -10,7 +10,7 @@ class Cleric(FullCaster):
 		self.divine_intervention = False
 		self.divine_intervention_seven_days = False
 		self.divine_intervention_day_timer = 7
-		FullCaster.__init__(self)
+		super().__init__()
 
 	def get_current_channel_divinity(self):
 		return self.current_channel_divinity
@@ -111,7 +111,7 @@ class Knowledge(Cleric):
 
 	def __init__(self):
 		self.visions_of_the_past = False
-		Cleric.__init__(self)
+		super().__init__()
 
 	def set_visions_of_the_past(self, truefalse):
 		self.visions_of_the_past = truefalse
@@ -175,7 +175,7 @@ class Light(Cleric):
 		self.wisdom = 0
 		self.max_warding_flare = 0
 		self.cur_warding_flare = 0
-		Cleric.__init__(self)
+		super().__init__()
 
 	def get_wisdom(self):
 		return self.wisdom
@@ -258,7 +258,7 @@ class Tempest(Cleric):
 		self.max_wrath_of_the_storm = 0
 		self.cur_wrath_of_the_storm = 0
 		self.wisdom = 0
-		Cleric.__init__(self)
+		super().__init__()
 
 	def get_wisdom(self):
 		return self.wisdom
@@ -345,7 +345,7 @@ class War(Cleric):
 		self.max_bonus_attack = 0
 		self.cur_bonus_attack = 0
 		self.wisdom = 0
-		Cleric.__init__(self)
+		super().__init__()
 
 	def get_wisdom(self):
 		return self.wisdom
@@ -393,7 +393,6 @@ class War(Cleric):
 		return player
 
 	def list_war_options(self):
-		selection = 0
 		selection = int(input("What action are you counting?\n" + "[1]: Use Channel Divinity\n" +
 
 			"[2]: Reset Channel Divinity\n" + "[3]: Use Divine Intervention\n" + "[4]: Reset Divine Intervention\n" +
@@ -433,7 +432,7 @@ class Grave(Cleric):
 		self.max_sentinel_at_deaths_door = 0
 		self.cur_sentinel_at_deaths_door = 0
 		self.wisdom = 0
-		Cleric.__init__(self)
+		super().__init__()
 
 	def get_wisdom(self):
 		return self.wisdom

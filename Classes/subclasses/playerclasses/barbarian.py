@@ -9,7 +9,7 @@ class Barbarian(PlayerCharacter):
 		self.rage = 0
 		self.is_rage = False
 		self.reckless_strikes = False
-		PlayerCharacter.__init__(self)
+		super().__init__()
 
 	def get_rage(self):
 		return self.rage
@@ -100,7 +100,7 @@ class Berserker(Barbarian):
 
 	def __init__(self):
 		self.frenzy = 0
-		Barbarian.__init__(self)
+		super().__init__()
 
 	def use_frenzy(self):
 		self.frenzy += 1
@@ -160,7 +160,7 @@ class AncestralGuardian(Barbarian):
 
 	def __init__(self):
 		self.consult_spirits = False
-		Barbarian.__init__(self)
+		super().__init__()
 
 	def get_consult_spirits(self):
 		return self.consult_spirits
@@ -220,7 +220,7 @@ class Zealot(Barbarian):
 	def __init__(self):
 		self.fanatical_focus = False
 		self.zealous_presence = False
-		Barbarian.__init__(self)
+		super().__init__()
 
 	def get_fanatical_focus(self):
 		return self.fanatical_focus

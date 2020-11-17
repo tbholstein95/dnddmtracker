@@ -7,9 +7,7 @@ class Warlock(PlayerCharacter):
 		self.current_slots = [0] * 6
 		self.mystic_arcanum = False
 		self.eldritch_master = False
-
-
-		PlayerCharacter.__init__(self)
+		super().__init__()
 
 	def set_max_spell_slots(self, level):
 		if level >= 1:
@@ -139,7 +137,7 @@ class Archfey(Warlock):
 		self.fey_presence = False
 		self.misty_escape = False
 		self.dark_delirium = False
-		Warlock.__init__(self)
+		super().__init__()
 
 	def get_fey_presence(self):
 		return self.fey_presence
@@ -250,7 +248,7 @@ class Fiend(Warlock):
 	def __init__(self):
 		self.dark_ones_own_luck = False
 		self.hurl_through_hell = False
-		Warlock.__init__(self)
+		super().__init__()
 
 	def get_dark_ones_own_luck(self):
 		return self.get_dark_ones_own_luck()
@@ -343,7 +341,7 @@ class Fiend(Warlock):
 class Old(Warlock):
 	def __init__(self):
 		self.entropic_ward = False
-		Warlock.__init__(self)
+		super().__init__()
 
 	def get_entropic_ward(self):
 		return self.entropic_ward

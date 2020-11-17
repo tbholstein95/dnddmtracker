@@ -9,7 +9,7 @@ class Bard(FullCaster):
 		self.counter_charm = False
 		self.max_bardic_inspiration = 0
 		self.current_bardic_inspiration = 0
-		FullCaster.__init__(self)
+		super().__init__()
 
 	def get_max_bardic_inspiration(self):
 		return self.max_bardic_inspiration
@@ -111,7 +111,7 @@ class Glamour(Bard):
 		self.enthralling_performance = False
 		self.mantle_of_majesty = False
 		self.unbreakable_majesty = False
-		Bard.__init__(self)
+		super().__init__()
 
 	def use_of_enthralling_performance(self):
 		self.enthralling_performance = True
@@ -213,7 +213,7 @@ class Glamour(Bard):
 class Swords(Bard):
 	def __init__(self):
 		self.blade_flourish = False
-		Bard.__init__(self)
+		super().__init__()
 
 	def get_blade_flourish(self):
 		return self.blade_flourish
@@ -285,7 +285,7 @@ class Whispers(Bard):
 		self.words_of_terror = False
 		self.mantle_of_whispers = False
 		self.shadow_lore = False
-		Bard.__init__(self)
+		super().__init__()
 
 	def get_psychic_blades(self):
 		return self.psychic_blades

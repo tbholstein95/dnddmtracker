@@ -9,14 +9,13 @@ class Fighter(PlayerCharacter):
 		self.action_surge = False
 		self.max_indomitable = 0
 		self.current_indomitable = 0
-		PlayerCharacter.__init__(self)
+		super().__init__()
 
 	def set_second_wind(self, truefalse):
 		self.second_wind = truefalse
 
 	def set_action_surge(self, truefalse):
 		self.action_surge = truefalse
-
 
 	def set_max_indomitable(self):
 		level = self.get_level()
@@ -116,7 +115,7 @@ class BattleMaster(Fighter):
 	def __init__(self):
 		self.max_superiority_dice = 0
 		self.current_superiority_dice = 0
-		Fighter.__init__(self)
+		super().__init__()
 
 	def set_max_superiority_dice(self):
 		level = self.get_level()
@@ -162,7 +161,6 @@ class BattleMaster(Fighter):
 		return player
 
 	def list_battlemaster_options(self):
-		selection = 0
 		selection = int(input("What action are you counting?\n" + "[1]: Use Second Wind\n" + "[2]: Reset Second Wind \n " + (
 			"[3]: Use Action Surge\n " + "[4]: Reset Action Surge" + "[5]: Use Indomitable" + "[6]: Reset Indomitable" +
 			"[7]: Use Hit Dice \n " + "[8]: Reset Hit Dice" + "[9]: Change Level\n" + "[10]: Exit\n")))
@@ -191,7 +189,7 @@ class BattleMaster(Fighter):
 		elif selection == 10:
 			return 0
 
-
+#TODO Make sure this multiple inheritance is correct
 class Eldritch(Fighter, HalfCaster):
 	def __init__(self):
 		HalfCaster.__init__(self)

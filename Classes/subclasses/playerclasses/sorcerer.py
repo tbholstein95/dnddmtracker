@@ -6,7 +6,7 @@ class Sorcerer(FullCaster):
 	def __init__(self):
 		self.max_sorcery_points = 0
 		self.current_sorcery_points = 0
-		FullCaster.__init__(self)
+		super().__init__()
 
 	def set_max_sorcery_points(self, level):
 		if level > 1:
@@ -112,6 +112,7 @@ class Sorcerer(FullCaster):
 
 			"[15]: Exit\n"))))
 
+		#TODO: Fix use spell slot
 		if selection == 1:
 			self.use_spell_slot()
 		if selection == 2:
@@ -161,7 +162,7 @@ class Sorcerer(FullCaster):
 
 class Draconic(Sorcerer):
 	def __init__(self):
-		Sorcerer.__init__(self)
+		super().__init__()
 
 	def elemental_affinity_resistance(self):
 		if self.level >= 6:
@@ -189,7 +190,7 @@ class Draconic(Sorcerer):
 			"[12]: Use Sorcerous Restoration\n" + "[13]: Use Elemental Affinity" + "[14]: Use Dragonic Presence" +
 
 			"[15]: Use Hit Dice\n" + "[16]: Change Level\n" + "[17]: Exit\n")))
-
+		#TODO: Fix use spell slot
 		if selection == 1:
 			self.use_spell_slot()
 		elif selection == 2:
@@ -245,7 +246,7 @@ class Draconic(Sorcerer):
 class WildMagic(Sorcerer):
 	def __init__(self):
 		self.tides_of_chaos = False
-		Sorcerer.__init__(self)
+		super().__init__()
 
 	def use_tides_of_chaos(self):
 		self.use_sorcery_point(1)
@@ -280,6 +281,7 @@ class WildMagic(Sorcerer):
 
 			"[17]: Use Hit Dice\n" + "[18]: Change Level\n" + "[19]: Exit\n")))
 
+		#TODO: Fix use spell slot
 		if selection == 1:
 			self.use_spell_slot()
 		elif selection == 2:

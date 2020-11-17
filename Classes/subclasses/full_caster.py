@@ -26,7 +26,7 @@ class FullCaster(PlayerCharacter):
 		self.max_slots = [0] * 21
 		self.current_slots = [0] * 21
 
-		PlayerCharacter.__init__(self)
+		super().__init__()
 
 	def set_max_list_spell_slots(self, level):
 		if level == 1:

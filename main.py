@@ -14,7 +14,7 @@ from Classes.subclasses.playerclasses.wizard import *
 # VAR
 player_dictionary = {}
 
-
+##TODO create a making function or class to handle all of the player creations. Maybe factory?
 def main():
 	running = True
 	number_of_players = int(input("How many players are in your party?"))
