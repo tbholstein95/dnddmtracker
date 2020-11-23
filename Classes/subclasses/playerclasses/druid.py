@@ -69,9 +69,9 @@ class Druid(FullCaster):
 		player = Druid()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_list_spell_slots(self.get_level())
+		player.set_max_list_spell_slots(player.get_level())
 		player.set_current_list_spell_slots()
-		player.set_hit_dice(self.get_level())
+		player.set_hit_dice(player.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level())
 		return player
 
@@ -116,9 +116,9 @@ class Land(Druid):
 		player = Land()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_list_spell_slots(self.get_level())
+		player.set_max_list_spell_slots(player.get_level())
 		player.set_current_list_spell_slots()
-		player.set_hit_dice(self.get_level())
+		player.set_hit_dice(player.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level())
 
 		return player
@@ -179,9 +179,9 @@ class Moon(Druid):
 		player = Moon()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_list_spell_slots(self.get_level())
+		player.set_max_list_spell_slots(player.get_level())
 		player.set_current_list_spell_slots()
-		player.set_hit_dice(self.get_level())
+		player.set_hit_dice(player.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level())
 
 		return player
@@ -296,7 +296,7 @@ class Dream(Druid):
 		player = Dream()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_list_spell_slots(self.get_level())
+		player.set_max_list_spell_slots(player.get_level())
 		player.set_current_list_spell_slots()
 		player.set_max_hidden_paths()
 		player.set_max_summer_court_dice()
@@ -305,7 +305,7 @@ class Dream(Druid):
 		player.set_wisdom()
 		player.set_max_hidden_paths()
 		player.set_current_hidden_paths()
-		player.set_hit_dice(self.get_level())
+		player.set_hit_dice(player.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level())
 
 		return player
@@ -390,9 +390,9 @@ class Shepherd(Druid):
 		player = Shepherd()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_list_spell_slots(self.get_level())
+		player.set_max_list_spell_slots(player.get_level())
 		player.set_current_list_spell_slots()
-		player.set_hit_dice(self.get_level())
+		player.set_hit_dice(player.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level())
 
 		return player

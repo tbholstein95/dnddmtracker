@@ -62,6 +62,7 @@ class Bard(FullCaster):
 		self.set_max_bardic_inspiration()
 		self.set_cur_bardic_inspiration(self.get_charisma)
 
+
 	def list_bard_options(self):
 		selection = int(
 			input("What actions are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Reset Spells\n" +
@@ -92,12 +93,12 @@ class Bard(FullCaster):
 	def create_bard(self, name):
 		name = name
 		player = Bard()
+		player.set_name(name)
 		player.set_level()
 		player.set_charisma()
-		player.set_name(name)
-		player.set_max_list_spell_slots(self.get_level())
+		player.set_max_list_spell_slots(player.get_level())
 		player.set_current_list_spell_slots()
-		player.set_hit_dice(self.get_level())
+		player.set_hit_dice(player.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Bardic Inspiration:", (
 			player.get_current_bardic_inspiration(), "Charisma:", + player.get_charisma()))
 
@@ -157,11 +158,11 @@ class Glamour(Bard):
 		player.set_level()
 		player.set_charisma()
 		player.set_name(name)
-		player.set_max_list_spell_slots(self.get_level())
+		player.set_max_list_spell_slots(player.get_level())
 		player.set_current_list_spell_slots()
 		player.set_max_bardic_inspiration()
 		player.set_cur_bardic_inspiration(player.get_charisma())
-		player.set_hit_dice(self.get_level())
+		player.set_hit_dice(player.get_level())
 
 		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Bardic Inspiration:", (
 			player.get_current_bardic_inspiration(), "Charisma:", + player.get_charisma()))
@@ -238,11 +239,11 @@ class Swords(Bard):
 		player.set_level()
 		player.set_charisma()
 		player.set_name(name)
-		player.set_max_list_spell_slots(self.get_level())
+		player.set_max_list_spell_slots(player.get_level())
 		player.set_current_list_spell_slots()
 		player.set_max_bardic_inspiration()
 		player.set_cur_bardic_inspiration(player.get_charisma())
-		player.set_hit_dice(self.get_level())
+		player.set_hit_dice(player.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Bardic Inspiration:", (
 			player.get_current_bardic_inspiration(), "Charisma:", + player.get_charisma()))
 
@@ -428,9 +429,9 @@ class Whispers(Bard):
 		player.set_level()
 		player.set_charisma()
 		player.set_name(name)
-		player.set_max_list_spell_slots(self.get_level())
+		player.set_max_list_spell_slots(player.get_level())
 		player.set_current_list_spell_slots()
-		player.set_hit_dice(self.get_level())
+		player.set_hit_dice(player.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Bardic Inspiration:", (
 			player.get_current_bardic_inspiration(), "Charisma:", + player.get_charisma()))
 

@@ -59,7 +59,6 @@ class Rogue(PlayerCharacter):
 		return player
 
 
-#TODO Make sure this multiple inheritance is correct
 class Arcane(Rogue, HalfCaster):
 	def __init__(self):
 		self.spell_thief = False
@@ -111,13 +110,12 @@ class Arcane(Rogue, HalfCaster):
 
 	def create_arcane_rogue(self, name):
 		name = name
-		level = int(input("What level is this Rogue?\n"))
 		player = Arcane()
 		player.set_level()
-		player.set_hit_dice(level)
+		player.set_hit_dice(player.get_level())
 		player.set_name(name)
-		player.set_max_spell_slots(level)
-		player.set_current_spell_slots(level)
+		player.set_max_spell_slots(player.get_level())
+		player.set_current_spell_slots(player.get_level())
 
 		print('Name:' + player.get_name(), ' Level:', player.get_level(), ' Hit Dice:', player.get_hit_dice())
 

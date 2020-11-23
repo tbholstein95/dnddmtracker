@@ -1,4 +1,5 @@
 from Classes.subclasses.full_caster import *
+
 cleric_dict = {}
 
 
@@ -24,7 +25,7 @@ class Cleric(FullCaster):
 			self.current_channel_divinity = 2
 		if level <= 18:
 			self.channel_divinity_max = 3
-			self.current_channel_divinity =3
+			self.current_channel_divinity = 3
 
 	def use_channel_divinity(self):
 		if self.get_current_channel_divinity() > 0:
@@ -64,6 +65,7 @@ class Cleric(FullCaster):
 				self.set_divine_intervention(True)
 				if self.get_divine_intervention() == 0:
 					self.set_divine_intervention(False)
+
 	def remove_divine_intervention_day(self):
 		self.divine_intervention_day_timer -= 1
 
@@ -72,21 +74,23 @@ class Cleric(FullCaster):
 		player = Cleric()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_list_spell_slots(self.get_level())
+		player.set_max_list_spell_slots(player.get_level())
 		player.set_current_list_spell_slots()
-		player.set_hit_dice(self.get_level())
-		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Slots" + player.get_cur_spell_slot(self.get_level()))
+		player.set_hit_dice(player.get_level())
+		print("Name:" + player.get_name(), "Level:", + player.get_level(),
+		      "Slots" + player.get_cur_spell_slot(player.get_level()))
 
 		return player
 
 	def list_cleric_options(self):
-		selection = int(input("What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Refresh Spells\n" +
+		selection = int(
+			input("What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Refresh Spells\n" +
 
-			"[3]: Use Channel Divinity\n" + "[4]: Reset Channel Divinity\n" + "[5]: Use Divine Intervention\n" +
+			      "[3]: Use Channel Divinity\n" + "[4]: Reset Channel Divinity\n" + "[5]: Use Divine Intervention\n" +
 
-			"[6]: Reset Divine Intervention\n" + "[7]: Use Hit Dice\n" + "[8]: Reset Hit Dice\n" +
+			      "[6]: Reset Divine Intervention\n" + "[7]: Use Hit Dice\n" + "[8]: Reset Hit Dice\n" +
 
-			"[9]: Change Level\n" + "[10]: Exit\n"))
+			      "[9]: Change Level\n" + "[10]: Exit\n"))
 
 		if selection == 1:
 			self.use_cur_spell_slot()
@@ -136,22 +140,23 @@ class Knowledge(Cleric):
 		player = Knowledge()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_list_spell_slots(self.get_level())
+		player.set_max_list_spell_slots(player.get_level())
 		player.set_current_list_spell_slots()
-		player.set_hit_dice(self.get_level())
+		player.set_hit_dice(player.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level())
 		return player
 
 	def list_knowledge_options(self):
 		selection = int(
 
-			input("What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Refresh Spells\n" + "[3]: Use Channel Divinity\n" +
+			input(
+				"What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Refresh Spells\n" + "[3]: Use Channel Divinity\n" +
 
-			"[4]: Reset Channel Divinity\n" + "[5]: Use Divine Intervention\n" + "[6]:Reset Divine Intervention" +
+				"[4]: Reset Channel Divinity\n" + "[5]: Use Divine Intervention\n" + "[6]:Reset Divine Intervention" +
 
-			"[7]: Use Visions of the Past\n" + "[8]: Reset Visions of the Past" + "[9]: Use Hit Dice\n" +
+				"[7]: Use Visions of the Past\n" + "[8]: Reset Visions of the Past" + "[9]: Use Hit Dice\n" +
 
-			"[10]: Reset Hit Dice" + "[11]: Change Level\n" + "[12]: Exit\n"))
+				"[10]: Reset Hit Dice" + "[11]: Change Level\n" + "[12]: Exit\n"))
 
 		if selection == 1:
 			self.use_cur_spell_slot()
@@ -220,26 +225,28 @@ class Light(Cleric):
 		player = Light()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_list_spell_slots(self.get_level())
+		player.set_max_list_spell_slots(player.get_level())
 		player.set_current_list_spell_slots()
 		player.set_wisdom()
 		player.set_max_warding_flare()
 		player.reset_current_warding_flare()
-		player.set_hit_dice(self.get_level())
-		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Wisdom:", + player.get_wisdom(), "Warding:", (
-			+ player.get_max_warding_flare(), "Slots" + player.get_cur_spell_slot(self.get_level())))
+		player.set_hit_dice(player.get_level())
+		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Wisdom:", + player.get_wisdom(),
+
+			"Warding:", + player.get_max_warding_flare(), "Slots" + player.get_cur_spell_slot(player.get_level()))
 
 		return player
 
 	def list_light_options(self):
 		selection = int(
-			input("What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Refresh Spells\n" + "[1]: Use Channel Divinity\n" +
+			input(
+				"What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Refresh Spells\n" + "[1]: Use Channel Divinity\n" +
 
-			"[2]: Reset Channel Divinity\n" + "[3]: Use Divine Intervention\n" + "[4]: Reset Divine Intervention\n" +
+				"[2]: Reset Channel Divinity\n" + "[3]: Use Divine Intervention\n" + "[4]: Reset Divine Intervention\n" +
 
-			"[5]: Use Warding Flare\n" + "[6]: Reset Warding Flare\n" + "[7]: Use Hit Dice\n" + "[8]: Reset Hit Dice\n" +
+				"[5]: Use Warding Flare\n" + "[6]: Reset Warding Flare\n" + "[7]: Use Hit Dice\n" + "[8]: Reset Hit Dice\n" +
 
-			"[8]: Change Level\n" + "[9]: Exit\n"))
+				"[8]: Change Level\n" + "[9]: Exit\n"))
 
 		if selection == 1:
 			self.use_cur_spell_slot()
@@ -265,6 +272,7 @@ class Light(Cleric):
 		elif selection == 11:
 			print("Leaving")
 			return
+
 
 class Tempest(Cleric):
 
@@ -307,27 +315,26 @@ class Tempest(Cleric):
 		player = Tempest()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_list_spell_slots(self.get_level())
+		player.set_max_list_spell_slots(player.get_level())
 		player.set_current_list_spell_slots()
 		player.set_wisdom()
 		player.set_max_wrath_of_the_storm()
 		player.reset_cur_wrath_of_the_storm()
-		player.set_hit_dice(self.get_level())
-		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Wisdom:", + player.get_wisdom(), "Warding:", (
-			+ player.get_max_wrath_of_the_storm(), "Slots" + player.get_cur_spell_slot(self.get_level())))
+		player.set_hit_dice(player.get_level())
+		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Wisdom:", + player.get_wisdom(),
+		      "Warding:", + player.get_max_wrath_of_the_storm(), "Slots" + player.get_cur_spell_slot(player.get_level()))
 
 		return player
-
 
 	def list_tempest_options(self):
 		selection = int(
 			input("What action are you counting?\n" + "[1]: Use Spell\n" + "[2]: Reset Spell\n" +
 
-			"[1]: Use Channel Divinity\n" +"[2]: Reset Channel Divinity\n" + "[3]: Use Divine Intervention\n" +
+			      "[1]: Use Channel Divinity\n" + "[2]: Reset Channel Divinity\n" + "[3]: Use Divine Intervention\n" +
 
-			"[4]: Reset Divine Intervention\n" + "[5]: Wrath of the Storm\n" + "[6]: Reset Wrath of the Storm\n" +
+			      "[4]: Reset Divine Intervention\n" + "[5]: Wrath of the Storm\n" + "[6]: Reset Wrath of the Storm\n" +
 
-			"[7]: Use Hit Dice\n" + "[8]: Reset Hit Dice\n" + "[9]: Change Level\n" +"[10]: Exit\n"))
+			      "[7]: Use Hit Dice\n" + "[8]: Reset Hit Dice\n" + "[9]: Change Level\n" + "[10]: Exit\n"))
 
 		if selection == 1:
 			self.use_cur_spell_slot()
@@ -355,6 +362,7 @@ class Tempest(Cleric):
 		elif selection == 12:
 			print("Leaving")
 			return
+
 
 class War(Cleric):
 
@@ -397,20 +405,21 @@ class War(Cleric):
 		player = War()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_list_spell_slots(self.get_level())
+		player.set_max_list_spell_slots(player.get_level())
 		player.set_current_list_spell_slots()
 		player.set_wisdom()
 		player.set_max_bonus_attack()
 		player.reset_cur_bonus_attack()
-		player.set_hit_dice(self.get_level())
+		player.set_hit_dice(player.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Wisdom:", + player.get_wisdom(),
-		      "Warding:", (
-			      + player.get_max_bonus_attack(), "Slots" + player.get_cur_spell_slot(self.get_level())))
+
+		      "Warding:", (+ player.get_max_bonus_attack(), "Slots" + player.get_cur_spell_slot(self.get_level())))
 
 		return player
 
 	def list_war_options(self):
-		selection = int(input("What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Reset Spells\n" + "[3]: Use Channel Divinity\n" +
+		selection = int(input(
+			"What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Reset Spells\n" + "[3]: Use Channel Divinity\n" +
 
 			"[4]: Reset Channel Divinity\n" + "[5]: Use Divine Intervention\n" + "[6]: Reset Divine Intervention\n" +
 
@@ -444,6 +453,7 @@ class War(Cleric):
 		elif selection == 12:
 			print("Leaving")
 			return
+
 
 class Grave(Cleric):
 
@@ -496,6 +506,7 @@ class Grave(Cleric):
 			return
 		else:
 			self.cur_eyes_of_the_grave -= 1
+
 	def use_sentinel_at_deaths_door(self):
 		if self.get_cur_sentinel_at_deaths_door() == 0:
 			print("Not enough Warding Flares left")
@@ -518,21 +529,23 @@ class Grave(Cleric):
 		player.set_hit_dice(self.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Wisdom:", + player.get_wisdom(), (
 			"Eyes of the Grave:", + player.get_max_eyes_of_the_grave(), (
-				"Sentinel:", + player.get_max_sentinel_at_deaths_door(), "Slots" + player.get_cur_spell_slot(self.get_level()))))
+				"Sentinel:", + player.get_max_sentinel_at_deaths_door(),
+				"Slots" + player.get_cur_spell_slot(self.get_level()))))
 
 		return player
 
 	def list_grave_options(self):
 		selection = int(
-			input("What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Reset Spells\n" + "[3]: Use Channel Divinity\n" +
+			input(
+				"What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Reset Spells\n" + "[3]: Use Channel Divinity\n" +
 
-			"[4]: Reset Channel Divinity\n" + "[5]: Use Divine Intervention\n" + "[6]: Reset Divine Intervention\n" +
+				"[4]: Reset Channel Divinity\n" + "[5]: Use Divine Intervention\n" + "[6]: Reset Divine Intervention\n" +
 
-			"[7]: Use Sentinel at Deaths Door\n" + "[8]: Reset Sentinel at Death's Door\n" +
+				"[7]: Use Sentinel at Deaths Door\n" + "[8]: Reset Sentinel at Death's Door\n" +
 
-			"[9]: Use Eyes of the Grave\n" + "[10] Reset Eyes of the Grave\n" + "[11]: Use Hit Dice\n" +
+				"[9]: Use Eyes of the Grave\n" + "[10] Reset Eyes of the Grave\n" + "[11]: Use Hit Dice\n" +
 
-			"[12]: Reset Hit Dice\n" + "[13]: Change Level\n" + "[14]: Exit\n"))
+				"[12]: Reset Hit Dice\n" + "[13]: Change Level\n" + "[14]: Exit\n"))
 
 		if selection == 1:
 			self.use_cur_spell_slot()
@@ -565,6 +578,7 @@ class Grave(Cleric):
 			print("Leaving")
 			return
 
+
 def main_cleric_making(name, dictionary):
 	name = name
 	player_subclass = input("What is their subclass?")
@@ -594,8 +608,6 @@ def main_cleric_making(name, dictionary):
 		p1 = p1.create_cleric(name)
 		class_options = Cleric.list_cleric_options
 
-	cleric_dict[f'{p1.get_name()}'] = {"character": p1, "subclass": player_subclass,
-					 "options": class_options}
+	cleric_dict[f'{p1.get_name()}'] = {"character": p1, "subclass": player_subclass, "options": class_options}
 
-	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass,
-				 "options": class_options}
+	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass, "options": class_options}

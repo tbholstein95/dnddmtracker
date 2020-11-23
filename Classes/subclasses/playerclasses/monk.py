@@ -1,6 +1,7 @@
 from Classes.playercharacter import *
 monk_dict = {}
 
+
 class Monk(PlayerCharacter):
 
 	def __init__(self):
@@ -13,7 +14,7 @@ class Monk(PlayerCharacter):
 		if level > 1:
 			self.max_ki_points = level
 
-	def set_current_ki_points(self,amount):
+	def set_current_ki_points(self, amount):
 		self.current_ki_points = amount
 
 	def get_current_ki_points(self):
@@ -26,7 +27,7 @@ class Monk(PlayerCharacter):
 		self.current_ki_points = self.max_ki_points
 		print("Ki points restored to max")
 
-	def restore_ki_points(self,amount):
+	def restore_ki_points(self, amount):
 		self.set_current_ki_points(self.get_current_ki_points() + amount)
 
 	def use_empty_body(self):
@@ -54,7 +55,7 @@ class Monk(PlayerCharacter):
 		player.set_hit_dice(level)
 		player.set_name(name)
 		player.set_max_ki_points(level)
-		player.set_current_ki_points(self.get_max_ki_points())
+		player.set_current_ki_points(player.get_max_ki_points())
 		print('Name:' + player.get_name(), ' Level:', player.get_level(), ' Hit Dice:', player.get_hit_dice(),)
 
 		return player
@@ -83,6 +84,7 @@ class Monk(PlayerCharacter):
 			self.reset_current_ki_points()
 		elif selection == 8:
 			return 0
+
 
 class OpenHand(Monk):
 
@@ -119,9 +121,13 @@ class OpenHand(Monk):
 		return player
 
 	def list_open_hand_options(self):
-		selection = int(input("What action are you counting?\n" + "[1]: Use Ki Point \n " + "[2]: Restore Ki \n " + (
-			"[3]: Use Empty Body \n " + "[4]: Use Quivering Palm" +"[5]: Use Wholeness" + "[6]: Use Hit Dice \n " + "[7]: Change Level\n" + (
-				"[8]: Reset Hit Dice" + "[9]:Reset Ki" + "[10]: Exit\n"))))
+		selection = int(
+			input("What action are you counting?\n" + "[1]: Use Ki Point \n " + "[2]: Restore Ki \n " +
+
+			"[3]: Use Empty Body \n " + "[4]: Use Quivering Palm" +"[5]: Use Wholeness" +
+
+			"[6]: Use Hit Dice\n" + "[7]: Change Level\n" + "[8]: Reset Hit Dice" + "[9]:Reset Ki" + "[10]: Exit\n"))
+
 		if selection == 1:
 			self.use_ki_point()
 		elif selection == 2:
@@ -177,16 +183,19 @@ class FourElements(Monk):
 		player.set_hit_dice(level)
 		player.set_name(name)
 		player.set_max_ki_points(level)
-		player.set_current_ki_points(self.get_max_ki_points())
+		player.set_current_ki_points(player.get_max_ki_points())
 		print('Name:' + player.get_name(), ' Level:', player.get_level(), ' Hit Dice:', player.get_hit_dice(),)
 
 		return player
 
 	def list_four_elements_options(self):
 		selection = 0
-		selection = int(input("What action are you counting?\n" + "[1]: Use Ki Point \n " + "[2]: Restore Ki \n " + (
-			"[3]: Use Empty Body \n " + "[4]: Use Quivering Palm" + "[5]: Use Hit Dice \n " + "[6]: Change Level\n" + (
-				"[7]: Reset Hit Dice" + "[8]:Reset Ki" + "[9]: Exit\n"))))
+		selection = int(input("What action are you counting?\n" + "[1]: Use Ki Point\n" + "[2]: Restore Ki\n" +
+
+				"[3]: Use Empty Body \n " + "[4]: Use Quivering Palm" + "[5]: Use Hit Dice \n " + "[6]: Change Level\n" +
+
+				"[7]: Reset Hit Dice" + "[8]:Reset Ki" + "[9]: Exit\n"))
+
 		if selection == 1:
 			self.use_ki_point()
 		elif selection == 2:

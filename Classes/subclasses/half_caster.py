@@ -3,19 +3,6 @@ from Classes.playercharacter import *
 
 class HalfCaster(PlayerCharacter):
 	def __init__(self):
-		self.max_level_one_spell_slots = 0
-		self.max_level_two_spell_slots = 0
-		self.max_level_three_spell_slots = 0
-		self.max_level_four_spell_slots = 0
-		self.max_level_five_spell_slots = 0
-
-		self.cur_level_one_spell_slots = 0
-		self.cur_level_two_spell_slots = 0
-		self.cur_level_three_spell_slots = 0
-		self.cur_level_four_spell_slots = 0
-		self.cur_level_five_spell_slots = 0
-
-
 		self.max_slots = [0] * 21
 		self.current_slots = [0] * 21
 		super().__init__()
@@ -45,6 +32,7 @@ class HalfCaster(PlayerCharacter):
 			self.max_slots[5] = 1
 		if level >= 19:
 			self.max_slots[5] = 2
+		print(self.max_slots)
 
 	def get_max_slot_int(self, level):
 		return int(self.max_slots[level])
