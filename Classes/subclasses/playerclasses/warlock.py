@@ -1,6 +1,7 @@
 from Classes.playercharacter import *
 warlock_dict = {}
 
+
 class Warlock(PlayerCharacter):
 	def __init__(self):
 		self.max_slots = [0] * 6
@@ -55,7 +56,6 @@ class Warlock(PlayerCharacter):
 			print("Used spell slot")
 		if not self.check_spell(spell_level):
 			print("Not enough slots left")
-
 
 	def check_spell(self, level):
 		if self.current_slots[level] > 0:
@@ -127,10 +127,10 @@ class Warlock(PlayerCharacter):
 		player.set_max_spell_slots(level)
 		player.set_current_spell_slots()
 		player.set_hit_dice(level)
-		print("Name:" + player.get_name(), "Level:", + player.get_level(),
-		      "Slots" + player.max_slots)
+		print("Name:" + player.get_name(), "Level:", + player.get_level())
 
 		return player
+
 
 class Archfey(Warlock):
 	def __init__(self):
@@ -141,8 +141,10 @@ class Archfey(Warlock):
 
 	def get_fey_presence(self):
 		return self.fey_presence
+
 	def get_misty_escape(self):
 		return self.misty_escape
+
 	def get_dark_delirium(self):
 		return self.dark_delirium
 
@@ -153,6 +155,7 @@ class Archfey(Warlock):
 		else:
 			print("Already used Fey Presence this short/long rest")
 			return
+
 	def use_misty_escape(self):
 		if not self.get_misty_escape():
 			print("Used Misty Escape")
@@ -160,6 +163,7 @@ class Archfey(Warlock):
 		else:
 			print("Already used Misty Escape this short/long rest")
 			return
+
 	def use_dark_delirium(self):
 		if not self.get_dark_delirium():
 			print("Used Dark Delirium")
@@ -173,12 +177,14 @@ class Archfey(Warlock):
 			self.fey_presence = False
 		else:
 			print("Can still use Fey Presence")
+
 	def reset_misty_escape(self):
 		if self.get_misty_escape():
 			print("Reset Misty Escape")
 			self.misty_escape = False
 		else:
 			print("Can still use Misty Escape")
+
 	def reset_dark_delirium(self):
 		if self.get_dark_delirium():
 			print("Reset Dark Delirium")
@@ -232,15 +238,13 @@ class Archfey(Warlock):
 
 	def create_archfey_warlock(self, name):
 		name = name
-		level = int(input("What level is this Wizard?"))
 		player = Archfey()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_spell_slots(level)
+		player.set_max_spell_slots(player.get_level())
 		player.set_current_spell_slots()
-		player.set_hit_dice(level)
-		print("Name:" + player.get_name(), "Level:", + player.get_level(),
-		      "Slots" + player.max_slots)
+		player.set_hit_dice(player.get_level())
+		print("Name:" + player.get_name(), "Level:", + player.get_level())
 
 		return player
 
@@ -252,6 +256,7 @@ class Fiend(Warlock):
 
 	def get_dark_ones_own_luck(self):
 		return self.get_dark_ones_own_luck()
+
 	def get_hurl_through_hell(self):
 		return self.hurl_through_hell
 
@@ -326,15 +331,13 @@ class Fiend(Warlock):
 
 	def create_fiend_warlock(self, name):
 		name = name
-		level = int(input("What level is this Wizard?"))
 		player = Fiend()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_spell_slots(level)
+		player.set_max_spell_slots(player.get_level())
 		player.set_current_spell_slots()
-		player.set_hit_dice(level)
-		print("Name:" + player.get_name(), "Level:", + player.get_level(),
-		      "Slots" + player.max_slots)
+		player.set_hit_dice(player.get_level())
+		print("Name:" + player.get_name(), "Level:", + player.get_level())
 
 		return player
 
@@ -352,6 +355,7 @@ class Old(Warlock):
 			self.entropic_ward = True
 		else:
 			print("Already used Entropic Ward this rest")
+
 	def reset_entropic_ward(self):
 		if self.get_entropic_ward():
 			print("Reset Entropic Ward")
@@ -395,15 +399,13 @@ class Old(Warlock):
 
 	def create_old_warlock(self, name):
 		name = name
-		level = int(input("What level is this Wizard?"))
 		player = Old()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_spell_slots(level)
+		player.set_max_spell_slots(player.get_level())
 		player.set_current_spell_slots()
-		player.set_hit_dice(level)
-		print("Name:" + player.get_name(), "Level:", + player.get_level(),
-		      "Slots" + player.max_slots)
+		player.set_hit_dice(player.get_level())
+		print("Name:" + player.get_name(), "Level:", + player.get_level())
 
 		return player
 

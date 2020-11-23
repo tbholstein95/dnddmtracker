@@ -142,16 +142,15 @@ class Paladin(HalfCaster):
 
 	def create_paladin(self, name):
 		name = name
-		level = int(input("What level is this Paladin?"))
 		player = Devotion()
 		player.set_charisma()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_spell_slots(level)
-		player.set_current_spell_slots(level)
-		player.set_hit_dice(level)
+		player.set_max_spell_slots(player.get_level())
+		player.set_current_spell_slots(player.get_level())
+		player.set_hit_dice(player.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level(),
-		      "Slots" + player.get_current_spell_slot(level))
+		      "Slots" + player.get_current_spell_slot(player.get_level()))
 
 		return player
 
@@ -224,16 +223,15 @@ class Devotion(Paladin):
 
 	def create_devotion_paladin(self, name):
 		name = name
-		level = int(input("What level is this Paladin?"))
 		player = Devotion()
 		player.set_charisma()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_spell_slots(level)
-		player.set_current_spell_slots(level)
+		player.set_max_spell_slots(player.get_level())
+		player.set_current_spell_slots(player.get_level())
 		player.set_hit_dice(level)
 		print("Name:" + player.get_name(), "Level:", + player.get_level(),
-		      "Slots" + player.get_current_spell_slot(level))
+		      "Slots" + player.get_current_spell_slot(player.get_level()))
 
 		return player
 
@@ -306,16 +304,15 @@ class Ancient(Paladin):
 
 	def create_ancients_paladin(self, name):
 		name = name
-		level = int(input("What level is this Paladin?"))
 		player = Devotion()
 		player.set_charisma()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_spell_slots(level)
-		player.set_current_spell_slots(level)
-		player.set_hit_dice(level)
+		player.set_max_spell_slots(player.get_level())
+		player.set_current_spell_slots(player.get_level())
+		player.set_hit_dice(player.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level(),
-		      "Slots" + player.get_current_spell_slot(level))
+		      "Slots" + player.get_current_spell_slot(player.get_level()))
 
 		return player
 
@@ -389,16 +386,15 @@ class Vengeance(Paladin):
 
 	def create_vengeance_paladin(self, name):
 		name = name
-		level = int(input("What level is this Paladin?"))
 		player = Devotion()
 		player.set_charisma()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_spell_slots(level)
-		player.set_current_spell_slots(level)
-		player.set_hit_dice(level)
+		player.set_max_spell_slots(player.get_level())
+		player.set_current_spell_slots(player.get_level())
+		player.set_hit_dice(player.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level(),
-		      "Slots" + player.get_current_spell_slot(level))
+		      "Slots" + player.get_current_spell_slot(player.get_level()))
 
 		return player
 

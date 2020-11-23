@@ -8,34 +8,37 @@ class Wizard(FullCaster):
 
 	def list_wizard_options(self):
 		selection = int(
-			input("What action are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Use Hit Dice\n" +
+			input("What action are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Reset Spell Slots\n" + "[3]: Use Hit Dice\n" +
 
-			      "[3]: Reset Hit Dice\n" + "[4]: Change Level\n" + "[5]: Exit\n"))
-		#TODO: Fix use spell slot
+			      "[4]: Reset Hit Dice\n" + "[5]: Change Level\n" + "[6]: Exit\n"))
+
 		if selection == 1:
-			self.use_spell_slot()
-		elif selection == 2:
-			self.use_hit_dice()
+			self.use_cur_spell_slot()
+		if selection == 2:
+			self.set_current_list_spell_slots()
 		elif selection == 3:
-			self.reset_current_hit_dice()
+			self.use_hit_dice()
 		elif selection == 4:
+			self.reset_current_hit_dice()
+		elif selection == 5:
 			self.set_level()
 			self.set_hit_dice(self.get_level())
-			self.set_spell_slots(self.get_level())
-		elif selection == 5:
+			self.set_max_list_spell_slots(self.get_level())
+			self.set_current_list_spell_slots()
+		elif selection == 6:
 			print("Leaving")
 			return
 
 	def create_wizard(self, name):
 		name = name
-		level = int(input("What level is this Wizard?"))
 		player = Wizard()
 		player.set_level()
 		player.set_name(name)
-		player.set_spell_slots(level)
-		player.set_hit_dice(level)
+		player.set_max_list_spell_slots(player.get_level())
+		player.set_current_list_spell_slots()
+		player.set_hit_dice(player.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level(),
-		      "Slots" + player.get_cur_spell_slot(level))
+		      "Slots" + player.get_cur_spell_slot(player.get_level()))
 
 		return player
 
@@ -56,18 +59,24 @@ class Abjuration(Wizard):
 			self.arcane_ward = False
 
 	def list_abjuration_options(self):
-		selection = int(input("What action are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Use Hit Dice\n" +
+		selection = int(input("What action are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Reset Spell Slots\n" + "[3]: Use Hit Dice\n" +
 
-		"[3]: Change Level\n" + "[16]: Exit\n"))
-		#TODO: Fix spell slot
+		"[4]: Reset Hit Dice\n" + "[5]: Change Level\n" + "[6]: Exit\n"))
+
 		if selection == 1:
-			self.use_spell_slot()
-		elif selection == 2:
-			self.use_hit_dice()
+			self.use_cur_spell_slot()
+		if selection == 2:
+			self.set_current_list_spell_slots()
 		elif selection == 3:
+			self.use_hit_dice()
+		elif selection == 4:
+			self.reset_current_hit_dice()
+		elif selection == 5:
 			self.set_level()
 			self.set_hit_dice(self.get_level())
-		elif selection == 4:
+			self.set_max_list_spell_slots(self.get_level())
+			self.set_current_list_spell_slots()
+		elif selection == 6:
 			print("Leaving")
 			return
 	def create_abjuration_wizard(self, name):
@@ -76,7 +85,8 @@ class Abjuration(Wizard):
 		player = Abjuration()
 		player.set_level()
 		player.set_name(name)
-		player.set_spell_slots(level)
+		player.set_max_list_spell_slots(self.get_level())
+		player.set_current_list_spell_slots()
 		player.set_hit_dice(level)
 		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Slots" + player.get_cur_spell_slot(level))
 
@@ -91,8 +101,8 @@ class Divination(Wizard):
 	#TODO: Fix spell slot
 	def use_expert_divination(self):
 		if self.get_level() >= 6:
-			spell_level = self.use_spell_slot()
-			restore_slot = int(input("WHat spell slot would they like to restore?"))
+			spell_level = self.use_cur_spell_slot()
+			restore_slot = int(input("What spell slot would they like to restore?"))
 			if restore_slot < 6 and restore_slot < spell_level:
 				self.add_spell_slot(restore_slot)
 			else:
@@ -129,43 +139,46 @@ class Divination(Wizard):
 			print("Third Eye is still good to go")
 
 	def list_divination_options(self):
-		selection = int(input("What action are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Use Expert Divination\n" +
+		selection = int(input("What action are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Reset Spell Slot\n" +
 
-		"[3]: Use Portent\n" + "[4]: Reset Current Portents\n" + "[5]: Use Hit Dice\n" + "[6]: Reset Hit Dice\n" +
+		"[3]: Use Expert Divination\n" + "[4]: Use Portent\n" + "[5]: Reset Current Portents\n" + "[6]: Use Hit Dice\n" +
 
-		"[7]: Change Level\n" + "[8]: Exit\n"))
-		#todo: Fix use spell slot
+		"[7]: Reset Hit Dice\n" + "[8]: Change Level\n" + "[9]: Exit\n"))
+
 		if selection == 1:
-			self.use_spell_slot()
+			self.use_cur_spell_slot()
 		elif selection == 2:
-			self.use_expert_divination()
+			self.set_current_list_spell_slots()
 		elif selection == 3:
-			self.use_portent()
+			self.use_expert_divination()
 		elif selection == 4:
-			self.reset_current_portents()
+			self.use_portent()
 		elif selection == 5:
-			self.use_hit_dice()
+			self.reset_current_portents()
 		elif selection == 6:
-			self.reset_current_hit_dice()
+			self.use_hit_dice()
 		elif selection == 7:
+			self.reset_current_hit_dice()
+		elif selection == 8:
 			self.set_level()
 			self.set_hit_dice(self.get_level())
 			self.set_max_portent()
-			self.set_spell_slots(self.get_level)
+			self.set_max_list_spell_slots(self.get_level())
+			self.set_current_list_spell_slots()
 		elif selection == 8:
 			print("Leaving")
 			return
 
 	def create_divination_wizard(self, name):
 		name = name
-		level = int(input("What level is this Wizard?"))
 		player = Divination()
 		player.set_level()
 		player.set_name(name)
-		player.set_spell_slots(level)
-		player.set_hit_dice(level)
+		player.set_max_list_spell_slots(player.get_level())
+		player.set_current_list_spell_slots()
+		player.set_hit_dice(player.get_level())
 		player.set_max_portent()
-		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Slots" + player.get_cur_spell_slot(level))
+		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Slots" + player.get_cur_spell_slot(player.get_level()))
 
 		return player
 
@@ -205,43 +218,45 @@ class Enchantment(Wizard):
 			print("Instinctive Charm still usable")
 
 	def list_enchantment_options(self):
-		selection = int(input("What action are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Use Hypnotic Gaze\n" +
+		selection = int(input("What action are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Reset Spell Slot\n" + "[3]: Use Hypnotic Gaze\n" +
 
-		"[3]: Reset Hypnotic Gaze\n" + "[4]: Use Instinctive Charm\n" + "[5]: Reset Instinctive Charm\n" +
+		"[4]: Reset Hypnotic Gaze\n" + "[5]: Use Instinctive Charm\n" + "[6]: Reset Instinctive Charm\n" +
 
-		"[6]: Use Hit Dice\n" + "[7]: Reset Hit Dice\n" + "[8]: Change Level\n" + "[9]: Exit\n"))
-		#TODO: Fix use spell slot
+		"[7]: Use Hit Dice\n" + "[8]: Reset Hit Dice\n" + "[9]: Change Level\n" + "[10]: Exit\n"))
 		if selection == 1:
-			self.use_spell_slot()
+			self.use_cur_spell_slot()
 		elif selection == 2:
-			self.use_hypnotic_gaze()
+			self.set_current_list_spell_slots()
 		elif selection == 3:
-			self.reset_hypnotic_gaze()
+			self.use_hypnotic_gaze()
 		elif selection == 4:
-			self.use_instinctive_charm()
+			self.reset_hypnotic_gaze()
 		elif selection == 5:
-			self.reset_instinctive_charm()
+			self.use_instinctive_charm()
 		elif selection == 6:
-			self.use_hit_dice()
+			self.reset_instinctive_charm()
 		elif selection == 7:
-			self.reset_current_hit_dice()
+			self.use_hit_dice()
 		elif selection == 8:
+			self.reset_current_hit_dice()
+		elif selection == 9:
 			self.set_level()
 			self.set_hit_dice(self.get_level())
-			self.set_spell_slots(self.get_level())
-		elif selection == 8:
+			self.set_max_list_spell_slots(self.get_level())
+			self.set_current_list_spell_slots()
+		elif selection == 10:
 			print("Leaving")
 			return
 
 	def create_enchantment_wizard(self, name):
 		name = name
-		level = int(input("What level is this Wizard?"))
 		player = Enchantment()
 		player.set_level()
 		player.set_name(name)
-		player.set_spell_slots(level)
-		player.set_hit_dice(level)
-		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Slots" + player.get_cur_spell_slot(level))
+		player.set_max_list_spell_slots(player.get_level())
+		player.set_current_list_spell_slots()
+		player.set_hit_dice(player.get_level())
+		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Slots" + player.get_cur_spell_slot(player.get_level()))
 
 		return player
 
@@ -266,38 +281,41 @@ class Illusion(Wizard):
 
 	def list_illusion_options(self):
 		selection = int(
-			input("What action are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Use Illusory Self\n" +
+			input("What action are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Reset Spell Slot\n" + "[3]: Use Illusory Self\n" +
 
-			      "[3]: Reset Illusory Self\n" + "[4]: Use Hit Dice\n" + "[5]: Reset Hit Dice\n" + "[6]: Change Level\n" + "[7]: Exit\n"))
-		#TODO: fix use spell slot
+			      "[4]: Reset Illusory Self\n" + "[5]: Use Hit Dice\n" + "[6]: Reset Hit Dice\n" + "[7]: Change Level\n" + "[8]: Exit\n"))
+
 		if selection == 1:
-			self.use_spell_slot()
+			self.use_cur_spell_slot()
 		elif selection == 2:
-			self.use_illusory_self()
+			self.set_current_list_spell_slots()
 		elif selection == 3:
-			self.reset_illusory_set()
+			self.use_illusory_self()
 		elif selection == 4:
-			self.use_hit_dice()
+			self.reset_illusory_set()
 		elif selection == 5:
-			self.reset_current_hit_dice()
+			self.use_hit_dice()
 		elif selection == 6:
+			self.reset_current_hit_dice()
+		elif selection == 7:
 			self.set_level()
 			self.set_hit_dice(self.get_level())
-			self.set_spell_slots(self.get_level())
-		elif selection == 7:
+			self.set_max_list_spell_slots(self.get_level())
+			self.set_current_list_spell_slots()
+		elif selection == 8:
 			print("Leaving")
 			return
 
 	def create_illusion_wizard(self, name):
 		name = name
-		level = int(input("What level is this Wizard?"))
 		player = Enchantment()
 		player.set_level()
 		player.set_name(name)
-		player.set_spell_slots(level)
-		player.set_hit_dice(level)
+		player.set_max_list_spell_slots(player.get_level())
+		player.set_current_list_spell_slots()
+		player.set_hit_dice(player.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level(),
-		      "Slots" + player.get_cur_spell_slot(level))
+		      "Slots" + player.get_cur_spell_slot(player.get_level()))
 
 		return player
 
@@ -339,44 +357,47 @@ class Transmutation(Wizard):
 
 	def list_transmutation_options(self):
 		selection = int(
-			input("What action are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Use Shapechange\n" +
+			input("What action are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Reset Spell Slot\n" + "[3]: Use Shapechange\n" +
 
-			      "[3]: Reset Shapechange\n" + "[4]: Use Master Transmuter\n" + "[5]: Reset Use Master Transmuter\n" +
+			      "[4]: Reset Shapechange\n" + "[5]: Use Master Transmuter\n" + "[6]: Reset Use Master Transmuter\n" +
 
-			      "[6]: Use Hit Dice\n" + "[7]: Reset Hit Dice\n" + "[8]: Change Level\n" + "[9]: Exit\n"))
-		#TODO: fix spell slot
+			      "[7]: Use Hit Dice\n" + "[8]: Reset Hit Dice\n" + "[9]: Change Level\n" + "[10]: Exit\n"))
+
 		if selection == 1:
-			self.use_spell_slot()
+			self.use_cur_spell_slot()
 		elif selection == 2:
-			self.use_shapechange()
+			self.set_current_list_spell_slots()
 		elif selection == 3:
-			self.reset_shapechange()
+			self.use_shapechange()
 		elif selection == 4:
-			self.use_master_transmuter()
+			self.reset_shapechange()
 		elif selection == 5:
-			self.reset_use_master_transmuter()
+			self.use_master_transmuter()
 		elif selection == 6:
-			self.use_hit_dice()
+			self.reset_use_master_transmuter()
 		elif selection == 7:
-			self.reset_current_hit_dice()
+			self.use_hit_dice()
 		elif selection == 8:
+			self.reset_current_hit_dice()
+		elif selection == 9:
 			self.set_level()
 			self.set_hit_dice(self.get_level())
-			self.set_spell_slots(self.get_level())
-		elif selection == 9:
+			self.set_max_list_spell_slots(self.get_level())
+			self.set_current_list_spell_slots()
+		elif selection == 10:
 			print("Leaving")
 			return
 
 	def create_transmutation_wizard(self, name):
 		name = name
-		level = int(input("What level is this Wizard?"))
 		player = Enchantment()
 		player.set_level()
 		player.set_name(name)
-		player.set_spell_slots(level)
-		player.set_hit_dice(level)
+		player.set_max_list_spell_slots(player.get_level())
+		player.set_current_list_spell_slots()
+		player.set_hit_dice(player.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level(),
-		      "Slots" + player.get_cur_spell_slot(level))
+		      "Slots" + player.get_cur_spell_slot(player.get_level()))
 
 		return player
 

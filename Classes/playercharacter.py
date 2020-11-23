@@ -21,8 +21,8 @@ class PlayerCharacter:
 		self.name = name
 
 	def set_level(self):
-		level = int(input("What level should this character be?"))
-		self.level = level
+		number = int(input("What level should this character be?"))
+		self.level = int(number)
 
 	def set_hit_dice(self, level):
 		self.hit_dice = level
