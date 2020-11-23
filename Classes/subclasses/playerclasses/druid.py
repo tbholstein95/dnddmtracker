@@ -7,7 +7,7 @@ druid_dict = {}
 class Druid(FullCaster):
 	def __init__(self):
 		self.max_wild_shape = 2
-		self.current_wild_shape = 2
+		self.current_wild_shape = 0
 		super().__init__()
 
 	def get_max_wild_shape(self):
@@ -17,12 +17,13 @@ class Druid(FullCaster):
 		return self.current_wild_shape
 
 	def set_max_wild_shape(self):
-		amount = int(input("How many times can this Druid wildshape?"))
-		self.max_wild_shape = amount
+		if self.get_level() < 20:
+			self.max_wild_shape = 2
+		else:
+			self.max_wild_shape = float('inf')
 
 	def set_current_wild_shape(self):
-		amount = int(input("How many times can this Druid wildshape?"))
-		self.current_wild_shape = amount
+		self.current_wild_shape = self.get_max_wild_shape()
 
 	def use_wild_shape(self):
 		if self.get_current_wild_shape() == 0:
@@ -32,20 +33,28 @@ class Druid(FullCaster):
 			self.current_wild_shape -= 1
 
 	def list_druid_options(self):
-		selection = int(input("What action are you counting?\n" + "[1]: Use Wildshape\n" + (
+		selection = int(
 
-			"[2]: Reset Wildshape\n" + "[3]: Use Hit Dice\n" + "[4]: Reset Hit Dice" + "[5]: Change Level\n" + "[6]: Exit\n")))
+			input("What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Reset Spells\n" +
+
+			"[1]: Use Wildshape\n" + "[2]: Reset Wildshape\n" + "[3]: Use Hit Dice\n" + "[4]: Reset Hit Dice\n" +
+
+			"[5]: Change Level\n" + "[6]: Exit\n"))
 
 		if selection == 1:
-			self.use_wild_shape()
+			self.use_cur_spell_slot()
 		elif selection == 2:
-			self.set_current_wild_shape()
+			self.set_current_list_spell_slots()
 		elif selection == 3:
-			self.use_hit_dice()
+			self.use_wild_shape()
 		elif selection == 4:
+			self.set_current_wild_shape()
+		elif selection == 5:
+			self.use_hit_dice()
+		elif selection == 6:
 			amount = self.get_level()
 			self.set_hit_dice(amount)
-		elif selection == 5:
+		elif selection == 7:
 			self.set_level()
 			level = self.get_level()
 			self.set_max_list_spell_slots(level)
@@ -57,17 +66,14 @@ class Druid(FullCaster):
 
 	def create_druid(self, name):
 		name = name
-		level = int(input("What level is this cleric?"))
 		player = Druid()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_list_spell_slots(level)
-		player.copy_slots(player.max_slots)
-		player.set_hit_dice()
+		player.set_max_list_spell_slots(self.get_level())
+		player.set_current_list_spell_slots()
+		player.set_hit_dice(self.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level())
-
 		return player
-
 
 
 class Land(Druid):
@@ -95,7 +101,7 @@ class Land(Druid):
 				if restoring > restore_up_to or restoring >= 6:
 					print("Spell slot too great")
 				if restoring == 0:
-					break
+					return
 				else:
 					quant_restoring = int(input("How many of these spell slots?"))
 					if quant_restoring * restoring > restore_up_to or quant_restoring * restoring > \
@@ -107,43 +113,50 @@ class Land(Druid):
 
 	def create_land_druid(self, name):
 		name = name
-		level = int(input("What level is this cleric?"))
 		player = Land()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_list_spell_slots(level)
-		player.copy_slots(player.max_slots)
-		player.set_hit_dice(level)
+		player.set_max_list_spell_slots(self.get_level())
+		player.set_current_list_spell_slots()
+		player.set_hit_dice(self.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level())
 
 		return player
 
 	def list_land_options(self):
-		selection = int(input("What action are you counting?\n" + "[1]: Use Wildshape\n" + (
+		selection = int(
 
-			"[2]: Reset Wildshape\n" + "[3]: Use Natural Recovery\n" + "[4]: Reset Natural Recovery\n" +
+			input("What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]Reset Spell Slots\n" +
 
-			"[5]: Use Hit Dice\n" + "[6]: Reset Hit Dice" + "[7]: Change Level\n" + "[8]: Exit\n")))
+			"[3]: Use Wildshape\n" + "[4]: Reset Wildshape\n" + "[5]: Use Natural Recovery\n" +
+
+			"[6]: Reset Natural Recovery\n" + "[7]: Use Hit Dice\n" + "[8]: Reset Hit Dice\n" +
+
+			"[9]: Change Level\n" + "[10]: Exit\n"))
 
 		if selection == 1:
-			self.use_wild_shape()
+			self.use_cur_spell_slot()
 		elif selection == 2:
-			self.set_current_wild_shape()
+			self.set_current_list_spell_slots()
 		elif selection == 3:
-			self.use_natural_recovery()
+			self.use_wild_shape()
 		elif selection == 4:
-			self.set_natural_recovery(False)
+			self.set_current_wild_shape()
 		elif selection == 5:
-			self.use_hit_dice()
+			self.use_natural_recovery()
 		elif selection == 6:
+			self.set_natural_recovery(False)
+		elif selection == 7:
+			self.use_hit_dice()
+		elif selection == 8:
 			amount = self.get_level()
 			self.set_hit_dice(amount)
-		elif selection == 7:
+		elif selection == 9:
 			self.set_level()
 			level = self.get_level()
 			self.set_max_list_spell_slots(level)
 			self.copy_slots(self.max_slots)
-		elif selection == 8:
+		elif selection == 10:
 			print("backing")
 			return 0
 
@@ -159,43 +172,50 @@ class Moon(Druid):
 			print("No remaining slots of this level")
 		else:
 			self.use_cur_spell_slot()
+			print("Used a spell slot to heal")
 
 	def create_moon_druid(self, name):
 		name = name
-		level = int(input("What level is this cleric?"))
 		player = Moon()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_list_spell_slots(level)
-		player.copy_slots(player.max_slots)
-		player.set_hit_dice(level)
+		player.set_max_list_spell_slots(self.get_level())
+		player.set_current_list_spell_slots()
+		player.set_hit_dice(self.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level())
 
 		return player
 
 	def list_moon_options(self):
-		selection = int(input("What action are you counting?\n" + "[1]: Use Wildshape\n" + (
+		selection = int(
 
-			"[2]: Reset Wildshape\n" + "[3]: Use Combat WildShape Heal" + "[4]: Use Hit Dice\n" +
-			"[5]: Reset Hit Dice" + "[6]: Change Level\n" + "[7]: Exit\n")))
+			input("What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Reset Spells\n" +
+
+			"[3]: Use Wildshape\n" + "[4]: Reset Wildshape\n" + "[5]: Use Combat WildShape Heal\n" +
+
+			"[6]: Use Hit Dice\n" + "[7]: Reset Hit Dice\n" + "[8]: Change Level\n" + "[9]: Exit\n"))
 
 		if selection == 1:
-			self.use_wild_shape()
+			self.use_cur_spell_slot()
 		elif selection == 2:
-			self.set_current_wild_shape()
+			self.set_current_list_spell_slots()
 		elif selection == 3:
-			self.use_combat_wildshape_heal()
+			self.use_wild_shape()
 		elif selection == 4:
-			self.use_hit_dice()
+			self.set_current_wild_shape()
 		elif selection == 5:
+			self.use_combat_wildshape_heal()
+		elif selection == 6:
+			self.use_hit_dice()
+		elif selection == 7:
 			amount = self.get_level()
 			self.set_hit_dice(amount)
-		elif selection == 6:
+		elif selection == 8:
 			self.set_level()
 			level = self.get_level()
 			self.set_max_list_spell_slots(level)
 			self.copy_slots(self.max_slots)
-		elif selection == 7:
+		elif selection == 9:
 			print("backing")
 			return 0
 
@@ -273,12 +293,11 @@ class Dream(Druid):
 
 	def create_dream_druid(self, name):
 		name = name
-		level = int(input("What level is this cleric?"))
 		player = Dream()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_list_spell_slots(level)
-		player.copy_slots(player.max_slots)
+		player.set_max_list_spell_slots(self.get_level())
+		player.set_current_list_spell_slots()
 		player.set_max_hidden_paths()
 		player.set_max_summer_court_dice()
 		player.set_current_hidden_paths()
@@ -286,43 +305,48 @@ class Dream(Druid):
 		player.set_wisdom()
 		player.set_max_hidden_paths()
 		player.set_current_hidden_paths()
-		player.set_hit_dice(level)
+		player.set_hit_dice(self.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level())
 
 		return player
 
 	def list_dream_options(self):
-		selection = int(input("What action are you counting?\n" + "[1]: Use Wildshape\n" + (
+		selection = int(
+			input("What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Reset Spells\n" + "[1]: Use Wildshape\n" +
 
 			"[2]: Reset Wildshape\n" + "[3]: Use Balm of the Summer Court\n" + "[4]: Reset Balm of the Summer court\n" +
-			"[5]: Use Hidden Paths\n" + "[6]: Reset Hidden Paths" + "[7]: Use Hit Dice\n" + "[8]: Reset Hit Dice\n" +
-			"[9]: Change Level\n" + "[10]: Exit\n")))
 
+			"[5]: Use Hidden Paths\n" + "[6]: Reset Hidden Paths" + "[7]: Use Hit Dice\n" + "[8]: Reset Hit Dice\n" +
+
+			"[9]: Change Level\n" + "[10]: Exit\n"))
 		if selection == 1:
-			self.use_wild_shape()
+			self.use_cur_spell_slot()
 		elif selection == 2:
-			self.set_current_wild_shape()
+			self.set_current_list_spell_slots()
 		elif selection == 3:
-			self.use_summer_court()
+			self.use_wild_shape()
 		elif selection == 4:
-			self.set_current_summer_court_dice()
+			self.set_current_wild_shape()
 		elif selection == 5:
-			self.use_hidden_paths()
+			self.use_summer_court()
 		elif selection == 6:
-			self.set_current_hidden_paths()
+			self.set_current_summer_court_dice()
 		elif selection == 7:
-			self.use_hit_dice()
+			self.use_hidden_paths()
 		elif selection == 8:
+			self.set_current_hidden_paths()
+		elif selection == 9:
+			self.use_hit_dice()
+		elif selection == 10:
 			amount = self.get_level()
 			self.set_hit_dice(amount)
-		elif selection == 9:
+		elif selection == 11:
 			self.set_level()
 			level = self.get_level()
 			self.set_max_list_spell_slots(level)
 			self.copy_slots(self.max_slots)
 			self.set_wisdom()
-
-		elif selection == 10:
+		elif selection == 12:
 			print("backing")
 			return 0
 
@@ -363,47 +387,52 @@ class Shepherd(Druid):
 
 	def create_shepherd_druid(self, name):
 		name = name
-		level = int(input("What level is this cleric?"))
 		player = Shepherd()
 		player.set_level()
 		player.set_name(name)
-		player.set_max_list_spell_slots(level)
-		player.copy_slots(player.max_slots)
-		player.set_hit_dice(level)
+		player.set_max_list_spell_slots(self.get_level())
+		player.set_current_list_spell_slots()
+		player.set_hit_dice(self.get_level())
 		print("Name:" + player.get_name(), "Level:", + player.get_level())
 
 		return player
 
 	def list_shepherd_options(self):
-		selection = int(input("What action are you counting?\n" + "[1]: Use Wildshape\n" + (
+		selection = int(input("What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Reset Spells\n" +
 
-			"[2]: Reset Wildshape\n" + "[3]: Use Spirit Totem" + "[4]: Reset Spirit Totem" + "[5]: Use Faithful Summons" +
-			"[6]: Reset Faithful Summons" + "[7]: Use Hit Dice\n" + "[8]: Reset Hit Dice" + "[9]: Change Level\n" +
-			"[10]: Exit\n")))
+			"[3]: Use Wildshape\n" + "[4]: Reset Wildshape\n" + "[5]: Use Spirit Totem\n" +
+
+			"[6]: Reset Spirit Totem\n" + "[7]: Use Faithful Summons\n" + "[8]: Reset Faithful Summons\n" +
+
+			"[9]: Use Hit Dice\n" + "[10]: Reset Hit Dice\n" + "[11]: Change Level\n" + "[12]: Exit\n"))
 
 		if selection == 1:
-			self.use_wild_shape()
+			self.use_cur_spell_slot()
 		elif selection == 2:
-			self.set_current_wild_shape()
+			self.set_current_list_spell_slots()
 		elif selection == 3:
-			self.use_spirit_totem()
+			self.use_wild_shape()
 		elif selection == 4:
-			self.set_spirit_totem(False)
+			self.set_current_wild_shape()
 		elif selection == 5:
-			self.use_faithful_summons()
+			self.use_spirit_totem()
 		elif selection == 6:
-			self.set_faithful_summons((False))
+			self.set_spirit_totem(False)
 		elif selection == 7:
-			self.use_hit_dice()
+			self.use_faithful_summons()
 		elif selection == 8:
+			self.set_faithful_summons((False))
+		elif selection == 9:
+			self.use_hit_dice()
+		elif selection == 10:
 			amount = self.get_level()
 			self.set_hit_dice(amount)
-		elif selection == 9:
+		elif selection == 11:
 			self.set_level()
 			level = self.get_level()
 			self.set_max_list_spell_slots(level)
 			self.copy_slots(self.max_slots)
-		elif selection == 10:
+		elif selection == 12:
 			print("backing")
 			return 0
 
