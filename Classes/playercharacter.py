@@ -1,4 +1,6 @@
-class PlayerCharacter:
+from abc import ABC, abstractmethod
+options_dict = {}
+class PlayerCharacter(ABC):
 	def __init__(self):
 		self.name = None
 		self.level = 0
@@ -40,3 +42,14 @@ class PlayerCharacter:
 			print("No hit dice left")
 		else:
 			self.hit_dice -= amount_to_use
+			print("Used Hit Dice")
+
+	def create_player_character_options(self):
+		# First 3 options, do not use 0-2 in other classes.
+		options_dict['0'] = "What action are you counting?\n[1]: Use Hit Dice\n[2]: Reset Hit Dice\n"
+		options_dict['1'] = self.use_hit_dice
+		options_dict['2'] = self.reset_current_hit_dice
+		return options_dict
+
+
+

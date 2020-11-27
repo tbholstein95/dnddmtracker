@@ -10,16 +10,18 @@ from Classes.subclasses.playerclasses.rogue import *
 from Classes.subclasses.playerclasses.sorcerer import *
 from Classes.subclasses.playerclasses.warlock import *
 from Classes.subclasses.playerclasses.wizard import *
+# TODO: Have options stored in a dictionary.  Called by keys.  Create a generic dictionary for each class.
+#  Merge the dictionaries at creation.
 
 # VAR
 player_dictionary = {}
 
-##TODO create a making function or class to handle all of the player creations. Maybe factory?
+# TODO create a making function or class to handle all of the player creations. Maybe factory?
+
 def main():
 	running = True
 	number_of_players = int(input("How many players are in your party?"))
 	for x in range(number_of_players):
-		p1 = None
 		player_name = input("What is this player's name?")
 		player_class = input("What is this player's class?")
 		player_class = player_class.capitalize()
@@ -57,10 +59,10 @@ def main():
 			break
 		# set current player
 		current_mod = player_dictionary[f'{current_player}']["character"]
-		print(current_mod)
-		print(player_dictionary)
+		# print(current_mod, "CURRENT MOD")
+		# print(player_dictionary, "PLAYER DICT")
 		# get current player's options
-		player_dictionary[f'{current_player}']['options'](current_mod)
+		player_dictionary[f'{current_player}']['new_options'](current_mod)
 
 
 if __name__ == '__main__':

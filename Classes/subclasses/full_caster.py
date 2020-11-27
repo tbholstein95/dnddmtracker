@@ -3,8 +3,8 @@ from Classes.playercharacter import *
 
 class FullCaster(PlayerCharacter):
 	def __init__(self):
-		self.max_slots = [0] * 21
-		self.current_slots = [0] * 21
+		self.max_slots = [0] * 10
+		self.current_slots = [0] * 10
 		super().__init__()
 
 	def set_max_list_spell_slots(self, level):
