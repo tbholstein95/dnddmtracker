@@ -1,6 +1,20 @@
 from abc import ABC, abstractmethod
 options_dict = {}
-class PlayerCharacter(ABC):
+
+
+def merge_dicts(higher, deeper):
+	concat_string = higher['0'] + deeper['0']
+	deeper.update(higher)
+	deeper['0'] = concat_string
+	return deeper
+
+
+def leave():
+	print("Leaving")
+	return 0
+
+
+class PlayerCharacter():
 	def __init__(self):
 		self.name = None
 		self.level = 0
