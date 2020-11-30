@@ -1,5 +1,5 @@
 from Classes.playercharacter import *
-
+full_caster_dict = {}
 
 class FullCaster(PlayerCharacter):
 	def __init__(self):
@@ -107,3 +107,10 @@ class FullCaster(PlayerCharacter):
 			self.current_slots[8] += 1
 		elif level == 9:
 			self.current_slots[9] += 1
+
+	def create_fullcaster_character_options(self):
+		# Player class uses 1 & 2. Fill out 0 for merging later.  Starts at 3
+		full_caster_dict['0'] = "[3]: Cast Spell\n[4]: Reset Spells\n"
+		full_caster_dict['3'] = self.use_cur_spell_slot
+		full_caster_dict['4'] = self.set_current_list_spell_slots
+		return full_caster_dict

@@ -72,10 +72,10 @@ class Barbarian(PlayerCharacter):
 		self.set_level()
 		self.set_hit_dice(self.get_level())
 
-	def show_options(self):
-		selection = int(input(self.new_options.get("0")))
+	def list_options(self):
+		selection = int(input(self.default_barb_options.get("0")))
 		print(selection)
-		self.new_options["{}".format(selection)]()
+		self.default_barb_options["{}".format(selection)]()
 
 
 class Berserker(Barbarian):
@@ -276,13 +276,9 @@ def main_barb_making(name, dictionary):
 	else:
 		p1 = create_barbarian(name)
 		new_options = 0
-
 	player = p1
 
 	print('Name:' + player.get_name(), ' Level:', player.get_level(), ' Rage:', player.get_rage,
 		' Hit Dice:', player.get_hit_dice())
-
-	# barb_dict[f'{p1.get_name()}'] = {"character": p1, "subclass": player_subclass,
-	# 				 "options": class_options, "new_options": new_options}
 
 	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass, "new_options": new_options}
