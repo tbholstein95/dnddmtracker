@@ -17,7 +17,8 @@ class Cleric(FullCaster):
 	def get_current_channel_divinity(self):
 		return self.current_channel_divinity
 
-	def set_channel_divinity_max(self, level):
+	def set_channel_divinity_max(self):
+		level = self.get_level()
 		if level < 6:
 			self.channel_divinity_max = 1
 			self.current_channel_divinity = 1
@@ -87,10 +88,16 @@ class Cleric(FullCaster):
 		return self.default_cleric_options
 
 	def change_level(self):
-		self.set_level()
+		self.base_change_level()
 		self.set_max_list_spell_slots(self.get_level())
 		self.set_current_list_spell_slots()
-		self.set_hit_dice(self.get_level())
+		self.set_channel_divinity_max()
+		self.reset_channel_divinity()
+
+	def list_options(self):
+		selection = int(input(self.default_cleric_options.get("0")))
+		print(selection)
+		self.default_cleric_options["{}".format(selection)]()
 
 
 class Knowledge(Cleric):
@@ -385,7 +392,6 @@ class Grave(Cleric):
 		self.grave_options['12'] = self.reset_cur_eyes_of_the_grave
 		self.grave_options['13'] = self.change_grave_level
 		self.grave_options['14'] = leave
-
 		return self.grave_options
 
 	def list_options(self):
@@ -395,12 +401,9 @@ class Grave(Cleric):
 
 
 def merge_base_cleric_dicts(player):
-	player_class = player.create_player_character_options()
-	spell_opts = player.create_fullcaster_character_options()
-	bard_opts = player.create_default_bard_options()
-	merge_dicts(player_class, spell_opts)
-	merge_dicts(spell_opts, bard_opts)
-	return bard_opts
+	cleric_opts = player.create_cleric_options()
+	merge_dicts(player.merge_base_and_fullspell_options(), cleric_opts)
+	return cleric_opts
 
 
 def create(name, subclass):
@@ -412,23 +415,14 @@ def create(name, subclass):
 def create_cleric(name):
 	player = create(name, Cleric)
 	player.change_level()
-	default_player_opts = player.create_player_character_options()
-	cleric_opts = player.create_cleric_options()
-	merge_dicts(default_player_opts, cleric_opts)
+	merge_base_cleric_dicts(player)
 	return player
 
 
 def create_grave_cleric(name):
-	player = Grave()
-	player.set_name(name)
+	player = create(name, Grave)
 	player.change_grave_level()
-	player.create_grave_options()
-	default_player_opts = player.create_player_character_options()
-	default_spell_opts = player.create_fullcaster_character_options()
-	cleric_opts = player.create_cleric_options()
-	merge_dicts(default_player_opts, default_spell_opts)
-	merge_dicts(default_spell_opts, cleric_opts)
-	merge_dicts(cleric_opts, player.grave_options)
+	merge_dicts(merge_base_cleric_dicts(player), player.create_grave_options())
 	return player
 
 
@@ -436,52 +430,28 @@ def create_knowledge_cleric(name):
 	player = create(name, Knowledge)
 	player.change_level()
 	player.create_knowledge_options()
-	default_player_opts = player.create_player_character_options()
-	default_spell_opts = player.create_fullcaster_character_options()
-	cleric_opts = player.create_cleric_options()
-	merge_dicts(default_player_opts, default_spell_opts)
-	merge_dicts(default_spell_opts, cleric_opts)
-	merge_dicts(cleric_opts, player.knowledge_options)
+	merge_dicts(merge_base_cleric_dicts(player), player.create_knowledge_options())
 	return player
 
 
 def create_light_cleric(name):
 	player = create(name, Light)
 	player.change_light_level()
-	player.create_light_options()
-	default_player_opts = player.create_player_character_options()
-	default_spell_opts = player.create_fullcaster_character_options()
-	cleric_opts = player.create_cleric_options()
-	light_opts = player.light_options
-	merge_dicts(default_player_opts, default_spell_opts)
-	merge_dicts(default_spell_opts, cleric_opts)
-	merge_dicts(cleric_opts, light_opts)
+	merge_dicts(merge_base_cleric_dicts(player), player.create_light_options())
 	return player
 
 
 def create_tempest_cleric(name):
 	player = create(name, Tempest)
 	player.change_tempest_level()
-	default_player_opts = player.create_player_character_options()
-	default_spell_opts = player.create_fullcaster_character_options()
-	player.create_tempest_options()
-	cleric_opts = player.create_cleric_options()
-	merge_dicts(default_player_opts, default_spell_opts)
-	merge_dicts(default_player_opts, cleric_opts)
-	merge_dicts(cleric_opts, player.tempest_options)
+	merge_dicts(merge_base_cleric_dicts(player), player.create_tempest_options())
 	return player
 
 
 def create_war_cleric(name):
 	player = create(name, War)
 	player.change_war_level()
-	player.create_war_options()
-	default_player_opts = player.create_player_character_options()
-	default_spell_opts = player.create_fullcaster_character_options()
-	cleric_opts = player.create_cleric_options()
-	merge_dicts(default_player_opts, default_spell_opts)
-	merge_dicts(default_player_opts, cleric_opts)
-	merge_dicts(cleric_opts, player.war_options)
+	merge_dicts(merge_base_cleric_dicts(player), player.create_tempest_options())
 	return player
 
 
@@ -504,6 +474,6 @@ def main_cleric_making(name, dictionary):
 		new_options = Grave.list_options
 	else:
 		p1 = create_cleric(name)
-		new_options = 0
+		new_options = Cleric.list_options
 
 	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass, "new_options": new_options}

@@ -1,6 +1,7 @@
 from Classes.subclasses.half_caster import *
 paladin_dict = {}
 
+
 class Paladin(HalfCaster):
 	def __init__(self):
 		self.max_divine_sense = 0
@@ -11,6 +12,7 @@ class Paladin(HalfCaster):
 		self.channel_divinity = False
 		self.max_cleansing_touch = 0
 		self.current_cleansing_touch = 0
+		self.paladin_options = {}
 		super().__init__()
 
 	def set_charisma(self):
@@ -85,8 +87,8 @@ class Paladin(HalfCaster):
 		return self.max_cleansing_touch
 
 	def set_current_cleansing_touch(self):
-		max = self.get_max_cleansing_touch()
-		self.current_cleansing_touch = max
+		totes_max = self.get_max_cleansing_touch()
+		self.current_cleansing_touch = totes_max
 
 	def get_current_cleansing_touch(self):
 		return self.current_cleansing_touch
@@ -98,65 +100,43 @@ class Paladin(HalfCaster):
 		else:
 			print("Not enough Cleansing Touch points left")
 
-	def list_paladin_options(self):
-		selection = int(
-			input("What action are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Use Divine Sense\n" +
+	def create_paladin_options(self):
+		self.paladin_options['0'] = "[5] = Use Divine Sense" + "[6]: Reset Divine Sense\n" + \
+					"[7]: Use Lay on Hands to Heal\n" + "[8]: Use Lay on Hands to Cure Poison/Disease\n" + \
+					"[9]: Reset Lay on Hands Pool\n" + "[10]: Use Channel Divinity\n" + \
+					"[11]: Reset Channel Divinity\n" + "[12] Use Cleansing Touch\n" + "[13]: Reset Cleansing Touch\n"
 
-			      "[3]: Reset Divine Sense\n" + "[4]: Use Lay on Hands to Heal\n" + "[5]: Use Lay on Hands to Cure Poison/Disease\n" +
+		self.paladin_options['5'] = self.use_divine_sense
+		self.paladin_options['6'] = self.set_current_divine_sense
+		self.paladin_options['7'] = self.use_lay_on_hands_to_heal
+		self.paladin_options['8'] = self.use_lay_on_hands_remove_poison
+		self.paladin_options['9'] = self.set_current_lay_on_hands_pool
+		self.paladin_options['10'] = self.use_channel_divinity
+		self.paladin_options['11'] = self.reset_channel_divinity
+		self.paladin_options['12'] = self.use_cleansing_touch
+		self.paladin_options['13'] = self.set_current_cleansing_touch
+		return self.paladin_options
 
-			      "[6]: Reset Lay on Hands Pool\n" + "[7]: Use Channel Divinity\n" + "[8]: Reset Channel Divinity\n" + "[9] Use Cleansing Touch\n" +
+	def change_paladin_level(self):
+		self.set_charisma()
+		self.change_half_caster_level()
+		self.set_max_cleansing_touch()
+		self.set_current_cleansing_touch()
+		self.set_max_lay_on_hands_pool()
+		self.set_current_lay_on_hands_pool()
+		self.set_max_divine_sense()
+		self.set_current_divine_sense()
 
-			      "[10]: Reset Cleansing Touch\n" + "[11]: Use Hit Dice\n" + "[12]: Reset Hit Dice\n" + "[13]: Change Level\n" + "[14]: Exit\n"))
+	def list_options(self):
+		selection = int(input(self.paladin_options.get("0")))
+		print(selection)
+		self.paladin_options["{}".format(selection)]()
 
-		if selection == 1:
-			self.use_cur_spell_slot()
-		elif selection == 2:
-			self.use_divine_sense()
-		elif selection == 3:
-			self.set_current_divine_sense()
-		elif selection == 4:
-			self.use_lay_on_hands_to_heal()
-		elif selection == 5:
-			self.use_lay_on_hands_remove_poison()
-		elif selection == 6:
-			self.set_current_lay_on_hands_pool()
-		elif selection == 7:
-			self.use_channel_divinity()
-		elif selection == 8:
-			self.reset_channel_divinity()
-		elif selection == 9:
-			self.use_cleansing_touch()
-		elif selection == 10:
-			self.set_current_cleansing_touch()
-		elif selection == 11:
-			self.use_hit_dice()
-		elif selection == 12:
-			self.reset_current_hit_dice()
-		elif selection == 13:
-			self.set_level()
-			self.set_hit_dice(self.get_level())
-			self.set_current_spell_slots(self.get_level())
-		elif selection == 14:
-			print("Leaving")
-			return
-
-	def create_paladin(self, name):
-		name = name
-		player = Devotion()
-		player.set_charisma()
-		player.set_level()
-		player.set_name(name)
-		player.set_max_spell_slots(player.get_level())
-		player.set_current_spell_slots(player.get_level())
-		player.set_hit_dice(player.get_level())
-		print("Name:" + player.get_name(), "Level:", + player.get_level(),
-		      "Slots" + player.get_current_spell_slot(player.get_level()))
-
-		return player
 
 class Devotion(Paladin):
 	def __init__(self):
 		self.holy_nimbus = False
+		self.devotion_options = {}
 		super().__init__()
 
 	def use_holy_nimbus(self):
@@ -173,71 +153,25 @@ class Devotion(Paladin):
 		else:
 			print("Holy Nimbus is still good to be used")
 
-	def list_devotion_options(self):
-		selection = int(
-			input("What action are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Use Divine Sense\n" +
+	def create_devotion_options(self):
+		self.devotion_options['0'] = "What action are you counting?\n" + "[14]: Use Holy Nimbus\n" + \
+					"[15]: Reset Holy Nimbus\n" + "[16]: Change Level\n" + "[17]: Exit\n"
+		self.devotion_options['14'] = self.use_holy_nimbus
+		self.devotion_options['15'] = self.reset_holy_nimbus
+		self.devotion_options['16'] = self.change_paladin_level
+		self.devotion_options['17'] = leave
+		return self.devotion_options
 
-			      "[3]: Reset Divine Sense\n" + "[4]: Use Lay on Hands to Heal\n" + "[5]: Use Lay on Hands to Cure Poison/Disease\n" +
+	def list_options(self):
+		selection = int(input(self.devotion_options.get("0")))
+		print(selection)
+		self.devotion_options["{}".format(selection)]()
 
-			      "[6]: Reset Lay on Hands Pool\n" + "[7]: Use Channel Divinity\n" + "[8]: Reset Channel Divinity\n" + "[9] Use Cleansing Touch\n" +
-
-			      "[10]: Reset Cleansing Touch\n" + "[11]: Use Holy Nimbus\n" + "[12]: Reset Holy Nimbus\n" +
-
-			      "[13]: Use Hit Dice\n" + "[14]: Reset Hit Dice\n" + "[15]: Change Level\n" + "[16]: Exit\n"))
-
-		if selection == 1:
-			self.use_cur_spell_slot()
-		elif selection == 2:
-			self.use_divine_sense()
-		elif selection == 3:
-			self.set_current_divine_sense()
-		elif selection == 4:
-			self.use_lay_on_hands_to_heal()
-		elif selection == 5:
-			self.use_lay_on_hands_remove_poison()
-		elif selection == 6:
-			self.set_current_lay_on_hands_pool()
-		elif selection == 7:
-			self.use_channel_divinity()
-		elif selection == 8:
-			self.reset_channel_divinity()
-		elif selection == 9:
-			self.use_cleansing_touch()
-		elif selection == 10:
-			self.set_current_cleansing_touch()
-		elif selection == 11:
-			self.use_holy_nimbus()
-		elif selection == 12:
-			self.reset_holy_nimbus()
-		elif selection == 13:
-			self.use_hit_dice()
-		elif selection == 14:
-			self.reset_current_hit_dice()
-		elif selection == 15:
-			self.set_level()
-			self.set_hit_dice(self.get_level())
-			self.set_current_spell_slots(self.get_level())
-		elif selection == 16:
-			print("Leaving")
-			return
-
-	def create_devotion_paladin(self, name):
-		name = name
-		player = Devotion()
-		player.set_charisma()
-		player.set_level()
-		player.set_name(name)
-		player.set_max_spell_slots(player.get_level())
-		player.set_current_spell_slots(player.get_level())
-		player.set_hit_dice(level)
-		print("Name:" + player.get_name(), "Level:", + player.get_level(),
-		      "Slots" + player.get_current_spell_slot(player.get_level()))
-
-		return player
 
 class Ancient(Paladin):
 	def __init__(self):
 		self.elder_champion = False
+		self.elder_options = {}
 		super().__init__()
 
 	def use_elder_champion(self):
@@ -397,6 +331,31 @@ class Vengeance(Paladin):
 		      "Slots" + player.get_current_spell_slot(player.get_level()))
 
 		return player
+
+
+def merge_base_paladin_dicts(player):
+	merge_dicts(player.merge_player_and_half(), player.create_paladin_options())
+	return player.paladin_options
+
+def create(name, subclass):
+	player = subclass()
+	player.set_name(name)
+	return player
+
+
+def create_paladin(name):
+	player = create(name, Devotion)
+	player.change_paladin_level()
+	merge_base_paladin_dicts(player)
+	return player
+
+
+def create_devotion_paladin(name):
+	player = create(name, Devotion)
+	player.change_paladin_level()
+	merge_dicts(merge_base_paladin_dicts(player), player.create_devotion_options())
+	return player
+
 
 def main_paladin_making(name, dictionary):
 	name = name

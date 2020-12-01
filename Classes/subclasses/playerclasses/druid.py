@@ -301,6 +301,12 @@ class Shepherd(Druid):
 		self.shepherd_options["{}".format(selection)]()
 
 
+def merge_base_druid_dicts(player):
+	druid_opts = player.create_druid_options()
+	merge_dicts(player.merge_base_and_fullspell_options(), druid_opts)
+	return druid_opts
+
+
 def create(name, subclass):
 	player = subclass()
 	player.set_name(name)
@@ -310,64 +316,35 @@ def create(name, subclass):
 def create_druid(name):
 	player = create(name, Druid)
 	player.change_druid_level()
-	default_player_opts = player.create_player_character_options()
-	default_spell_opts = player.create_fullcaster_character_options()
-	druid_opts = player.create_druid_options()
-	merge_dicts(default_player_opts, default_spell_opts)
-	merge_dicts(default_spell_opts, druid_opts)
+	merge_base_druid_dicts(player)
 	return player
 
 
 def create_dream_druid(name):
 	player = create(name, Dream)
 	player.change_dream_level()
-	player.create_dream_options()
-	default_player_opts = player.create_player_character_options()
-	default_spell_opts = player.create_fullcaster_character_options()
-	druid_opts = player.create_druid_options()
-	merge_dicts(default_player_opts, default_spell_opts)
-	merge_dicts(default_spell_opts, druid_opts)
-	merge_dicts(druid_opts, player.dream_options)
+	merge_dicts(merge_base_druid_dicts(player), player.create_dream_options())
 	return player
 
 
 def create_shepherd_druid(name):
-
 	player = create(name, Shepherd)
 	player.change_druid_level()
-	player.create_shepherd_options()
-	default_player_opts = player.create_player_character_options()
-	default_spell_opts = player.create_fullcaster_character_options()
-	druid_opts = player.create_druid_options()
-	merge_dicts(default_player_opts, default_spell_opts)
-	merge_dicts(default_spell_opts, druid_opts)
-	merge_dicts(druid_opts, player.shepherd_options)
+	merge_dicts(merge_base_druid_dicts(player), player.create_shepherd_options())
 	return player
 
 
 def create_land_druid(name):
 	player = create(name, Land)
 	player.change_land_level()
-	player.create_land_options()
-	default_player_opts = player.create_player_character_options()
-	default_spell_opts = player.create_fullcaster_character_options()
-	druid_opts = player.create_druid_options()
-	merge_dicts(default_player_opts, default_spell_opts)
-	merge_dicts(default_spell_opts, druid_opts)
-	merge_dicts(druid_opts, player.land_options)
+	merge_dicts(merge_base_druid_dicts(player), player.create_land_options())
 	return player
 
 
 def create_moon_druid(name):
 	player = create(name, Moon)
 	player.change_druid_level()
-	player.create_moon_options()
-	default_player_opts = player.create_player_character_options()
-	default_spell_opts = player.create_fullcaster_character_options()
-	druid_opts = player.create_druid_options()
-	merge_dicts(default_player_opts, default_spell_opts)
-	merge_dicts(default_spell_opts, druid_opts)
-	merge_dicts(druid_opts, player.moon_options)
+	merge_dicts(merge_base_druid_dicts(player), player.create_land_options())
 	return player
 
 

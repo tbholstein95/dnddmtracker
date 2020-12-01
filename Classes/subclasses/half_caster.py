@@ -1,5 +1,5 @@
 from Classes.playercharacter import *
-
+half_caster_dict = {}
 class HalfCaster(PlayerCharacter):
 	def __init__(self):
 		self.max_slots = [0] * 10
@@ -66,5 +66,23 @@ class HalfCaster(PlayerCharacter):
 	def get_all_current_spell_slots(self, level):
 		print(self.current_slots[1: level])
 		return self.current_slots[1:level]
+
+	def create_halfcaster_character_options(self):
+		# Player class uses 1 & 2. Fill out 0 for merging later.  Starts at 3
+		half_caster_dict['0'] = "[3]: Cast Spell\n[4]: Reset Spells\n"
+		half_caster_dict['3'] = self.use_cur_spell_slot
+		half_caster_dict['4'] = self.set_current_spell_slots
+		return half_caster_dict
+
+	def merge_player_and_half(self):
+		player_class = self.create_player_character_options()
+		spell_opts = self.create_halfcaster_character_options()
+		merge_dicts(player_class, spell_opts)
+		return spell_opts
+
+	def change_half_caster_level(self):
+		self.base_change_level()
+		self.set_max_spell_slots()
+		self.set_current_spell_slots()
 
 

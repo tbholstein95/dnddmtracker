@@ -317,14 +317,14 @@ def create_glamour_bard(name):
 
 def create_swords_bard(name):
 	player = create(name, Swords)
-	player.change_level_options()
+	player.change_level_option()
 	merge_dicts(merge_base_bard_dicts(player), player.create_swords_options())
 	return player
 
 
 def create_whispers_bard(name):
 	player = create(name, Whispers)
-	player.change_level_options()
+	player.change_level_option()
 	merge_dicts(merge_base_bard_dicts(player), player.create_swords_options())
 	return player
 
@@ -342,7 +342,7 @@ def main_bard_making(name, dictionary):
 		new_options = Whispers.list_options
 	else:
 		p1 = create_bard(name)
-		new_options = 0
+		new_options = Bard.list_options
 
 	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass, "new_options": new_options}
 

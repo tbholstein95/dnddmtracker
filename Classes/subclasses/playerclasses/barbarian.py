@@ -65,7 +65,6 @@ class Barbarian(PlayerCharacter):
 		self.default_barb_options['3'] = self.use_rage
 		self.default_barb_options['4'] = self.use_reckless_strikes
 		self.default_barb_options['5'] = self.reset_reckless_strikes
-
 		return self.default_barb_options
 
 	def change_barb_level(self):
