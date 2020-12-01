@@ -14,7 +14,7 @@ def leave():
 	return 0
 
 
-class PlayerCharacter():
+class PlayerCharacter:
 	def __init__(self):
 		self.name = None
 		self.level = 0

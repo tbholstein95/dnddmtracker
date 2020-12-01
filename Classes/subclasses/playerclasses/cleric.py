@@ -233,20 +233,19 @@ class Tempest(Cleric):
 		self.set_max_list_spell_slots(self.get_level())
 		self.set_current_list_spell_slots()
 
-	def list_tempest_options(self):
+	def create_tempest_options(self):
 		self.tempest_options['0'] = "[9]: Wrath of the Storm\n" + "[10]: Reset Wrath of the Storm\n" + \
 					"[13]: Change Level\n" + "[14]: Exit\n"
 		self.tempest_options['9'] = self.use_wrath_of_the_storm
 		self.tempest_options['10'] = self.reset_cur_wrath_of_the_storm
 		self.tempest_options['11'] = self.change_tempest_level
 		self.tempest_options['12'] = leave
+		return self.tempest_options
 
 	def list_options(self):
-		def list_options(self):
-			selection = int(input(self.tempest_options.get("0")))
-			print(selection)
-			self.tempest_options["{}".format(selection)]()
-
+		selection = int(input(self.tempest_options.get("0")))
+		print(selection)
+		self.tempest_options["{}".format(selection)]()
 
 
 class War(Cleric):
@@ -286,59 +285,28 @@ class War(Cleric):
 		else:
 			self.cur_bonus_attack -= 1
 
-	def create_war_cleric(self, name):
-		name = name
-		player = War()
-		player.set_level()
-		player.set_name(name)
-		player.set_max_list_spell_slots(player.get_level())
-		player.set_current_list_spell_slots()
-		player.set_wisdom()
-		player.set_max_bonus_attack()
-		player.reset_cur_bonus_attack()
-		player.set_hit_dice(player.get_level())
-		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Wisdom:", + player.get_wisdom(),
+	def change_war_level(self):
+		self.set_level()
+		self.set_max_list_spell_slots(self.get_level())
+		self.set_current_list_spell_slots()
+		self.set_wisdom()
+		self.set_max_bonus_attack()
+		self.reset_cur_bonus_attack()
+		self.set_hit_dice(self.get_level())
 
-		      "Warding:", (+ player.get_max_bonus_attack(), "Slots" + player.get_cur_spell_slot(self.get_level())))
+	def create_war_options(self):
+		self.war_options['0'] = "[9]: Use Bonus Attack\n" + "[10]: Reset Bonus Attacks\n" + "[11]: Change Level\n" \
+					+ "[12]: Exit\n"
+		self.war_options['9'] = self.use_bonus_attack
+		self.war_options['10'] = self.reset_cur_bonus_attack
+		self.war_options['11'] = self.change_war_level
+		self.war_options['12'] = leave
+		return self.war_options
 
-		return player
-
-	def list_war_options(self):
-		selection = int(input(
-			"What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Reset Spells\n" + "[3]: Use Channel Divinity\n" +
-
-			"[4]: Reset Channel Divinity\n" + "[5]: Use Divine Intervention\n" + "[6]: Reset Divine Intervention\n" +
-
-			"[7]: Use Bonus Attack\n" + "[8]: Reset Bonus Attacks\n" + "[9]: Use Hit Dice\n" + "[10]: Reset Hit Dice\n" +
-
-			"[11]: Change Level\n" + "[12]: Exit\n"))
-
-		if selection == 1:
-			self.use_cur_spell_slot()
-		if selection == 2:
-			self.set_current_list_spell_slots()
-		if selection == 3:
-			self.use_channel_divinity()
-		elif selection == 4:
-			self.set_channel_divinity_max(self.get_level())
-		elif selection == 5:
-			self.use_divine_intervention()
-		elif selection == 6:
-			self.set_divine_intervention(False)
-		elif selection == 7:
-			self.use_bonus_attack()
-		elif selection == 8:
-			self.reset_cur_bonus_attack()
-		elif selection == 9:
-			self.use_hit_dice()
-		elif selection == 10:
-			self.reset_current_hit_dice()
-		elif selection == 11:
-			self.set_level()
-			self.set_hit_dice(self.get_level())
-		elif selection == 12:
-			print("Leaving")
-			return
+	def list_options(self):
+		selection = int(input(self.war_options.get("0")))
+		print(selection)
+		self.war_options["{}".format(selection)]()
 
 
 class Grave(Cleric):
@@ -349,6 +317,7 @@ class Grave(Cleric):
 		self.max_sentinel_at_deaths_door = 0
 		self.cur_sentinel_at_deaths_door = 0
 		self.wisdom = 0
+		self.grave_options = {}
 		super().__init__()
 
 	def get_wisdom(self):
@@ -400,86 +369,58 @@ class Grave(Cleric):
 		else:
 			self.cur_sentinel_at_deaths_door -= 1
 
-	def create_grave_cleric(self, name):
-		name = name
-		player = Grave()
-		player.set_level()
-		player.set_name(name)
-		player.set_max_list_spell_slots(self.get_level())
-		player.set_current_list_spell_slots()
-		player.set_wisdom()
-		player.set_max_sentinel_at_deaths_door()
-		player.set_max_eyes_of_the_grave()
-		player.reset_cur_sentinel_at_deaths_door()
-		player.reset_cur_eyes_of_the_grave()
-		player.set_hit_dice(self.get_level())
-		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Wisdom:", + player.get_wisdom(), (
-			"Eyes of the Grave:", + player.get_max_eyes_of_the_grave(), (
-				"Sentinel:", + player.get_max_sentinel_at_deaths_door(),
-				"Slots" + player.get_cur_spell_slot(self.get_level()))))
+	def change_grave_level(self):
+		self.change_level()
+		self.set_wisdom()
+		self.set_max_sentinel_at_deaths_door()
+		self.set_max_eyes_of_the_grave()
+		self.reset_cur_sentinel_at_deaths_door()
+		self.reset_cur_eyes_of_the_grave()
 
-		return player
+	def create_grave_options(self):
+		self.grave_options['0'] = "[9]: Use Sentinel at Deaths Door\n" + "[10]: Reset Sentinel at Death's Door\n" + \
+					"[11]: Use Eyes of the Grave\n" + "[12] Reset Eyes of the Grave\n" + "[13]: Change Level\n" + "[14]: Exit\n"
+		self.grave_options['9'] = self.use_sentinel_at_deaths_door
+		self.grave_options['10'] = self.reset_cur_sentinel_at_deaths_door
+		self.grave_options['11'] = self.use_eyes_of_the_grave
+		self.grave_options['12'] = self.reset_cur_eyes_of_the_grave
+		self.grave_options['13'] = self.change_grave_level
+		self.grave_options['14'] = leave
 
-	def list_grave_options(self):
-		selection = int(
-			input(
-				"What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Reset Spells\n" + "[3]: Use Channel Divinity\n" +
+		return self.grave_options
 
-				"[4]: Reset Channel Divinity\n" + "[5]: Use Divine Intervention\n" + "[6]: Reset Divine Intervention\n" +
-
-				"[7]: Use Sentinel at Deaths Door\n" + "[8]: Reset Sentinel at Death's Door\n" +
-
-				"[9]: Use Eyes of the Grave\n" + "[10] Reset Eyes of the Grave\n" + "[11]: Use Hit Dice\n" +
-
-				"[12]: Reset Hit Dice\n" + "[13]: Change Level\n" + "[14]: Exit\n"))
-
-		if selection == 1:
-			self.use_cur_spell_slot()
-		elif selection == 2:
-			self.set_current_list_spell_slots()
-		elif selection == 3:
-			self.use_channel_divinity()
-		elif selection == 4:
-			self.set_channel_divinity_max(self.get_level())
-		elif selection == 5:
-			self.use_divine_intervention()
-		elif selection == 6:
-			self.set_divine_intervention(False)
-		elif selection == 7:
-			self.use_sentinel_at_deaths_door()
-		elif selection == 8:
-			self.reset_cur_sentinel_at_deaths_door()
-		elif selection == 9:
-			self.use_eyes_of_the_grave()
-		elif selection == 10:
-			self.reset_cur_eyes_of_the_grave()
-		elif selection == 11:
-			self.use_hit_dice()
-		elif selection == 12:
-			self.reset_current_hit_dice()
-		elif selection == 13:
-			self.set_level()
-			self.set_hit_dice(self.get_level())
-		elif selection == 14:
-			print("Leaving")
-			return
+	def list_options(self):
+		selection = int(input(self.grave_options.get("0")))
+		print(selection)
+		self.grave_options["{}".format(selection)]()
 
 
 def create(name, subclass):
 	player = subclass()
 	player.set_name(name)
-	# player.set_level()
-	# player.set_max_list_spell_slots(player.get_level())
-	# player.set_current_list_spell_slots()
-	# player.set_hit_dice(player.get_level())
 	return player
 
 
 def create_cleric(name):
 	player = create(name, Cleric)
+	player.change_level()
 	default_player_opts = player.create_player_character_options()
 	cleric_opts = player.create_cleric_options()
 	merge_dicts(default_player_opts, cleric_opts)
+	return player
+
+
+def create_grave_cleric(name):
+	player = Grave()
+	player.set_name(name)
+	player.change_grave_level()
+	player.create_grave_options()
+	default_player_opts = player.create_player_character_options()
+	default_spell_opts = player.create_fullcaster_character_options()
+	cleric_opts = player.create_cleric_options()
+	merge_dicts(default_player_opts, default_spell_opts)
+	merge_dicts(default_spell_opts, cleric_opts)
+	merge_dicts(cleric_opts, player.grave_options)
 	return player
 
 
@@ -515,11 +456,24 @@ def create_tempest_cleric(name):
 	player.change_tempest_level()
 	default_player_opts = player.create_player_character_options()
 	default_spell_opts = player.create_fullcaster_character_options()
+	player.create_tempest_options()
 	cleric_opts = player.create_cleric_options()
-	tempest_opts = player.tempest_options
 	merge_dicts(default_player_opts, default_spell_opts)
 	merge_dicts(default_player_opts, cleric_opts)
-	merge_dicts(cleric_opts, tempest_opts)
+	merge_dicts(cleric_opts, player.tempest_options)
+	return player
+
+
+def create_war_cleric(name):
+	player = create(name, War)
+	player.change_war_level()
+	player.create_war_options()
+	default_player_opts = player.create_player_character_options()
+	default_spell_opts = player.create_fullcaster_character_options()
+	cleric_opts = player.create_cleric_options()
+	merge_dicts(default_player_opts, default_spell_opts)
+	merge_dicts(default_player_opts, cleric_opts)
+	merge_dicts(cleric_opts, player.war_options)
 	return player
 
 
@@ -535,17 +489,13 @@ def main_cleric_making(name, dictionary):
 		p1 = create_tempest_cleric(name)
 		new_options = Tempest.list_options
 	elif player_subclass == "War":
-		p1 = War()
-		p1 = p1.create_war_cleric(name)
-		class_options = War.list_war_options
+		p1 = create_war_cleric(name)
+		new_options = War.list_options
 	elif player_subclass == "Grave":
-		p1 = Grave()
-		p1.create_grave_cleric(name)
-		class_options = Grave.list_grave_options
+		p1 = create_grave_cleric(name)
+		new_options = Grave.list_options
 	else:
 		p1 = create_cleric(name)
 		new_options = 0
-
-	# cleric_dict[f'{p1.get_name()}'] = {"character": p1, "subclass": player_subclass, "options": class_options}
 
 	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass, "new_options": new_options}

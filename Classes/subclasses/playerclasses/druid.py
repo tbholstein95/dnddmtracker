@@ -8,6 +8,7 @@ class Druid(FullCaster):
 	def __init__(self):
 		self.max_wild_shape = 2
 		self.current_wild_shape = 0
+		self.default_druid_options = {}
 		super().__init__()
 
 	def get_max_wild_shape(self):
@@ -32,53 +33,29 @@ class Druid(FullCaster):
 		else:
 			self.current_wild_shape -= 1
 
+	def create_druid_options(self):
+		self.default_druid_options['0'] = "[5]: Use Wildshape\n" + "[6]: Reset Wildshape\n"
+		self.default_druid_options['5'] = self.use_wild_shape
+		self.default_druid_options['6'] = self.set_current_wild_shape
+		return self.default_druid_options
+
+	def change_druid_level(self):
+		self.set_level()
+		self.set_max_list_spell_slots(self.get_level())
+		self.set_current_list_spell_slots()
+		self.set_max_hit_dice(self.get_level())
+		self.set_hit_dice(self.get_level())
+
 	def list_druid_options(self):
-		selection = int(
-
-			input("What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Reset Spells\n" +
-
-			"[1]: Use Wildshape\n" + "[2]: Reset Wildshape\n" + "[3]: Use Hit Dice\n" + "[4]: Reset Hit Dice\n" +
-
-			"[5]: Change Level\n" + "[6]: Exit\n"))
-
-		if selection == 1:
-			self.use_cur_spell_slot()
-		elif selection == 2:
-			self.set_current_list_spell_slots()
-		elif selection == 3:
-			self.use_wild_shape()
-		elif selection == 4:
-			self.set_current_wild_shape()
-		elif selection == 5:
-			self.use_hit_dice()
-		elif selection == 6:
-			amount = self.get_level()
-			self.set_hit_dice(amount)
-		elif selection == 7:
-			self.set_level()
-			level = self.get_level()
-			self.set_max_list_spell_slots(level)
-			self.copy_slots(self.max_slots)
-		elif selection == 6:
-			print("backing")
-			return 0
-
-
-	def create_druid(self, name):
-		name = name
-		player = Druid()
-		player.set_level()
-		player.set_name(name)
-		player.set_max_list_spell_slots(player.get_level())
-		player.set_current_list_spell_slots()
-		player.set_hit_dice(player.get_level())
-		print("Name:" + player.get_name(), "Level:", + player.get_level())
-		return player
+		selection = int(input(self.default_druid_options.get("0")))
+		print(selection)
+		self.default_druid_options["{}".format(selection)]()
 
 
 class Land(Druid):
 	def __init__(self):
 		self.natural_recovery = False
+		self.land_options = {}
 		super().__init__()
 
 	def get_natural_recovery(self):
@@ -111,58 +88,34 @@ class Land(Druid):
 						self.current_slots[restoring] += quant_restoring
 			self.set_natural_recovery(True)
 
-	def create_land_druid(self, name):
-		name = name
-		player = Land()
-		player.set_level()
-		player.set_name(name)
-		player.set_max_list_spell_slots(player.get_level())
-		player.set_current_list_spell_slots()
-		player.set_hit_dice(player.get_level())
-		print("Name:" + player.get_name(), "Level:", + player.get_level())
+	def reset_natural_recovery(self):
+		self.natural_recovery = False
 
-		return player
+	def change_land_level(self):
+		self.set_level()
+		self.set_max_list_spell_slots(self.get_level())
+		self.set_current_list_spell_slots()
+		self.set_max_hit_dice(self.get_level())
+		self.reset_current_hit_dice()
 
-	def list_land_options(self):
-		selection = int(
+	def create_land_options(self):
+		self.land_options['0'] = "[5]: Use Natural Recovery\n" + "[6]: Reset Natural Recovery\n" + \
+					"[7]: Change Level\n" + "[8]: Exit\n"
+		self.land_options['5'] = self.use_natural_recovery
+		self.land_options['6'] = self.reset_natural_recovery
+		self.land_options['7'] = self.change_land_level
+		self.land_options['8'] = leave
+		return self.land_options
 
-			input("What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]Reset Spell Slots\n" +
-
-			"[3]: Use Wildshape\n" + "[4]: Reset Wildshape\n" + "[5]: Use Natural Recovery\n" +
-
-			"[6]: Reset Natural Recovery\n" + "[7]: Use Hit Dice\n" + "[8]: Reset Hit Dice\n" +
-
-			"[9]: Change Level\n" + "[10]: Exit\n"))
-
-		if selection == 1:
-			self.use_cur_spell_slot()
-		elif selection == 2:
-			self.set_current_list_spell_slots()
-		elif selection == 3:
-			self.use_wild_shape()
-		elif selection == 4:
-			self.set_current_wild_shape()
-		elif selection == 5:
-			self.use_natural_recovery()
-		elif selection == 6:
-			self.set_natural_recovery(False)
-		elif selection == 7:
-			self.use_hit_dice()
-		elif selection == 8:
-			amount = self.get_level()
-			self.set_hit_dice(amount)
-		elif selection == 9:
-			self.set_level()
-			level = self.get_level()
-			self.set_max_list_spell_slots(level)
-			self.copy_slots(self.max_slots)
-		elif selection == 10:
-			print("backing")
-			return 0
+	def list_options(self):
+		selection = int(input(self.land_options.get("0")))
+		print(selection)
+		self.land_options["{}".format(selection)]()
 
 
 class Moon(Druid):
 	def __init__(self):
+		self.moon_options = {}
 		super().__init__()
 
 	def use_combat_wildshape_heal(self):
@@ -174,50 +127,17 @@ class Moon(Druid):
 			self.use_cur_spell_slot()
 			print("Used a spell slot to heal")
 
-	def create_moon_druid(self, name):
-		name = name
-		player = Moon()
-		player.set_level()
-		player.set_name(name)
-		player.set_max_list_spell_slots(player.get_level())
-		player.set_current_list_spell_slots()
-		player.set_hit_dice(player.get_level())
-		print("Name:" + player.get_name(), "Level:", + player.get_level())
+	def create_moon_options(self):
+		self.moon_options['0'] = "[5]: Use Combat WildShape Heal\n" + "[6]: Change Level\n" + "[7]: Exit\n"
+		self.moon_options['5'] = self.use_combat_wildshape_heal
+		self.moon_options['6'] = self.change_druid_level
+		self.moon_options['7'] = leave
+		return self.moon_options
 
-		return player
-
-	def list_moon_options(self):
-		selection = int(
-
-			input("What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Reset Spells\n" +
-
-			"[3]: Use Wildshape\n" + "[4]: Reset Wildshape\n" + "[5]: Use Combat WildShape Heal\n" +
-
-			"[6]: Use Hit Dice\n" + "[7]: Reset Hit Dice\n" + "[8]: Change Level\n" + "[9]: Exit\n"))
-
-		if selection == 1:
-			self.use_cur_spell_slot()
-		elif selection == 2:
-			self.set_current_list_spell_slots()
-		elif selection == 3:
-			self.use_wild_shape()
-		elif selection == 4:
-			self.set_current_wild_shape()
-		elif selection == 5:
-			self.use_combat_wildshape_heal()
-		elif selection == 6:
-			self.use_hit_dice()
-		elif selection == 7:
-			amount = self.get_level()
-			self.set_hit_dice(amount)
-		elif selection == 8:
-			self.set_level()
-			level = self.get_level()
-			self.set_max_list_spell_slots(level)
-			self.copy_slots(self.max_slots)
-		elif selection == 9:
-			print("backing")
-			return 0
+	def list_options(self):
+		selection = int(input(self.moon_options.get("0")))
+		print(selection)
+		self.moon_options["{}".format(selection)]()
 
 
 class Dream(Druid):
@@ -228,6 +148,7 @@ class Dream(Druid):
 		self.max_hidden_paths = 0
 		self.current_hidden_paths = 0
 		self.walker_in_dreams = False
+		self.dream_options = {}
 		super().__init__()
 
 	def set_wisdom(self):
@@ -248,10 +169,6 @@ class Dream(Druid):
 
 	def use_current_summer_court_dice(self, amount):
 		self.cur_summer_court_dice -= amount
-
-	def use_current_hidden_paths(self):
-		self.current_hidden_paths -= 1
-		print(f"Used Hidden Paths! {self.get_current_hidden_paths()} Hidden Paths left!")
 
 	def set_current_hidden_paths(self):
 		amount = self.get_max_hidden_paths
@@ -289,71 +206,46 @@ class Dream(Druid):
 			print("Not available to use until after Long Rest")
 			return
 		else:
-			self.use_current_hidden_paths()
+			self.current_hidden_paths -= 1
 
-	def create_dream_druid(self, name):
-		name = name
-		player = Dream()
-		player.set_level()
-		player.set_name(name)
-		player.set_max_list_spell_slots(player.get_level())
-		player.set_current_list_spell_slots()
-		player.set_max_hidden_paths()
-		player.set_max_summer_court_dice()
-		player.set_current_hidden_paths()
-		player.set_current_summer_court_dice()
-		player.set_wisdom()
-		player.set_max_hidden_paths()
-		player.set_current_hidden_paths()
-		player.set_hit_dice(player.get_level())
-		print("Name:" + player.get_name(), "Level:", + player.get_level())
+	def change_dream_level(self):
+		self.set_level()
+		self.set_wisdom()
+		self.set_max_hidden_paths()
+		self.set_max_summer_court_dice()
+		self.set_current_hidden_paths()
+		self.set_current_summer_court_dice()
+		self.set_max_hidden_paths()
+		self.set_current_hidden_paths()
+		self.set_max_list_spell_slots(self.get_level())
+		self.set_current_list_spell_slots()
+		self.set_max_hit_dice(self.get_level())
+		self.set_hit_dice(self.get_level())
 
-		return player
+	def create_dream_options(self):
+		self.dream_options['0'] = "[5]: Use Balm of the Summer Court\n" + "[6]: Reset Balm of the Summer court\n" + \
+					"[7]: Use Hidden Paths\n" + "[8]: Reset Hidden Paths" + "[9]: Change Level\n" + \
+					"[10]: Exit\n"
 
-	def list_dream_options(self):
-		selection = int(
-			input("What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Reset Spells\n" + "[1]: Use Wildshape\n" +
+		self.dream_options['5'] = self.use_summer_court
+		self.dream_options['6'] = self.set_current_summer_court_dice
+		self.dream_options['7'] = self.use_hidden_paths
+		self.dream_options['8'] = self.set_current_hidden_paths
+		self.dream_options['9'] = self.change_dream_level
+		self.dream_options['10'] = leave
+		return self.dream_options
 
-			"[2]: Reset Wildshape\n" + "[3]: Use Balm of the Summer Court\n" + "[4]: Reset Balm of the Summer court\n" +
+	def list_options(self):
+		selection = int(input(self.dream_options.get("0")))
+		print(selection)
+		self.dream_options["{}".format(selection)]()
 
-			"[5]: Use Hidden Paths\n" + "[6]: Reset Hidden Paths" + "[7]: Use Hit Dice\n" + "[8]: Reset Hit Dice\n" +
-
-			"[9]: Change Level\n" + "[10]: Exit\n"))
-		if selection == 1:
-			self.use_cur_spell_slot()
-		elif selection == 2:
-			self.set_current_list_spell_slots()
-		elif selection == 3:
-			self.use_wild_shape()
-		elif selection == 4:
-			self.set_current_wild_shape()
-		elif selection == 5:
-			self.use_summer_court()
-		elif selection == 6:
-			self.set_current_summer_court_dice()
-		elif selection == 7:
-			self.use_hidden_paths()
-		elif selection == 8:
-			self.set_current_hidden_paths()
-		elif selection == 9:
-			self.use_hit_dice()
-		elif selection == 10:
-			amount = self.get_level()
-			self.set_hit_dice(amount)
-		elif selection == 11:
-			self.set_level()
-			level = self.get_level()
-			self.set_max_list_spell_slots(level)
-			self.copy_slots(self.max_slots)
-			self.set_wisdom()
-		elif selection == 12:
-			print("backing")
-			return 0
 
 class Shepherd(Druid):
 	def __init__(self):
 		self.spirit_totem = False
 		self.faithful_summons = False
+		self.shepherd_options = {}
 		super().__init__()
 
 	def get_spirit_totem(self):
@@ -364,6 +256,9 @@ class Shepherd(Druid):
 
 	def set_spirit_totem(self, truefalse):
 		self.spirit_totem = truefalse
+
+	def reset_spirit_totem(self):
+		self.set_spirit_totem(False)
 
 	def set_faithful_summons(self, truefalse):
 		self.faithful_summons = truefalse
@@ -385,84 +280,113 @@ class Shepherd(Druid):
 			print("Used Faithful Summons")
 			self.set_faithful_summons(True)
 
-	def create_shepherd_druid(self, name):
-		name = name
-		player = Shepherd()
-		player.set_level()
-		player.set_name(name)
-		player.set_max_list_spell_slots(player.get_level())
-		player.set_current_list_spell_slots()
-		player.set_hit_dice(player.get_level())
-		print("Name:" + player.get_name(), "Level:", + player.get_level())
+	def reset_faithful_summons(self):
+		self.set_faithful_summons(False)
 
-		return player
+	def create_shepherd_options(self):
+		self.shepherd_options['0'] = "[5]: Use Spirit Totem\n" + "[6]: Reset Spirit Totem\n" + "[7]: Use Faithful Summons\n" \
+					+ "[8]: Reset Faithful Summons\n" + "[9]: Change Level\n" + "[10]: Exit\n"
 
-	def list_shepherd_options(self):
-		selection = int(input("What action are you counting?\n" + "[1]: Cast Spell\n" + "[2]: Reset Spells\n" +
+		self.shepherd_options['5'] = self.use_spirit_totem
+		self.shepherd_options['6'] = self.reset_spirit_totem
+		self.shepherd_options['7'] = self.use_faithful_summons
+		self.shepherd_options['8'] = self.reset_faithful_summons
+		self.shepherd_options['9'] = self.change_druid_level
+		self.shepherd_options['10'] = leave
+		return self.shepherd_options
 
-			"[3]: Use Wildshape\n" + "[4]: Reset Wildshape\n" + "[5]: Use Spirit Totem\n" +
+	def list_options(self):
+		selection = int(input(self.shepherd_options.get("0")))
+		print(selection)
+		self.shepherd_options["{}".format(selection)]()
 
-			"[6]: Reset Spirit Totem\n" + "[7]: Use Faithful Summons\n" + "[8]: Reset Faithful Summons\n" +
 
-			"[9]: Use Hit Dice\n" + "[10]: Reset Hit Dice\n" + "[11]: Change Level\n" + "[12]: Exit\n"))
+def create(name, subclass):
+	player = subclass()
+	player.set_name(name)
+	return player
 
-		if selection == 1:
-			self.use_cur_spell_slot()
-		elif selection == 2:
-			self.set_current_list_spell_slots()
-		elif selection == 3:
-			self.use_wild_shape()
-		elif selection == 4:
-			self.set_current_wild_shape()
-		elif selection == 5:
-			self.use_spirit_totem()
-		elif selection == 6:
-			self.set_spirit_totem(False)
-		elif selection == 7:
-			self.use_faithful_summons()
-		elif selection == 8:
-			self.set_faithful_summons((False))
-		elif selection == 9:
-			self.use_hit_dice()
-		elif selection == 10:
-			amount = self.get_level()
-			self.set_hit_dice(amount)
-		elif selection == 11:
-			self.set_level()
-			level = self.get_level()
-			self.set_max_list_spell_slots(level)
-			self.copy_slots(self.max_slots)
-		elif selection == 12:
-			print("backing")
-			return 0
+
+def create_druid(name):
+	player = create(name, Druid)
+	player.change_druid_level()
+	default_player_opts = player.create_player_character_options()
+	default_spell_opts = player.create_fullcaster_character_options()
+	druid_opts = player.create_druid_options()
+	merge_dicts(default_player_opts, default_spell_opts)
+	merge_dicts(default_spell_opts, druid_opts)
+	return player
+
+
+def create_dream_druid(name):
+	player = create(name, Dream)
+	player.change_dream_level()
+	player.create_dream_options()
+	default_player_opts = player.create_player_character_options()
+	default_spell_opts = player.create_fullcaster_character_options()
+	druid_opts = player.create_druid_options()
+	merge_dicts(default_player_opts, default_spell_opts)
+	merge_dicts(default_spell_opts, druid_opts)
+	merge_dicts(druid_opts, player.dream_options)
+	return player
+
+
+def create_shepherd_druid(name):
+
+	player = create(name, Shepherd)
+	player.change_druid_level()
+	player.create_shepherd_options()
+	default_player_opts = player.create_player_character_options()
+	default_spell_opts = player.create_fullcaster_character_options()
+	druid_opts = player.create_druid_options()
+	merge_dicts(default_player_opts, default_spell_opts)
+	merge_dicts(default_spell_opts, druid_opts)
+	merge_dicts(druid_opts, player.shepherd_options)
+	return player
+
+
+def create_land_druid(name):
+	player = create(name, Land)
+	player.change_land_level()
+	player.create_land_options()
+	default_player_opts = player.create_player_character_options()
+	default_spell_opts = player.create_fullcaster_character_options()
+	druid_opts = player.create_druid_options()
+	merge_dicts(default_player_opts, default_spell_opts)
+	merge_dicts(default_spell_opts, druid_opts)
+	merge_dicts(druid_opts, player.land_options)
+	return player
+
+
+def create_moon_druid(name):
+	player = create(name, Moon)
+	player.change_druid_level()
+	player.create_moon_options()
+	default_player_opts = player.create_player_character_options()
+	default_spell_opts = player.create_fullcaster_character_options()
+	druid_opts = player.create_druid_options()
+	merge_dicts(default_player_opts, default_spell_opts)
+	merge_dicts(default_spell_opts, druid_opts)
+	merge_dicts(druid_opts, player.moon_options)
+	return player
+
 
 def main_druid_making(name, dictionary):
-	name = name
-	player_subclass = input("What is their subclass?")
-	player_subclass = player_subclass.capitalize()
+	player_subclass = input("What is their subclass?").capitalize()
 	if player_subclass == "Land":
-		p1 = Land()
-		p1 = p1.create_land_druid(name)
-		class_options = Land.list_land_options
+		p1 = create_land_druid(name)
+		new_options = Land.list_options
 	elif player_subclass == "Moon":
-		p1 = Moon()
-		p1 = p1.create_moon_druid(name)
-		class_options = Moon.list_moon_options
+		p1 = create_moon_druid(name)
+		new_options = Moon.list_options
 	elif player_subclass == "Dream":
-		p1 = Dream()
-		p1 = p1.create_dream_druid(name)
-		class_options = Dream.list_dream_options
+		p1 = create_dream_druid(name)
+		new_options = Dream.list_options
 	elif player_subclass == "Shepherd":
-		p1 = Shepherd()
-		p1 = p1.create_shepherd_druid(name)
-		class_options = Shepherd.list_shepherd_options
+		p1 = create_shepherd_druid(name)
+		new_options = Shepherd.list_options
 	else:
-		p1 = Druid()
-		p1 = p1.create_druid(name)
-		class_options = Druid.list_druid_options
+		p1 = create_druid(name)
+		new_options = Druid.list_druid_options
 
-	druid_dict[f'{p1.get_name()}'] = {"character": p1, "subclass": player_subclass,
-					 "options": class_options}
-
-	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass,
-				 "options": class_options}
+	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass, "new_options": new_options}
