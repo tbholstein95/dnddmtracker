@@ -9,6 +9,7 @@ class Fighter(PlayerCharacter):
 		self.action_surge = False
 		self.max_indomitable = 0
 		self.current_indomitable = 0
+		self.fighter_options = {}
 		super().__init__()
 
 	def set_second_wind(self, truefalse):
@@ -16,6 +17,9 @@ class Fighter(PlayerCharacter):
 
 	def set_action_surge(self, truefalse):
 		self.action_surge = truefalse
+
+	def reset_action_surge(self):
+		self.set_action_surge(False)
 
 	def set_max_indomitable(self):
 		level = self.get_level()
@@ -61,6 +65,9 @@ class Fighter(PlayerCharacter):
 			print("Used Second Wind")
 			self.set_second_wind(True)
 
+	def reset_second_wind(self):
+		self.set_second_wind(False)
+
 	def use_action_surge(self):
 		if self.get_action_surge():
 			print("Cannot use Action Surge until short or long rest")
@@ -69,57 +76,33 @@ class Fighter(PlayerCharacter):
 			print("Used Action Surge")
 			self.set_action_surge(True)
 
-	def create_fighter(self, name):
-		name = name
-		player = Fighter()
-		player.set_level()
-		player.set_hit_dice(player.get_level())
-		player.set_name(name)
-		print('Name:' + player.get_name(), ' Level:', player.get_level(), ' Hit Dice:', player.get_hit_dice())
+	def create_fighter_options(self):
+		self.fighter_options['0'] = "[3]: Use Second Wind\n" + "[4]: Reset Second Wind\n " + "[5]: Use Action Surge\n " + \
+					"[6]: Reset Action Surge\n" + "[7]: Use Indomitable\n" + "[8]: Reset Indomitable\n"
+		self.fighter_options['3'] = self.use_second_wind
+		self.fighter_options['4'] = self.reset_second_wind
+		self.fighter_options['5'] = self.use_action_surge
+		self.fighter_options['6'] = self.reset_action_surge
+		self.fighter_options['7'] = self.use_indomitable
+		self.fighter_options['8'] = self.set_current_indomitable
+		return self.fighter_options
 
-		return player
+	def change_fighter_level(self):
+		self.base_change_level()
+		self.set_max_indomitable()
+		self.set_current_indomitable()
 
-	def list_fighter_options(self):
-		selection = int(
-			input(
-			"What action are you counting?\n" + "[1]: Use Second Wind\n" + "[2]: Reset Second Wind\n " +
-
-			"[3]: Use Action Surge\n " + "[4]: Reset Action Surge\n" + "[5]: Use Indomitable\n" +
-
-			"[6]: Reset Indomitable\n" + "[7]: Use Hit Dice \n " + "[8]: Reset Hit Dice\n" +
-
-			"[9]: Change Level\n" + "[10]: Exit\n"))
-
-		if selection == 1:
-			self.use_second_wind()
-		elif selection == 2:
-			self.set_second_wind(True)
-		elif selection == 3:
-			self.use_action_surge()
-		elif selection == 4:
-			self.set_action_surge(True)
-		elif selection == 5:
-			self.use_indomitable()
-		elif selection == 6:
-			self.set_current_indomitable()
-		elif selection == 7:
-			self.use_hit_dice()
-			print("Current hit dice: ", self.get_hit_dice())
-		elif selection == 8:
-			amount = self.get_level()
-			self.set_hit_dice(amount)
-		elif selection == 9:
-			self.set_level()
-			amount = self.get_level()
-			self.set_hit_dice(amount)
-		elif selection == 10:
-			return 0
+	def list_options(self):
+		selection = int(input(self.fighter_options.get("0")))
+		print(selection)
+		self.fighter_options["{}".format(selection)]()
 
 
 class BattleMaster(Fighter):
 	def __init__(self):
 		self.max_superiority_dice = 0
 		self.current_superiority_dice = 0
+		self.battlemaster_options = {}
 		super().__init__()
 
 	def set_max_superiority_dice(self):
@@ -152,136 +135,103 @@ class BattleMaster(Fighter):
 		else:
 			self.use_current_superiority_dice()
 
-	def create_battlemaster_fighter(self, name):
-		name = name
-		player = BattleMaster()
-		player.set_level()
-		player.set_hit_dice(player.get_level())
-		player.set_name(name)
-		player.set_max_superiority_dice()
-		player.set_current_superiority_dice()
-		print('Name:' + player.get_name(), ' Level:', player.get_level(), ' Hit Dice:', player.get_hit_dice())
+	def change_battlemaster_level(self):
+		self.change_fighter_level()
+		self.set_max_superiority_dice()
+		self.set_current_superiority_dice()
 
-		return player
+	def create_battlemaster_options(self):
+		self.battlemaster_options['0'] = "[9]: Use Superiority Dice \n " + "[10]: Reset Superiority Dice\n" + \
+						"[11]: Change Level\n" + "[10]: Exit\n"
+		self.battlemaster_options['9'] = self.use_superiority_dice
+		self.battlemaster_options['10'] = self.set_current_superiority_dice
+		self.battlemaster_options['11'] = self.change_battlemaster_level
+		self.battlemaster_options['12'] = leave
+		return self.battlemaster_options
 
-	def list_battlemaster_options(self):
-		selection = int(
-			input("What action are you counting?\n" + "[1]: Use Second Wind\n" + "[2]: Reset Second Wind \n " +
-
-			"[3]: Use Action Surge\n " + "[4]: Reset Action Surge\n" + "[5]: Use Indomitable\n" +
-
-			"[6]: Reset Indomitable\n" + "[7]: Use Hit Dice \n " + "[8]: Reset Hit Dice\n" +
-
-			"[9]: Change Level\n" + "[10]: Exit\n"))
-		if selection == 1:
-			self.use_second_wind()
-		elif selection == 2:
-			self.set_second_wind(True)
-		elif selection == 3:
-			self.use_action_surge()
-		elif selection == 4:
-			self.set_action_surge(True)
-		elif selection == 5:
-			self.use_indomitable()
-		elif selection == 6:
-			self.set_current_indomitable()
-		elif selection == 7:
-			self.use_hit_dice()
-			print("Current hit dice: ", self.get_hit_dice())
-		elif selection == 8:
-			amount = self.get_level()
-			self.set_hit_dice(amount)
-		elif selection == 9:
-			self.set_level()
-			amount = self.get_level()
-			self.set_hit_dice(amount)
-		elif selection == 10:
-			return 0
+	def list_options(self):
+		selection = int(input(self.battlemaster_options.get("0")))
+		print(selection)
+		self.battlemaster_options["{}".format(selection)]()
 
 
 class Eldritch(Fighter, HalfCaster):
 	def __init__(self):
 		HalfCaster.__init__(self)
 		Fighter.__init__(self)
+		self.eldritch_options = {}
+
+	def change_eldritch_level(self):
+		self.change_fighter_level()
+		self.set_max_spell_slots(self.get_level())
+		self.set_current_spell_slots(self.get_level())
+
+	def create_eldritch_options(self):
+		self.eldritch_options['0'] = "[5]: Use Second Wind\n" + "[6]: Reset Second Wind \n " + "[7]: Use Action Surge\n " + \
+					"[8]: Reset Action Surge\n" + "[9]: Use Indomitable\n" + "[10]: Reset Indomitable\n" + \
+					"[11]: Change Level\n" + "[12]: Exit\n"
+		self.eldritch_options['5'] = self.use_second_wind
+		self.eldritch_options['6'] = self.reset_second_wind
+		self.eldritch_options['7'] = self.use_action_surge
+		self.eldritch_options['8'] = self.reset_action_surge
+		self.eldritch_options['9'] = self.use_indomitable
+		self.eldritch_options['10'] = self.set_current_indomitable
+		self.eldritch_options['11'] = self.change_eldritch_level
+		self.eldritch_options['12'] = leave
+
+	def list_options(self):
+		selection = int(input(self.eldritch_options.get("0")))
+		print(selection)
+		self.eldritch_options["{}".format(selection)]()
 
 
-	def create_eldritch_fighter(self, name):
-		name = name
-		player = Eldritch()
-		player.set_name(name)
-		player.set_level()
-		player.set_max_spell_slots(player.get_level())
-		player.set_current_spell_slots(player.get_level())
-		player.set_hit_dice(player.get_level())
-		return player
+def merge_base_fighter_dicts(player):
+	player_class = player.create_player_character_options()
+	fighter_opts = player.create_fighter_options()
+	merge_dicts(player_class, fighter_opts)
+	return fighter_opts
 
-	def list_eldritch_options(self):
-		selection = int(
-			input("What action are you counting?\n" + "[1]: Use Spell" + "[2]: Refresh Spells" + "[3]: Use Second Wind\n" + "[4]: Reset Second Wind \n " +
 
-			"[5]: Use Action Surge\n " + "[6]: Reset Action Surge\n" + "[7]: Use Indomitable\n" + "[8]: Reset Indomitable\n" +
+def create(name, subclass):
+	player = subclass()
+	player.set_name(name)
+	return player
 
-			"[9]: Use Spell Slot\n" + "[10]: Use Hit Dice \n " + "[11]: Reset Hit Dice\n" + "[12]: Change Level\n" + "[13]: Exit\n"))
-		if selection == 1:
-			self.use_cur_spell_slot()
-		elif selection == 2:
-			self.set_current_spell_slots(self.get_level())
-		elif selection == 3:
-			self.use_second_wind()
-		elif selection == 4:
-			self.set_second_wind(True)
-		elif selection == 5:
-			self.use_action_surge()
-		elif selection == 6:
-			self.set_action_surge(True)
-		elif selection == 7:
-			self.use_indomitable()
-		elif selection == 8:
-			self.set_current_indomitable()
-		elif selection == 9:
-			self.use_cur_spell_slot()
-		elif selection == 10:
-			self.use_hit_dice()
-			print("Current hit dice: ", self.get_hit_dice())
-		elif selection == 11:
-			amount = self.get_level()
-			self.set_hit_dice(amount)
-		elif selection == 12:
-			self.set_level()
-			amount = self.get_level()
-			self.set_hit_dice(amount)
-			self.set_max_spell_slots(self.get_level)
-			self.set_current_spell_slots(self.get_level)
-		elif selection == 14:
-			print(self.get_all_current_spell_slots(self.get_level()))
-		elif selection == 13:
-			return 0
+
+def create_fighter(name):
+	player = create(name, Fighter)
+	player.change_fighter_level()
+	merge_base_fighter_dicts(player)
+	return player
+
+
+def create_battlemaster_fighter(name):
+	player = create(name, BattleMaster)
+	player.change_battlemaster_level()
+	merge_dicts(merge_base_fighter_dicts(player), player.create_battlemaster_options())
+	return player
+
+
+def create_eldritch_fighter(name):
+	player = create(name, Eldritch)
+	player.change_eldritch_level()
+	merge_dicts(player.merge_dicts(player.create_player_character_options(), player.create_halfcaster_character_options()),
+		player.create_eldritch_options())
+	return player
 
 
 def main_fighter_making(name, dictionary):
-	name = name
-	player_subclass = input("What is their subclass?")
-	player_subclass = player_subclass.capitalize()
+	player_subclass = input("What is their subclass?").capitalize()
 	if player_subclass == "BattleMaster":
-		p1 = BattleMaster()
-		p1 = p1.create_battlemaster_fighter(name)
-		class_options = BattleMaster.list_battlemaster_options
+		p1 = create_battlemaster_fighter(name)
+		new_options = BattleMaster.list_options
 	elif player_subclass == "Eldritch":
-		p1 = Eldritch()
-		p1 = p1.create_eldritch_fighter(name)
-		class_options = Eldritch.list_eldritch_options
-		print('Name:' + p1.get_name(), ' Level:', p1.get_level(), ' Hit Dice:', p1.get_hit_dice())
+		p1 = create_eldritch_fighter(name)
+		new_options = Eldritch.list_options
 	else:
-		p1 = Fighter()
-		p1 = p1.create_fighter(name)
-		class_options = Fighter.list_fighter_options
+		p1 = create_fighter(name)
+		new_options = Fighter.list_options
 
-	fighter_dict[f'{p1.get_name()}'] = {"character": p1, "subclass": player_subclass,
-					 "options": class_options}
+	print('Name:' + p1.get_name(), ' Level:', p1.get_level(), ' Hit Dice:', p1.get_hit_dice())
 
-	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass,
-				 "options": class_options}
-
-
-
-
+	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass, "new_options": new_options}

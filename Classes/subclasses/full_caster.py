@@ -1,31 +1,10 @@
 from Classes.playercharacter import *
+full_caster_dict = {}
 
-#TODO: Rework as well as half-caster
 class FullCaster(PlayerCharacter):
 	def __init__(self):
-		self.max_level_one_spell_slots = 0
-		self.max_level_two_spell_slots = 0
-		self.max_level_three_spell_slots = 0
-		self.max_level_four_spell_slots = 0
-		self.max_level_five_spell_slots = 0
-		self.max_level_six_spell_slots = 0
-		self.max_level_seven_spell_slots = 0
-		self.max_level_eight_spell_slots = 0
-		self.max_level_nine_spell_slots = 0
-
-		self.cur_level_one_spell_slots = 0
-		self.cur_level_two_spell_slots = 0
-		self.cur_level_three_spell_slots = 0
-		self.cur_level_four_spell_slots = 0
-		self.cur_level_five_spell_slots = 0
-		self.cur_level_six_spell_slots = 0
-		self.cur_level_seven_spell_slots = 0
-		self.cur_level_eight_spell_slots = 0
-		self.cur_level_nine_spell_slots = 0
-
-		self.max_slots = [0] * 21
-		self.current_slots = [0] * 21
-
+		self.max_slots = [0] * 10
+		self.current_slots = [0] * 10
 		super().__init__()
 
 	def set_max_list_spell_slots(self, level):
@@ -88,8 +67,6 @@ class FullCaster(PlayerCharacter):
 	def get_max_slot_int(self, level):
 		return int(self.max_slots[level])
 
-
-
 	def get_current_spell_slot(self, level):
 		print(self.current_slots[level])
 		return self.current_slots[level]
@@ -97,128 +74,6 @@ class FullCaster(PlayerCharacter):
 	def get_all_current_spell_slots(self, level):
 		print(self.current_slots[1: level])
 		return self.current_slots[1:level]
-
-
-
-
-	# def set_spell_slots(self, level):
-	# 	if level >= 1:
-	# 		self.max_level_one_spell_slots = 2
-	# 		self.cur_level_one_spell_slots = 2
-	# 	if level >= 2:
-	# 		self.max_level_one_spell_slots = 3
-	# 		self.cur_level_one_spell_slots = 3
-	# 	if level >= 3:
-	# 		self.max_level_one_spell_slots = 4
-	# 		self.cur_level_one_spell_slots = 4
-	# 		self.max_level_two_spell_slots = 2
-	# 		self.cur_level_two_spell_slots = 2
-	# 	if level >= 4:
-	# 		self.max_level_two_spell_slots = 3
-	# 		self.cur_level_two_spell_slots = 3
-	# 	if level >= 5:
-	# 		self.max_level_three_spell_slots = 2
-	# 		self.cur_level_three_spell_slots = 2
-	# 	if level >= 6:
-	# 		self.max_level_three_spell_slots = 3
-	# 		self.cur_level_three_spell_slots = 3
-	# 	if level >= 7:
-	# 		self.max_level_four_spell_slots = 1
-	# 		self.cur_level_four_spell_slots = 1
-	# 	if level >= 8:
-	# 		self.max_level_four_spell_slots = 2
-	# 		self.cur_level_four_spell_slots = 2
-	# 	if level >= 9:
-	# 		self.max_level_four_spell_slots = 3
-	# 		self.cur_level_four_spell_slots = 3
-	#
-	# 		self.max_level_five_spell_slots = 1
-	# 		self.cur_level_five_spell_slots = 1
-	#
-	# 	if level >= 10:
-	# 		self.max_level_five_spell_slots = 2
-	# 		self.cur_level_five_spell_slots = 2
-	#
-	# 	if level >= 11 or level >= 12:
-	# 		self.max_level_six_spell_slots = 1
-	# 		self.cur_level_six_spell_slots = 1
-	# 	if level >= 13 or level >= 14:
-	# 		self.max_level_seven_spell_slots = 1
-	# 		self.cur_level_seven_spell_slots = 1
-	# 	if level >= 15 or level >= 16:
-	# 		self.max_level_eight_spell_slots = 1
-	# 		self.cur_level_eight_spell_slots = 1
-	# 	if level >= 17:
-	# 		self.max_level_nine_spell_slots = 1
-	# 		self.cur_level_nine_spell_slots = 1
-	# 	if level >= 18:
-	# 		self.max_level_five_spell_slots = 2
-	# 		self.cur_level_five_spell_slots = 2
-	# 	if level >= 19:
-	# 		self.max_level_six_spell_slots = 2
-	# 		self.cur_level_six_spell_slots = 2
-	# 	if level >= 20:
-	# 		self.max_level_six_spell_slots = 2
-	# 		self.cur_level_six_spell_slots = 2
-
-	def get_cur_spell_slot(self, level):
-		if level == 1:
-			return self.cur_level_one_spell_slots
-		if level == 2:
-			return self.cur_level_two_spell_slots
-		if level == 3:
-			return self.cur_level_three_spell_slots
-		if level == 4:
-			return self.cur_level_four_spell_slots
-		if level == 5:
-			return self.cur_level_five_spell_slots
-		if level == 6:
-			return self.cur_level_six_spell_slots
-		if level == 7:
-			return self.cur_level_seven_spell_slots
-		if level == 8:
-			return self.cur_level_eight_spell_slots
-		if level == 9:
-			return self.cur_level_nine_spell_slots
-
-	# def use_cur_spell_slot(self, level):
-	# 	if level == 1:
-	# 		self.cur_level_one_spell_slots -= 1
-	# 	if level == 2:
-	# 		self.cur_level_two_spell_slots -= 1
-	# 	if level == 3:
-	# 		self.cur_level_three_spell_slots -= 1
-	# 	if level == 4:
-	# 		self.cur_level_four_spell_slots -= 1
-	# 	if level == 5:
-	# 		self.cur_level_five_spell_slots -= 1
-	# 	if level == 6:
-	# 		self.cur_level_six_spell_slots -= 1
-	# 	if level == 7:
-	# 		self.cur_level_seven_spell_slots -= 1
-	# 	if level == 8:
-	# 		self.cur_level_eight_spell_slots -= 1
-	# 	if level == 9:
-	# 		self.cur_level_nine_spell_slots -= 1
-
-	# def use_cur_spell_slot(self, level):
-	# 	check = self.get_current_spell_slot(level)
-	# 	if check == 0:
-	# 		print(f"Out of slots for Level {level} levels")
-	# 	else:
-	# 		self.current_slots[level] -= 1
-	# 		print(f"{self.get_current_spell_slot(level)} level {level} slots left")
-	#
-	# def use_spell_slot(self):
-	# 	slot_to_use = int(input("What level spell slot is being used?"))
-	# 	current_slots = self.get_cur_spell_slot(slot_to_use)
-	# 	if current_slots == 0:
-	# 		print(f"No slots of {slot_to_use} level")
-	# 		return 0
-	# 	else:
-	# 		self.use_cur_spell_slot(slot_to_use)
-	# 		print(f"Used Level {slot_to_use} spell")
-	# 	return slot_to_use
 
 	def use_cur_spell_slot(self):
 		level = int(input("What level spell slot is being used?"))
@@ -252,3 +107,16 @@ class FullCaster(PlayerCharacter):
 			self.current_slots[8] += 1
 		elif level == 9:
 			self.current_slots[9] += 1
+
+	def create_fullcaster_character_options(self):
+		# Player class uses 1 & 2. Fill out 0 for merging later.  Starts at 3
+		full_caster_dict['0'] = "[3]: Cast Spell\n[4]: Reset Spells\n"
+		full_caster_dict['3'] = self.use_cur_spell_slot
+		full_caster_dict['4'] = self.set_current_list_spell_slots
+		return full_caster_dict
+
+	def merge_base_and_fullspell_options(self):
+		player_class = self.create_player_character_options()
+		spell_opts = self.create_fullcaster_character_options()
+		merge_dicts(player_class, spell_opts)
+		return spell_opts

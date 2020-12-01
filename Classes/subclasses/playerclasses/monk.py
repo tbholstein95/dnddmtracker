@@ -8,6 +8,7 @@ class Monk(PlayerCharacter):
 		self.max_ki_points = 0
 		self.current_ki_points = 0
 		self.empty_body = False
+		self.monk_options = {}
 		super().__init__()
 
 	def set_max_ki_points(self, level):
@@ -47,49 +48,29 @@ class Monk(PlayerCharacter):
 			self.set_current_ki_points(current_ki - ki_to_use)
 			print("Used 1 Ki Point")
 
-	def create_basic_monk(self, name):
-		name = name
-		level = int(input("What level is this Monk?\n"))
-		player = Monk()
-		player.set_level()
-		player.set_hit_dice(level)
-		player.set_name(name)
-		player.set_max_ki_points(level)
-		player.set_current_ki_points(player.get_max_ki_points())
-		print('Name:' + player.get_name(), ' Level:', player.get_level(), ' Hit Dice:', player.get_hit_dice(),)
+	def create_basic_monk_options(self):
+		self.monk_options['0'] = "[3]: Use Ki Point \n " + "[4]: Restore Ki \n " + "[5]: Use Empty Body \n "
+		self.monk_options['3'] = self.use_ki_point
+		self.monk_options['4'] = self.reset_current_ki_points
+		self.monk_options['5'] = self.use_empty_body
+		return self.monk_options
 
-		return player
+	def change_monk_level(self):
+		self.base_change_level()
+		self.set_max_ki_points(self.get_level())
+		self.reset_current_ki_points()
 
-	def list_basic_monk_options(self):
-		selection = int(input("What action are you counting?\n" + "[1]: Use Ki Point \n " + "[2]: Restore Ki \n " + (
-			"[3]: Use Empty Body \n " + "[4]: Use Hit Dice \n " + "[5]: Change Level\n" + (
-				"[6]: Reset Hit Dice" + "[7]:Reset Ki" + "[8]: Exit\n"))))
-		if selection == 1:
-			self.use_ki_point()
-		elif selection == 2:
-			self.reset_current_ki_points()
-		elif selection == 3:
-			self.use_empty_body()
-		elif selection == 4:
-			self.use_hit_dice()
-			print("Current hit dice: ", self.get_hit_dice())
-		elif selection == 5:
-			level = self.set_level()
-			self.set_max_ki_points(level)
-			self.set_hit_dice(level)
-			print(self.get_level())
-		elif selection == 6:
-			self.reset_current_hit_dice()
-		elif selection == 7:
-			self.reset_current_ki_points()
-		elif selection == 8:
-			return 0
+	def list_options(self):
+		selection = int(input(self.monk_options.get("0")))
+		print(selection)
+		self.monk_options["{}".format(selection)]()
 
 
 class OpenHand(Monk):
 
 	def __init__(self):
 		self.wholeness = False
+		self.open_hand_options = {}
 		super().__init__()
 
 	def use_quivering_palm(self):
@@ -107,58 +88,37 @@ class OpenHand(Monk):
 		else:
 			print("Monk already used wholeness this long rest")
 
-	def create_open_hand_monk(self, name):
-		name = name
-		level = int(input("What level is this Monk?\n"))
-		player = OpenHand()
-		player.set_level()
-		player.set_hit_dice(level)
-		player.set_name(name)
-		player.set_max_ki_points(level)
-		player.set_current_ki_points(self.get_max_ki_points())
-		print('Name:' + player.get_name(), ' Level:', player.get_level(), ' Hit Dice:', player.get_hit_dice(),)
+	def reset_wholeness(self):
+		if self.wholeness:
+			print("Reset Wholeness")
+			self.wholeness = False
+		else:
+			print("Can still use Wholeness this rest period")
 
-		return player
+	def create_open_hand_options(self):
+		self.open_hand_options['0'] = "[4]: Use Quivering Palm" + "[5]: Use Wholeness" + "[6]: Reset Wholeness" + \
+					"[7]: Change Level\n" + "[10]: Exit\n"
+		self.open_hand_options['4'] = self.use_quivering_palm
+		self.open_hand_options['5'] = self.use_wholeness
+		self.open_hand_options['6'] = self.reset_wholeness
+		self.open_hand_options['7'] = self.change_monk_level
+		self.open_hand_options['8'] = leave
+		return self.open_hand_options
 
-	def list_open_hand_options(self):
-		selection = int(
-			input("What action are you counting?\n" + "[1]: Use Ki Point \n " + "[2]: Restore Ki \n " +
+	def list_options(self):
+		selection = int(input(self.open_hand_options.get("0")))
+		print(selection)
+		self.open_hand_options["{}".format(selection)]()
 
-			"[3]: Use Empty Body \n " + "[4]: Use Quivering Palm" +"[5]: Use Wholeness" +
-
-			"[6]: Use Hit Dice\n" + "[7]: Change Level\n" + "[8]: Reset Hit Dice" + "[9]:Reset Ki" + "[10]: Exit\n"))
-
-		if selection == 1:
-			self.use_ki_point()
-		elif selection == 2:
-			self.reset_current_ki_points()
-		elif selection == 3:
-			self.use_empty_body()
-		elif selection == 4:
-			self.use_quivering_palm()
-		elif selection == 5:
-			self.use_wholeness()
-		elif selection == 6:
-			self.use_hit_dice()
-			print("Current hit dice: ", self.get_hit_dice())
-		elif selection == 7:
-			level = self.set_level()
-			self.set_max_ki_points(level)
-			self.set_hit_dice(level)
-			print(self.get_level())
-		elif selection == 8:
-			self.reset_current_hit_dice()
-		elif selection == 9:
-			self.reset_current_ki_points()
-		elif selection == 10:
-			return 0
 
 class FourElements(Monk):
 	def __init__(self):
+		self.elements_options = {}
 		super().__init__()
 
-	def use_elemental_discipline(self, amount):
-		maximum_ki_expend = ''
+	def use_elemental_discipline(self):
+		amount = int(input("How many ki points?"))
+		maximum_ki_expend = 0
 		if 5 <= self.get_level() <= 8:
 			maximum_ki_expend = 3
 		elif 9 <= self.get_level() <= 12:
@@ -175,70 +135,64 @@ class FourElements(Monk):
 			self.set_current_ki_points(self.get_current_ki_points() - (amount + spell_level))
 			print("Monk cast the spell for {} ki points".format(amount + spell_level))
 
-	def create_four_elements_monk(self, name):
-		name = name
-		level = int(input("What level is this Monk?\n"))
-		player = OpenHand()
-		player.set_level()
-		player.set_hit_dice(level)
-		player.set_name(name)
-		player.set_max_ki_points(level)
-		player.set_current_ki_points(player.get_max_ki_points())
-		print('Name:' + player.get_name(), ' Level:', player.get_level(), ' Hit Dice:', player.get_hit_dice(),)
+	def create_four_elements_options(self):
+		self.elements_options['0'] = "[4]: Use Elemental Discipline" + "[5]: Change Level" + "[6]: Exit\n"
+		self.elements_options['4'] = self.use_elemental_discipline
+		self.elements_options['5'] = self.change_monk_level
+		self.elements_options['6'] = leave
+		return self.elements_options
 
-		return player
+	def list_options(self):
+		selection = int(input(self.elements_options.get("0")))
+		print(selection)
+		self.elements_options["{}".format(selection)]()
 
-	def list_four_elements_options(self):
-		selection = 0
-		selection = int(input("What action are you counting?\n" + "[1]: Use Ki Point\n" + "[2]: Restore Ki\n" +
 
-				"[3]: Use Empty Body \n " + "[4]: Use Quivering Palm" + "[5]: Use Hit Dice \n " + "[6]: Change Level\n" +
+def merge_base_monk_dicts(player):
+	player_class = player.create_player_character_options()
+	monk_opts = player.create_monk_options()
+	merge_dicts(player_class, monk_opts)
+	return monk_opts
 
-				"[7]: Reset Hit Dice" + "[8]:Reset Ki" + "[9]: Exit\n"))
 
-		if selection == 1:
-			self.use_ki_point()
-		elif selection == 2:
-			self.reset_current_ki_points()
-		elif selection == 3:
-			self.use_empty_body()
-		elif selection == 4:
-			self.use_elemental_discipline()
-		elif selection == 5:
-			self.use_hit_dice()
-			print("Current hit dice: ", self.get_hit_dice())
-		elif selection == 6:
-			level = self.set_level()
-			self.set_max_ki_points(level)
-			self.set_hit_dice(level)
-			print(self.get_level())
-		elif selection == 7:
-			self.reset_current_hit_dice()
-		elif selection == 8:
-			self.reset_current_ki_points()
-		elif selection == 9:
-			return 0
+def create(name, subclass):
+	player = subclass()
+	player.set_name(name)
+	return player
+
+
+def create_basic_monk(name):
+	player = create(name, Monk)
+	player.change_monk_level()
+	merge_base_monk_dicts(player)
+	return player
+
+
+def create_open_hand_monk(name):
+	player = create(name, OpenHand)
+	player.change_monk_level()
+	merge_dicts(merge_base_monk_dicts(player), player.create_open_hand_options())
+	return player
+
+
+def create_four_elements_monk(name):
+	player = create(name, FourElements)
+	player.change_monk_level()
+	merge_dicts(merge_base_monk_dicts(player), player.create_four_elements_options())
+	return player
 
 
 def main_monk_making(name, dictionary):
 	name = name
-	player_subclass = input("What is their subclass?")
-	player_subclass = player_subclass.capitalize()
+	player_subclass = input("What is their subclass?").capitalize()
 	if player_subclass == "Open Hand":
-		p1 = OpenHand()
-		p1 = p1.create_open_hand_monk(name)
-		class_options = OpenHand.list_open_hand_options
+		p1 = create_open_hand_monk(name)
+		new_options = OpenHand.list_options
 	elif player_subclass == "Four Elements":
-		p1 = FourElements()
-		p1 = p1.create_four_elements_monk(name)
-		class_options = FourElements.list_four_elements_options
+		p1 = create(name, FourElements)
+		new_options = FourElements.list_options
 	else:
-		p1 = Monk()
-		p1 = p1.create_basic_monk(name)
-		class_options = Monk.list_basic_monk_options
+		p1 = create(name, Monk)
+		new_options = Monk.list_options
 
-	monk_dict[f'{p1.get_name()}'] = {"character": p1, "subclass": player_subclass,
-					 "options": class_options}
-
-	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass,
-				 "options": class_options}
+	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass, "new_options": new_options}
