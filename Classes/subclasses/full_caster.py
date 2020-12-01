@@ -114,3 +114,9 @@ class FullCaster(PlayerCharacter):
 		full_caster_dict['3'] = self.use_cur_spell_slot
 		full_caster_dict['4'] = self.set_current_list_spell_slots
 		return full_caster_dict
+
+	def merge_base_and_fullspell_options(self):
+		player_class = self.create_player_character_options()
+		spell_opts = self.create_fullcaster_character_options()
+		merge_dicts(player_class, spell_opts)
+		return spell_opts

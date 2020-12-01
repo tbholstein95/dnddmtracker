@@ -58,6 +58,11 @@ class PlayerCharacter:
 			self.hit_dice -= amount_to_use
 			print("Used Hit Dice")
 
+	def base_change_level(self):
+		self.set_level()
+		self.set_max_hit_dice(self.get_level())
+		self.reset_current_hit_dice()
+
 	def create_player_character_options(self):
 		# First 3 options, do not use 0-2 in other classes.
 		options_dict['0'] = "What action are you counting?\n[1]: Use Hit Dice\n[2]: Reset Hit Dice\n"

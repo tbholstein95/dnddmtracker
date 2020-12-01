@@ -57,12 +57,10 @@ class Bard(FullCaster):
 		self.set_cur_bardic_inspiration(self.get_charisma)
 
 	def change_level_option(self):
-		self.set_level()
-		self.set_charisma()
+		self.base_change_level()
+		self.charisma_option()
 		self.set_max_list_spell_slots(self.get_level())
 		self.set_current_list_spell_slots()
-		self.set_max_bardic_inspiration()
-		self.set_cur_bardic_inspiration(self.get_charisma)
 
 	def create_default_bard_options(self):
 		# Default player and spell caster take up 0-4.
@@ -71,7 +69,6 @@ class Bard(FullCaster):
 		self.default_bard_options['5'] = self.use_bardic_inspiration
 		self.default_bard_options['6'] = self.reset_bardic_inspiration
 		self.default_bard_options['7'] = self.charisma_option
-
 		return self.default_bard_options
 
 	def list_options(self):
@@ -141,6 +138,7 @@ class Glamour(Bard):
 		self.glamour_options['13'] = self.reset_unbreakable_majesty
 		self.glamour_options['14'] = self.change_level_option
 		self.glamour_options['15'] = leave
+		return self.glamour_options
 
 	def list_options(self):
 		selection = int(input(self.glamour_options.get("0")))
@@ -175,6 +173,7 @@ class Swords(Bard):
 		self.sword_options['9'] = self.reset_blade_flourish
 		self.sword_options['10'] = self.change_level_option
 		self.sword_options['11'] = leave
+		return self.sword_options
 
 	def list_options(self):
 		selection = int(input(self.sword_options.get("0")))
@@ -282,6 +281,7 @@ class Whispers(Bard):
 		self.whispers_options['15'] = self.reset_shadow_lore
 		self.whispers_options['16'] = self.change_level_option
 		self.whispers_options['17'] = leave
+		return self.whispers_options
 
 	def list_options(self):
 		selection = int(input(self.whispers_options.get("0")))
@@ -289,53 +289,43 @@ class Whispers(Bard):
 		self.whispers_options["{}".format(selection)]()
 
 
+def merge_base_bard_dicts(player):
+	bard_opts = player.create_default_bard_options()
+	merge_dicts(player.merge_base_and_fullspell_options(), bard_opts)
+	return bard_opts
+
+
 def create(name, subclass):
-	name = name
 	player = subclass()
 	player.set_name(name)
-	player.set_level()
-	player.set_charisma()
-	player.set_max_list_spell_slots(player.get_level())
-	player.set_current_list_spell_slots()
-	player.set_hit_dice(player.get_level())
 	return player
 
 
 def create_bard(name):
 	player = create(name, Bard)
-	default_player_opts = player.create_player_character_options()
-	bard_opts = player.create_default_bard_options()
-	merge_dicts(default_player_opts, bard_opts)
+	player.change_level_option()
+	merge_base_bard_dicts(player)
 	return player
 
 
 def create_glamour_bard(name):
 	player = create(name, Glamour)
-	player.create_glamour_options()
-	default_player_opts = player.create_player_character_options()
-	bard_opts = player.create_default_bard_options()
-	merge_dicts(default_player_opts, bard_opts)
-	merge_dicts(bard_opts, player.glamour_options)
+	player.change_level_option()
+	merge_dicts(merge_base_bard_dicts(player), player.create_glamour_options())
 	return player
 
 
 def create_swords_bard(name):
 	player = create(name, Swords)
-	player.create_swords_options()
-	default_player_opts = player.create_player_character_options()
-	bard_opts = player.create_default_bard_options()
-	merge_dicts(default_player_opts, bard_opts)
-	merge_dicts(bard_opts, player.sword_options)
+	player.change_level_options()
+	merge_dicts(merge_base_bard_dicts(player), player.create_swords_options())
 	return player
 
 
 def create_whispers_bard(name):
 	player = create(name, Whispers)
-	player.create_whispers_options()
-	default_player_opts = player.create_player_character_options()
-	bard_opts = player.create_default_bard_options()
-	merge_dicts(default_player_opts, bard_opts)
-	merge_dicts(bard_opts, player.whispers_options)
+	player.change_level_options()
+	merge_dicts(merge_base_bard_dicts(player), player.create_swords_options())
 	return player
 
 
@@ -354,9 +344,7 @@ def main_bard_making(name, dictionary):
 		p1 = create_bard(name)
 		new_options = 0
 
-	player = p1
-
 	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass, "new_options": new_options}
 
-	print("Name:" + player.get_name(), "Level:", + player.get_level(), "Bardic Inspiration:", (
-		player.get_current_bardic_inspiration(), "Charisma:", + player.get_charisma()))
+	print("Name:" + p1.get_name(), "Level:", + p1.get_level(), "Bardic Inspiration:", (
+		p1.get_current_bardic_inspiration(), "Charisma:", + p1.get_charisma()))

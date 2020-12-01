@@ -84,7 +84,6 @@ class Cleric(FullCaster):
 		self.default_cleric_options['6'] = self.reset_channel_divinity
 		self.default_cleric_options['7'] = self.use_divine_intervention
 		self.default_cleric_options['8'] = self.remove_divine_intervention_day
-
 		return self.default_cleric_options
 
 	def change_level(self):
@@ -393,6 +392,15 @@ class Grave(Cleric):
 		selection = int(input(self.grave_options.get("0")))
 		print(selection)
 		self.grave_options["{}".format(selection)]()
+
+
+def merge_base_cleric_dicts(player):
+	player_class = player.create_player_character_options()
+	spell_opts = player.create_fullcaster_character_options()
+	bard_opts = player.create_default_bard_options()
+	merge_dicts(player_class, spell_opts)
+	merge_dicts(spell_opts, bard_opts)
+	return bard_opts
 
 
 def create(name, subclass):

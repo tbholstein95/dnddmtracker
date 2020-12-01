@@ -230,9 +230,7 @@ def create(name, subclass):
 def create_barbarian(name):
 	player = create(name, Barbarian)
 	player.change_barb_level()
-	player_class = player.create_player_character_options()
-	barb_opts = player.create_default_barb_options()
-	merge_dicts(player_class, barb_opts)
+	merge_base_barb_dicts(player)
 	return player
 
 
@@ -274,8 +272,7 @@ def main_barb_making(name, dictionary):
 	else:
 		p1 = create_barbarian(name)
 		new_options = Barbarian.list_options
-	player = p1
 
-	print('Name:' + player.get_name(), ' Level:', player.get_level(), ' Rage:', player.get_rage, ' Hit Dice:', player.get_hit_dice())
+	print('Name:' + p1.get_name(), ' Level:', p1.get_level(), ' Rage:', p1.get_rage, ' Hit Dice:', p1.get_hit_dice())
 
 	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass, "new_options": new_options}
