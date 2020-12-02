@@ -8,6 +8,7 @@ class Warlock(PlayerCharacter):
 		self.current_slots = [0] * 6
 		self.mystic_arcanum = False
 		self.eldritch_master = False
+		self.warlock_options = {}
 		super().__init__()
 
 	def set_max_spell_slots(self, level):
@@ -90,46 +91,35 @@ class Warlock(PlayerCharacter):
 		else:
 			print("Need to long rest before using Eldritch Master again")
 
-	def list_warlock_options(self):
-		selection = int(
-			input("What action are you counting?\n" + "[1]: Use Spell Slot\n" +
+	def reset_eldritch_master(self):
+		if self.get_eldritch_master():
+			print("Reset Eldritch Master")
+			self.eldritch_master = False
+		else:
+			print("Can still use Eldritch Master this long rest")
 
-			      "[2]: Reset Spell Slots" + "[3]: Use Mystic Arcanum" + "[4]: Reset Mystic Arcanum" +
+	def create_warlock_options(self):
+		self.warlock_options['0'] = "[3]: Use Spell Slot\n" + "[4]: Reset Spell Slots\n" + \
+					"[5]: Use Mystic Arcanum\n" + "[6]: Reset Mystic Arcanum\n" + \
+					"[7]: Use Eldritch Master" + "[8]: Reset Eldritch Master"
 
-			      "[5]: Use Hit Dice\n" + "[6]: Reset Hit Dice\n" + "[7]: Change Level\n" + "[8]: Exit\n"))
+		self.warlock_options['3'] = self.use_spell
+		self.warlock_options['4'] = self.set_current_spell_slots
+		self.warlock_options['5'] = self.use_mystic_arcanum
+		self.warlock_options['6'] = self.reset_mystic_arcanum
+		self.warlock_options['7'] = self.use_eldritch_master
+		self.warlock_options['8'] = self.reset_eldritch_master
+		return self.warlock_options
 
-		if selection == 1:
-			self.use_spell()
-		if selection == 2:
-			self.set_current_spell_slots()
-		if selection == 3:
-			self.use_mystic_arcanum()
-		if selection == 4:
-			self.reset_mystic_arcanum()
-		elif selection == 5:
-			self.use_hit_dice()
-		elif selection == 6:
-			self.reset_current_hit_dice()
-		elif selection == 7:
-			self.set_level()
-			self.set_hit_dice(self.get_level())
-			self.set_max_spell_slots(self.get_level())
-		elif selection == 8:
-			print("Leaving")
-			return
+	def list_options(self):
+		selection = int(input(self.warlock_options.get("0")))
+		print(selection)
+		self.warlock_options["{}".format(selection)]()
 
-	def create_warlock(self, name):
-		name = name
-		level = int(input("What level is this Wizard?"))
-		player = Warlock()
-		player.set_level()
-		player.set_name(name)
-		player.set_max_spell_slots(level)
-		player.set_current_spell_slots()
-		player.set_hit_dice(level)
-		print("Name:" + player.get_name(), "Level:", + player.get_level())
-
-		return player
+	def set_base_warlock_level(self):
+		self.base_change_level()
+		self.set_max_spell_slots(self.get_level())
+		self.set_current_spell_slots()
 
 
 class Archfey(Warlock):
@@ -137,6 +127,7 @@ class Archfey(Warlock):
 		self.fey_presence = False
 		self.misty_escape = False
 		self.dark_delirium = False
+		self.archfey_options = {}
 		super().__init__()
 
 	def get_fey_presence(self):
@@ -192,66 +183,32 @@ class Archfey(Warlock):
 		else:
 			print("Can still use Dark Delirium")
 
-	def list_archfey_options(self):
-		selection = int(
-			input("What action are you counting?\n" + "[1]: Use Spell Slot\n" +
+	def create_archfey_options(self):
+		self.archfey_options['0'] = "[9]: Use Fey Presence\n" + "[10]: Reset Fey Presence\n" + "[11]: Use Misty Escape\n" + \
+					"[12]: Reset Misty Escape\n" + "[13]: Use Dark Delirium\n" + "[14]: Reset Dark Delirium\n" + \
+					"[15]: Change Level\n" + "[16]: Exit\n"
 
-			      "[2]: Reset Spell Slots\n" + "[3]: Use Mystic Arcanum\n" + "[4]: Reset Mystic Arcanum\n" +
+		self.archfey_options['9'] = self.use_fey_presence
+		self.archfey_options['10'] = self.reset_fey_presence
+		self.archfey_options['11'] = self.use_misty_escape
+		self.archfey_options['12'] = self.reset_misty_escape
+		self.archfey_options['13'] = self.use_dark_delirium
+		self.archfey_options['14'] = self.reset_dark_delirium
+		self.archfey_options['15'] = self.set_base_warlock_level
+		self.archfey_options['16'] = leave
+		return self.archfey_options
 
-			      "[5]: Use Fey Presence\n" + "[6]: Reset Fey Presence\n" + "[7]: Use Misty Escape\n" + "[8]: Reset Misty Escape\n" +
+	def list_options(self):
+		selection = int(input(self.archfey_options.get("0")))
+		print(selection)
+		self.archfey_options["{}".format(selection)]()
 
-			      "[9]: Use Dark Delirium\n" + "[10]: Reset Dark Delirium\n" + "[11]: Use Hit Dice\n" + "[12]: Reset Hit Dice\n" +
-
-			      "[13]: Change Level\n" + "[14]: Exit\n"))
-
-		if selection == 1:
-			self.use_spell()
-		if selection == 2:
-			self.set_current_spell_slots()
-		if selection == 3:
-			self.use_mystic_arcanum()
-		if selection == 4:
-			self.reset_mystic_arcanum()
-		if selection == 5:
-			self.use_fey_presence()
-		if selection == 6:
-			self.reset_fey_presence()
-		if selection == 7:
-			self.use_misty_escape()
-		if selection == 8:
-			self.reset_misty_escape()
-		if selection == 9:
-			self.use_dark_delirium()
-		if selection == 10:
-			self.reset_dark_delirium()
-		elif selection == 11:
-			self.use_hit_dice()
-		elif selection == 12:
-			self.reset_current_hit_dice()
-		elif selection == 13:
-			self.set_level()
-			self.set_hit_dice(self.get_level())
-			self.set_max_spell_slots(self.get_level())
-		elif selection == 14:
-			print("Leaving")
-			return
-
-	def create_archfey_warlock(self, name):
-		name = name
-		player = Archfey()
-		player.set_level()
-		player.set_name(name)
-		player.set_max_spell_slots(player.get_level())
-		player.set_current_spell_slots()
-		player.set_hit_dice(player.get_level())
-		print("Name:" + player.get_name(), "Level:", + player.get_level())
-
-		return player
 
 class Fiend(Warlock):
 	def __init__(self):
 		self.dark_ones_own_luck = False
 		self.hurl_through_hell = False
+		self.fiend_options = {}
 		super().__init__()
 
 	def get_dark_ones_own_luck(self):
@@ -267,6 +224,7 @@ class Fiend(Warlock):
 		else:
 			print("Already used Dark One's Own Luck this rest")
 			return
+
 	def use_hurl_through_hell(self):
 		if not self.get_hurl_through_hell():
 			print("Warlock used Hurl Through Hell")
@@ -289,61 +247,28 @@ class Fiend(Warlock):
 		else:
 			print("Hurl Through Hell Still Usable this rest period")
 
-	def list_fiend_options(self):
-		selection = int(
-			input("What action are you counting?\n" + "[1]: Use Spell Slot\n" +
+	def create_fiend_options(self):
+		self.fiend_options['0'] = "[9]: Use Dark One's Own Luck\n" + "[10]: Reset Dark One's Own Luck\n" + \
+					"[11]: Use Hurl Through Hell\n" + "[12]: Reset Hurl Through Hell\n" + \
+					"[13]: Change Level\n" + "[14]: Exit\n"
 
-			      "[2]: Reset Spell Slots\n" + "[3]: Use Mystic Arcanum\n" + "[4]: Reset Mystic Arcanum\n" +
+		self.fiend_options['9'] = self.use_dark_ones_own_luck
+		self.fiend_options['10'] = self.reset_dark_ones_own_luck
+		self.fiend_options['11'] = self.use_hurl_through_hell
+		self.fiend_options['12'] = self.reset_hurl_through_hell
+		self.fiend_options['13'] = self.set_base_warlock_level
+		self.fiend_options['14'] = leave
 
-			      "[5]: Use Dark One's Own Luck\n" + "[6]: Reset Dark One's Own Luck\n" + "[7]: Use Hurl Through Hell\n" +
+	def list_options(self):
+		selection = int(input(self.fiend_options.get("0")))
+		print(selection)
+		self.fiend_options["{}".format(selection)]()
 
-			      "[8]: Reset Hurl Through Hell\n" + "[9]: Use Hit Dice\n" + "[10]: Reset Hit Dice\n" +
-
-			      "[11]: Change Level\n" + "[12]: Exit\n"))
-
-		if selection == 1:
-			self.use_spell()
-		if selection == 2:
-			self.set_current_spell_slots()
-		if selection == 3:
-			self.use_mystic_arcanum()
-		if selection == 4:
-			self.reset_mystic_arcanum()
-		if selection == 5:
-			self.use_dark_ones_own_luck()
-		if selection == 6:
-			self.reset_dark_ones_own_luck()
-		if selection == 7:
-			self.use_hurl_through_hell()
-		if selection == 8:
-			self.reset_hurl_through_hell()
-		elif selection == 9:
-			self.use_hit_dice()
-		elif selection == 10:
-			self.reset_current_hit_dice()
-		elif selection == 11:
-			self.set_level()
-			self.set_hit_dice(self.get_level())
-			self.set_max_spell_slots(self.get_level())
-		elif selection == 12:
-			print("Leaving")
-			return
-
-	def create_fiend_warlock(self, name):
-		name = name
-		player = Fiend()
-		player.set_level()
-		player.set_name(name)
-		player.set_max_spell_slots(player.get_level())
-		player.set_current_spell_slots()
-		player.set_hit_dice(player.get_level())
-		print("Name:" + player.get_name(), "Level:", + player.get_level())
-
-		return player
 
 class Old(Warlock):
 	def __init__(self):
 		self.entropic_ward = False
+		self.old_options = {}
 		super().__init__()
 
 	def get_entropic_ward(self):
@@ -363,78 +288,74 @@ class Old(Warlock):
 		else:
 			print("Can still use Entropic Ward this rest period")
 
-	def list_old_options(self):
-		selection = int(
-			input("What action are you counting?\n" + "[1]: Use Spell Slot\n" +
+	def create_old_options(self):
+		self.old_options['0'] = "[9]: Use Entropic Ward\n" + "[10]: Reset Entropic Ward\n" + \
+					"[11]: Change Level\n" + "[12]: Exit\n"
+		self.old_options['9'] = self.use_entropic_ward
+		self.old_options['10'] = self.reset_entropic_ward
+		self.old_options['11'] = self.set_base_warlock_level
+		self.old_options['12'] = leave
+		return self.old_options
 
-			      "[2]: Reset Spell Slots\n" + "[3]: Use Mystic Arcanum\n" + "[4]: Reset Mystic Arcanum\n" +
+	def list_options(self):
+		selection = int(input(self.old_options.get("0")))
+		print(selection)
+		self.old_options["{}".format(selection)]()
 
-			      "[5]: Use Dark One's Own Luck\n" + "[6]: Reset Dark One's Own Luck\n" + "[9]: Use Hit Dice\n" +
 
-			      "[10]: Reset Hit Dice\n" + "[11]: Change Level\n" + "[12]: Exit\n"))
+def merge_base_warlock_dicts(player):
+	warlock_opts = player.create_warlock_options()
+	merge_dicts(player.create_player_character_options(), warlock_opts)
+	return warlock_opts
 
-		if selection == 1:
-			self.use_spell()
-		if selection == 2:
-			self.set_current_spell_slots()
-		if selection == 3:
-			self.use_mystic_arcanum()
-		if selection == 4:
-			self.reset_mystic_arcanum()
-		if selection == 5:
-			self.use_entropic_ward()
-		if selection == 6:
-			self.reset_entropic_ward()
-		elif selection == 9:
-			self.use_hit_dice()
-		elif selection == 10:
-			self.reset_current_hit_dice()
-		elif selection == 11:
-			self.set_level()
-			self.set_hit_dice(self.get_level())
-			self.set_max_spell_slots(self.get_level())
-		elif selection == 12:
-			print("Leaving")
-			return
 
-	def create_old_warlock(self, name):
-		name = name
-		player = Old()
-		player.set_level()
-		player.set_name(name)
-		player.set_max_spell_slots(player.get_level())
-		player.set_current_spell_slots()
-		player.set_hit_dice(player.get_level())
-		print("Name:" + player.get_name(), "Level:", + player.get_level())
+def create(name, subclass):
+	player = subclass()
+	player.set_name(name)
+	return player
 
-		return player
+
+def create_warlock(name):
+	player = create(name, Warlock)
+	player.set_base_warlock_level()
+	merge_base_warlock_dicts(player)
+	return player
+
+
+def create_archfey_warlock(name):
+	player = create(name, Archfey)
+	player.set_base_warlock_level()
+	merge_dicts(merge_base_warlock_dicts(player), player.create_archfey_options())
+	return player
+
+
+def create_fiend_warlock(name):
+	player = create(name, Fiend)
+	player.set_base_warlock_level()
+	merge_dicts(merge_base_warlock_dicts(player), player.create_fiend_options())
+	return player
+
+
+def create_old_warlock(name):
+	player = create(name, Old)
+	player.set_base_warlock_level()
+	merge_dicts(merge_base_warlock_dicts(player), player.create_old_options())
+	return player
+
 
 def main_warlock_making(name, dictionary):
-	name = name
-	player_subclass = input("What is their subclass?")
-	player_subclass = player_subclass.capitalize()
+	player_subclass = input("What is their subclass?").capitalize()
 	if player_subclass == "Archfey":
-		p1 = Archfey()
-		p1 = p1.create_archfey_warlock(name)
-		class_options = Archfey.list_archfey_options
+		p1 = create_archfey_warlock(name)
+		class_options = Archfey.list_options
 	elif player_subclass == "Fiend":
-		p1 = Fiend()
-		p1 = p1.create_fiend_warlock(name)
-		class_options = Fiend.list_fiend_options
+		p1 = create_fiend_warlock(name)
+		class_options = Fiend.list_options
 	elif player_subclass == "Old":
-		p1 = Old()
-		p1 = p1.create_old_warlock(name)
-		class_options = Old.list_old_options
+		p1 = create_old_warlock(name)
+		class_options = Old.list_options
 	else:
-		p1 = Warlock()
-		p1 = p1.create_warlock(name)
-		class_options = Warlock.list_warlock_options
+		p1 = create_warlock(name)
+		class_options = Warlock.list_options
 
-	warlock_dict[f'{p1.get_name()}'] = {"character": p1, "subclass": player_subclass,
-					 "options": class_options}
-
-	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass,
-				 "options": class_options}
-
-
-
+	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass, "options": class_options}

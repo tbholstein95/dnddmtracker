@@ -7,6 +7,7 @@ class Sorcerer(FullCaster):
 	def __init__(self):
 		self.max_sorcery_points = 0
 		self.current_sorcery_points = 0
+		self.sorcerer_options = {}
 		super().__init__()
 
 	def set_max_sorcery_points(self, level):
@@ -105,71 +106,39 @@ class Sorcerer(FullCaster):
 	def use_sorcerous_restoration(self):
 		self.add_sorcery_points(4)
 
-	def list_basic_options(self):
-		selection = int(input("What action are you counting?\n" + "[1]: Use Spell Slot" + "[2]: Reset Spell Slots\n" + "[3]: Create Spell Slot\n" + (
+	def create_sorcerer_options(self):
+		self.sorcerer_options['0'] = "[5]: Create Spell Slot\n" + "[6]: Create Sorcery Point\n" + \
+					"[7]: Use Careful Spell\n" + "[8]: Use Distant Spell\n" + "[9]: Use Empowered Spell \n" + \
+					"[10]: Use Extended Spell\n" + "[11]: Use Heightened Spell\n" + "[12]: Use Quickened Spell\n" + \
+					"[13]Use Subtle Spell\n" + "[14]: Use Twinned Spell\n" + "[15]: Use Sorcerous Restoration\n"
 
-			"[4]: Create Sorcery Point\n" + "[5]: Use Careful Spell\n" + "[6]: Use Distant Spell\n" +
+		self.sorcerer_options['5'] = self.create_spell_slot
+		self.sorcerer_options['6'] = self.create_sorcery_points
+		self.sorcerer_options['7'] = self.use_careful_spell
+		self.sorcerer_options['8'] = self.use_distant_spell
+		self.sorcerer_options['9'] = self.use_empowered_spell
+		self.sorcerer_options['10'] = self.use_extended_spell
+		self.sorcerer_options['11'] = self.use_heightened_spell
+		self.sorcerer_options['12'] = self.use_quickened_spell
+		self.sorcerer_options['13'] = self.use_subtle_spell
+		self.sorcerer_options['14'] = self.use_twinned_spell
+		self.sorcerer_options['15'] = self.use_sorcerous_restoration
+		return self.sorcerer_options
 
-			"[7]: Use Empowered Spell \n" + "[8]: Use Extended Spell\n" + "[9]: Use Heightened Spell\n" +
+	def change_sorcerer_level(self):
+		self.change_fullcaster_level()
+		self.set_max_sorcery_points(self.get_level())
+		self.reset_current_sorcery_points()
 
-			"[10]: Use Quickened Spell\n" + "[11]Use Subtle Spell\n" + "[12]: Use Twinned Spell\n" +
+	def list_options(self):
+		selection = int(input(self.sorcerer_options.get("0")))
+		print(selection)
+		self.sorcerer_options["{}".format(selection)]()
 
-			"[13]: Use Sorcerous Restoration\n" + "[14]: Use Hit Dice\n" + "[15]: Change Level\n" + (
-
-			"[16]: Exit\n"))))
-
-		if selection == 1:
-			self.use_cur_spell_slot()
-		if selection == 2:
-			self.set_current_list_spell_slots()
-		if selection == 3:
-			self.create_spell_slot()
-		elif selection == 4:
-			self.create_sorcery_points()
-		elif selection == 5:
-			self.use_careful_spell()
-		elif selection == 6:
-			self.use_distant_spell()
-		elif selection == 7:
-			self.use_empowered_spell()
-		elif selection == 8:
-			self.use_extended_spell()
-		elif selection == 9:
-			self.use_heightened_spell()
-		elif selection == 10:
-			self.use_quickened_spell()
-		elif selection == 11:
-			self.use_subtle_spell()
-		elif selection == 12:
-			self.use_twinned_spell()
-		elif selection == 13:
-			self.use_sorcerous_restoration()
-		elif selection == 14:
-			self.use_hit_dice()
-		elif selection == 15:
-			self.set_level()
-			self.set_hit_dice(self.get_level())
-			self.set_max_list_spell_slots()
-			self.set_current_list_spell_slots()
-		elif selection == 16:
-			print("Leaving")
-			return
-	def create_basic_sorcerer(self, name):
-		name = name
-		player = Sorcerer()
-		player.set_level()
-		player.set_name(name)
-		player.set_max_list_spell_slots(player.get_level())
-		player.set_current_list_spell_slots()
-		player.set_hit_dice(player.get_level())
-		player.set_max_sorcery_points(player.get_level())
-		player.set_current_sorcery_points(self.get_max_sorcery_points())
-		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Slots" + player.get_cur_spell_slot(player.get_level()))
-
-		return player
 
 class Draconic(Sorcerer):
 	def __init__(self):
+		self.draconic_options = {}
 		super().__init__()
 
 	def elemental_affinity_resistance(self):
@@ -186,78 +155,25 @@ class Draconic(Sorcerer):
 		else:
 			print("Sorcerer needs to be level 18 first")
 
-	def list_draconic_options(self):
-		selection = int(input("What action are you counting?\n" + "[1]: Use Spell\n" + "[2]: Reset Spell Slots\n" + "[3]: Create Spell Slot\n" + (
+	def create_draconic_options(self):
+		self.draconic_options['0'] = "[16]: Use Elemental Affinity\n" + "[17]: Use Dragonic Presence\n" + \
+					"[18]: Change Level\n" + "[19]: Exit\n"
+		self.draconic_options['16'] = self.elemental_affinity_resistance
+		self.draconic_options['17'] = self.use_draconic_presence
+		self.draconic_options['18'] = self.change_sorcerer_level
+		self.draconic_options['19'] = leave
+		return self.draconic_options
 
-			"[4]: Create Sorcery Point\n" + "[5]: Use Careful Spell\n" + "[6]: Use Distant Spell\n" +
+	def list_options(self):
+		selection = int(input(self.draconic_options.get("0")))
+		print(selection)
+		self.draconic_options["{}".format(selection)]()
 
-			"[7]: Use Empowered Spell \n" + "[8]: Use Extended Spell\n" + "[9]: Use Heightened Spell\n" +
-
-			"[10]: Use Quickened Spell\n" + "[11]Use Subtle Spell\n" + "[12]: Use Twinned Spell\n" +
-
-			"[13]: Use Sorcerous Restoration\n" + "[14]: Use Elemental Affinity\n" + "[15]: Use Dragonic Presence\n" +
-
-			"[16]: Use Hit Dice\n" + "[17]: Change Level\n" + "[18]: Exit\n")))
-		#TODO: Fix use spell slot
-		if selection == 1:
-			self.use_cur_spell_slot()
-		if selection == 2:
-			self.set_current_list_spell_slots()
-		elif selection == 3:
-			self.create_spell_slot()
-		elif selection == 4:
-			self.create_sorcery_points()
-		elif selection == 5:
-			self.use_careful_spell()
-		elif selection == 6:
-			self.use_distant_spell()
-		elif selection == 7:
-			self.use_empowered_spell()
-		elif selection == 8:
-			self.use_extended_spell()
-		elif selection == 9:
-			self.use_heightened_spell()
-		elif selection == 10:
-			self.use_quickened_spell()
-		elif selection == 11:
-			self.use_subtle_spell()
-		elif selection == 12:
-			self.use_twinned_spell()
-		elif selection == 13:
-			self.use_sorcerous_restoration()
-		elif selection == 14:
-			self.elemental_affinity_resistance()
-		elif selection == 15:
-			self.use_draconic_presence()
-		elif selection == 16:
-			self.use_hit_dice()
-		elif selection == 17:
-			self.set_level()
-			self.set_hit_dice(self.get_level())
-			self.set_max_list_spell_slots(self.get_level())
-			self.set_current_list_spell_slots()
-		elif selection == 17:
-			print("Leaving")
-			return
-
-	def create_draconic_sorcerer(self, name):
-		name = name
-		level = int(input("What level is this cleric?"))
-		player = Draconic()
-		player.set_level()
-		player.set_name(name)
-		player.set_max_list_spell_slots(player.get_level())
-		player.set_current_list_spell_slots()
-		player.set_hit_dice(level)
-		player.set_max_sorcery_points(level)
-		player.set_current_sorcery_points(self.get_max_sorcery_points())
-		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Slots" + player.get_cur_spell_slot(level))
-
-		return player
 
 class WildMagic(Sorcerer):
 	def __init__(self):
 		self.tides_of_chaos = False
+		self.wildmagic_options = {}
 		super().__init__()
 
 	def use_tides_of_chaos(self):
@@ -273,106 +189,75 @@ class WildMagic(Sorcerer):
 	def reset_tides_of_chaos_roll(self):
 		self.tides_of_chaos = False
 
-
 	def use_bend_luck(self):
 		self.use_sorcery_point(2)
 		print("Used bend luck")
 
-	def list_wild_magic_options(self):
-		selection = int(input("What action are you counting?\n" + "[1]: Use Spell Slot" + "[2]: Reset Spell Slots\n" + "[3]: Create Spell Slot\n" +
+	def create_wild_magic_options(self):
+		self.wildmagic_options['0'] = "[14]: Use Bend Luck\n" + "[15]: Use Tides of Chaos\n" + \
+					"[16]: Reset Tides of Chaos (Rest)\n" + "[17]: Reset Tides of Chaos (Roll)\n" + \
+					"[19]: Change Level\n" + "[20]: Exit\n"
+		self.wildmagic_options['14'] = self.use_bend_luck
+		self.wildmagic_options['15'] = self.use_tides_of_chaos
+		self.wildmagic_options['16'] = self.reset_tides_of_chaos_rest
+		self.wildmagic_options['17'] = self.reset_tides_of_chaos_roll
+		self.wildmagic_options['18'] = self.change_sorcerer_level
+		self.wildmagic_options['19'] = leave
+		return self.wildmagic_options
 
-			"[4]: Create Sorcery Point\n" + "[5]: Use Careful Spell\n" + "[6]: Use Distant Spell\n" +
+	def list_options(self):
+		selection = int(input(self.wildmagic_options.get("0")))
+		print(selection)
+		self.wildmagic_options["{}".format(selection)]()
 
-			"[7]: Use Empowered Spell \n" + "[8]: Use Extended Spell\n" + "[9]: Use Heightened Spell\n" +
 
-			"[10]: Use Quickened Spell\n" + "[11]Use Subtle Spell\n" + "[12]: Use Twinned Spell\n" +
+def merge_base_sorcerer_dicts(player):
+	sorcerer_opts = player.create_default_sorcerer_options()
+	merge_dicts(player.merge_base_and_fullspell_options(), sorcerer_opts)
+	return sorcerer_opts
 
-			"[13]: Use Sorcerous Restoration\n" + "[14]: Use Bend Luck\n" + "[15]: Use Tides of Chaos\n" +
 
-			"[16]: Reset Tides of Chaos (Rest)\n" + "[17]: Reset Tides of Chaos (Roll)\n" +
+def create(name, subclass):
+	player = subclass()
+	player.set_name(name)
+	return player
 
-			"[18]: Use Hit Dice\n" + "[19]: Change Level\n" + "[20]: Exit\n"))
 
-		if selection == 1:
-			self.use_cur_spell_slot()
-		if selection == 2:
-			self.set_current_list_spell_slots()
-		elif selection == 3:
-			self.create_spell_slot()
-		elif selection == 4:
-			self.create_sorcery_points()
-		elif selection == 5:
-			self.use_careful_spell()
-		elif selection == 6:
-			self.use_distant_spell()
-		elif selection == 7:
-			self.use_empowered_spell()
-		elif selection == 8:
-			self.use_extended_spell()
-		elif selection == 9:
-			self.use_heightened_spell()
-		elif selection == 10:
-			self.use_quickened_spell()
-		elif selection == 11:
-			self.use_subtle_spell()
-		elif selection == 12:
-			self.use_twinned_spell()
-		elif selection == 13:
-			self.use_sorcerous_restoration()
-		elif selection == 14:
-			self.use_bend_luck()
-		elif selection == 15:
-			self.use_tides_of_chaos()
-		elif selection == 16:
-			self.reset_tides_of_chaos_rest()
-		elif selection == 17:
-			self.reset_tides_of_chaos_roll()
-		elif selection == 18:
-			self.use_hit_dice()
-		elif selection == 19:
-			self.set_level()
-			self.set_hit_dice(self.get_level())
-			self.set_max_list_spell_slots(self.get_level())
-			self.set_current_list_spell_slots()
-		elif selection == 19:
-			print("Leaving")
-			return
+def create_basic_sorcerer(name):
+	player = create(name, Sorcerer)
+	player.change_sorcerer_level()
+	merge_dicts(merge_base_sorcerer_dicts(player), player.create_sorcerer_options())
+	return player
 
-	def create_wild_magic_sorcerer(self, name):
-		name = name
-		player = WildMagic()
-		player.set_level()
-		player.set_name(name)
-		player.set_max_list_spell_slots(player.get_level())
-		player.set_current_list_spell_slots()
-		player.set_hit_dice(player.get_level())
-		player.set_max_sorcery_points(player.get_level())
-		player.set_current_sorcery_points(self.get_max_sorcery_points())
-		print("Name:" + player.get_name(), "Level:", + player.get_level(), "Slots" + player.get_cur_spell_slot(player.get_level()))
 
-		return player
+def create_draconic_sorcerer(name):
+	player = create(name, Draconic)
+	player.change_sorcerer_level()
+	merge_dicts(merge_base_sorcerer_dicts(player), player.create_draconic_options())
+	return player
+
+
+def create_wild_magic_sorcerer(name):
+	player = create(name, WildMagic)
+	player.change_sorcerer_level()
+	merge_dicts(merge_base_sorcerer_dicts(player), player.create_wild_magic_options())
+	return player
+
 
 def main_sorcerer_making(name, dictionary):
 	name = name
 	player_subclass = input("What is their subclass?")
 	player_subclass = player_subclass.capitalize()
 	if player_subclass == "Draconic":
-		p1 = Draconic()
-		p1 = p1.create_draconic_sorcerer(name)
-		class_options = Draconic.list_draconic_options
+		p1 = create_draconic_sorcerer(name)
+		class_options = Draconic.list_options
 	elif player_subclass == "Wild Magic":
-		p1 = WildMagic()
-		p1 = p1.create_wild_magic_sorcerer(name)
-		class_options = WildMagic.list_wild_magic_options
+		p1 = create_wild_magic_sorcerer(name)
+		class_options = WildMagic.list_options
 	else:
-		p1 = Sorcerer()
-		p1 = p1.create_basic_sorcerer(name)
-		class_options = Sorcerer.list_basic_options
+		p1 = create_basic_sorcerer(name)
+		class_options = Sorcerer.list_options
 
-	sorcerer_dict[f'{p1.get_name()}'] = {"character": p1, "subclass": player_subclass,
-					 "options": class_options}
-
-	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass,
-				 "options": class_options}
+	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass, "options": class_options}
 
 
