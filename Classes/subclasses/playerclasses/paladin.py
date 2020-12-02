@@ -171,7 +171,7 @@ class Devotion(Paladin):
 class Ancient(Paladin):
 	def __init__(self):
 		self.elder_champion = False
-		self.elder_options = {}
+		self.ancient_options = {}
 		super().__init__()
 
 	def use_elder_champion(self):
@@ -188,71 +188,25 @@ class Ancient(Paladin):
 		else:
 			print("Paladin can still use Elder Champion")
 
-	def list_ancients_options(self):
-		selection = int(
-			input("What action are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Use Divine Sense\n" +
+	def create_ancients_options(self):
+		self.ancient_options['0'] = "[14]: Use Elder Champion\n" + "[15]: Reset Elder Champion\n" + \
+					"[16]: Change Level\n" + "[17]: Exit\n"
+		self.ancient_options['14'] = self.use_elder_champion
+		self.ancient_options['15'] = self.reset_elder_champion
+		self.ancient_options['16'] = self.change_paladin_level
+		self.ancient_options['17'] = leave
+		return self.ancient_options
 
-			      "[3]: Reset Divine Sense\n" + "[4]: Use Lay on Hands to Heal\n" + "[5]: Use Lay on Hands to Cure Poison/Disease\n" +
+	def list_options(self):
+		selection = int(input(self.ancient_options.get("0")))
+		print(selection)
+		self.ancient_options["{}".format(selection)]()
 
-			      "[6]: Reset Lay on Hands Pool\n" + "[7]: Use Channel Divinity\n" + "[8]: Reset Channel Divinity\n" + "[9] Use Cleansing Touch\n" +
-
-			      "[10]: Reset Cleansing Touch\n" + "[11]: Use Elder Champion\n" + "[12]: Reset Elder Champion\n" +
-
-			      "[13]: Use Hit Dice\n" + "[14]: Reset Hit Dice\n" + "[15]: Change Level\n" + "[16]: Exit\n"))
-
-		if selection == 1:
-			self.use_cur_spell_slot()
-		elif selection == 2:
-			self.use_divine_sense()
-		elif selection == 3:
-			self.set_current_divine_sense()
-		elif selection == 4:
-			self.use_lay_on_hands_to_heal()
-		elif selection == 5:
-			self.use_lay_on_hands_remove_poison()
-		elif selection == 6:
-			self.set_current_lay_on_hands_pool()
-		elif selection == 7:
-			self.use_channel_divinity()
-		elif selection == 8:
-			self.reset_channel_divinity()
-		elif selection == 9:
-			self.use_cleansing_touch()
-		elif selection == 10:
-			self.set_current_cleansing_touch()
-		elif selection == 11:
-			self.use_elder_champion()
-		elif selection == 12:
-			self.reset_elder_champion()
-		elif selection == 13:
-			self.use_hit_dice()
-		elif selection == 14:
-			self.reset_current_hit_dice()
-		elif selection == 15:
-			self.set_level()
-			self.set_hit_dice(self.get_level())
-			self.set_current_spell_slots(self.get_level())
-		elif selection == 16:
-			print("Leaving")
-			return
-
-	def create_ancients_paladin(self, name):
-		name = name
-		player = Devotion()
-		player.set_charisma()
-		player.set_level()
-		player.set_name(name)
-		player.set_max_spell_slots(player.get_level())
-		player.set_current_spell_slots(player.get_level())
-		player.set_hit_dice(player.get_level())
-		print("Name:" + player.get_name(), "Level:", + player.get_level(),
-		      "Slots" + player.get_current_spell_slot(player.get_level()))
-
-		return player
 
 class Vengeance(Paladin):
 	def __init__(self):
 		self.avenging_angel = False
+		self.vengeance_options = {}
 		super().__init__()
 
 	def use_avenging_angel(self):
@@ -269,73 +223,25 @@ class Vengeance(Paladin):
 		else:
 			print("Avenging Angel is still usable")
 
-	def list_vengeance_options(self):
-		selection = int(
-			input("What action are you counting?\n" + "[1]: Use Spell Slot\n" + "[2]: Use Divine Sense\n" +
+	def create_vengeance_options(self):
+		self.vengeance_options['0'] = "[14]: Use Avenging Angel\n" + "[15]: Reset Avenging Angel\n" + \
+					"[16]: Change Level\n" + "[17]: Exit\n"
+		self.vengeance_options['14'] = self.use_avenging_angel
+		self.vengeance_options['15'] = self.reset_avenging_angel
+		self.vengeance_options['16'] = self.change_paladin_level
+		self.vengeance_options['17'] = leave
+		return self.vengeance_options
 
-			      "[3]: Reset Divine Sense\n" + "[4]: Use Lay on Hands to Heal\n" + "[5]: Use Lay on Hands to Cure Poison/Disease\n" +
-
-			      "[6]: Reset Lay on Hands Pool\n" + "[7]: Use Channel Divinity\n" + "[8]: Reset Channel Divinity\n" + "[9] Use Cleansing Touch\n" +
-
-			      "[10]: Reset Cleansing Touch\n" + "[11]: Use Avenging Angel\n" + "[12]: Reset Avenging Angel\n" +
-
-			      "[13]: Use Hit Dice\n" + "[14]: Reset Hit Dice\n" + "[15]: Change Level\n" + "[16]: Exit\n"))
-
-		if selection == 1:
-			self.use_cur_spell_slot()
-		elif selection == 2:
-			self.use_divine_sense()
-		elif selection == 3:
-			self.set_current_divine_sense()
-		elif selection == 4:
-			self.use_lay_on_hands_to_heal()
-		elif selection == 5:
-			self.use_lay_on_hands_remove_poison()
-		elif selection == 6:
-			self.set_current_lay_on_hands_pool()
-		elif selection == 7:
-			self.use_channel_divinity()
-		elif selection == 8:
-			self.reset_channel_divinity()
-		elif selection == 9:
-			self.use_cleansing_touch()
-		elif selection == 10:
-			self.set_current_cleansing_touch()
-		elif selection == 11:
-			self.use_avenging_angel()
-		elif selection == 12:
-			self.reset_avenging_angel()
-		elif selection == 13:
-			self.use_hit_dice()
-		elif selection == 14:
-			self.reset_current_hit_dice()
-		elif selection == 15:
-			self.set_level()
-			self.set_hit_dice(self.get_level())
-			self.set_max_spell_slots(self.get_level())
-			self.set_current_spell_slots(self.get_level())
-		elif selection == 16:
-			print("Leaving")
-			return
-
-	def create_vengeance_paladin(self, name):
-		name = name
-		player = Devotion()
-		player.set_charisma()
-		player.set_level()
-		player.set_name(name)
-		player.set_max_spell_slots(player.get_level())
-		player.set_current_spell_slots(player.get_level())
-		player.set_hit_dice(player.get_level())
-		print("Name:" + player.get_name(), "Level:", + player.get_level(),
-		      "Slots" + player.get_current_spell_slot(player.get_level()))
-
-		return player
+	def list_options(self):
+		selection = int(input(self.vengeance_options.get("0")))
+		print(selection)
+		self.vengeance_options["{}".format(selection)]()
 
 
 def merge_base_paladin_dicts(player):
 	merge_dicts(player.merge_player_and_half(), player.create_paladin_options())
 	return player.paladin_options
+
 
 def create(name, subclass):
 	player = subclass()
@@ -350,10 +256,24 @@ def create_paladin(name):
 	return player
 
 
+def create_ancients_paladin(name):
+	player = create(name, Ancient)
+	player.change_paladin_level()
+	merge_dicts(merge_base_paladin_dicts(player), player.create_ancients_options())
+	return player
+
+
 def create_devotion_paladin(name):
 	player = create(name, Devotion)
 	player.change_paladin_level()
 	merge_dicts(merge_base_paladin_dicts(player), player.create_devotion_options())
+	return player
+
+
+def create_vengeance_paladin(name):
+	player = create(name, Vengeance)
+	player.change_paladin_level()
+	merge_dicts(merge_base_paladin_dicts(player), player.create_vengeance_options())
 	return player
 
 
@@ -362,24 +282,16 @@ def main_paladin_making(name, dictionary):
 	player_subclass = input("What is their subclass?")
 	player_subclass = player_subclass.capitalize()
 	if player_subclass == "Devotion":
-		p1 = Devotion()
-		p1 = p1.create_devotion_paladin(name)
-		class_options = Devotion.list_devotion_options
+		p1 = create_devotion_paladin(name)
+		class_options = Devotion.list_options
 	elif player_subclass == "Ancient":
-		p1 = Ancient()
-		p1 = p1.create_ancients_paladin(name)
-		class_options = Ancient.list_ancients_options
+		p1 = create_ancients_paladin(name)
+		class_options = Ancient.list_options
 	elif player_subclass == "Vengeance":
-		p1 = Vengeance()
-		p1 = p1.create_vengeance_paladin(name)
-		class_options = Vengeance.list_vengeance_options
+		p1 = create_vengeance_paladin(name)
+		class_options = Vengeance.list_options
 	else:
-		p1 = Paladin()
-		p1 = p1.create_paladin(name)
-		class_options = Paladin.list_paladin_options
+		p1 = create_paladin(name)
+		class_options = Paladin.list_options
 
-	paladin_dict[f'{p1.get_name()}'] = {"character": p1, "subclass": player_subclass,
-					 "options": class_options}
-
-	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass,
-				 "options": class_options}
+	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass, "options": class_options}

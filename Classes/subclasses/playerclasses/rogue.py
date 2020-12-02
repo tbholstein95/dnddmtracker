@@ -2,10 +2,12 @@ from Classes.playercharacter import *
 from Classes.subclasses.half_caster import *
 rogue_dict = {}
 
+
 class Rogue(PlayerCharacter):
 
 	def __init__(self):
 		self.stroke_of_luck = False
+		self.rogue_options = {}
 		super().__init__()
 
 	def get_stroke_of_luck(self):
@@ -25,38 +27,16 @@ class Rogue(PlayerCharacter):
 		else:
 			print("Stroke of Luck is still goo to use.")
 
-	def list_rogue_options(self):
-		selection = int(input("What action are you counting?\n" + "[1]: Use Stroke of Luck" +
-				      "[2]: Reset Stroke of Luck" + "[3]: Use Hit Dice" + "[4]: Reset Hit Dice" + "[5]: Change Level" + "[6]: Exit"))
+	def create_rogue_options(self):
+		self.rogue_options['0'] = "[3]: Use Stroke of Luck" + "[4]: Reset Stroke of Luck"
+		self.rogue_options['3'] = self.use_stroke_of_luck
+		self.rogue_options['4'] = self.reset_stroke_of_luck
+		return self.rogue_options
 
-		if selection == 1:
-			self.use_stroke_of_luck()
-		if selection == 2:
-			self.reset_stroke_of_luck()
-		if selection == 3:
-			self.use_hit_dice()
-		if selection == 4:
-			self.reset_current_hit_dice()
-		if selection == 5:
-			self.set_level()
-			self.set_hit_dice(self.get_level())
-		if selection == 6:
-			print("Leaving")
-			return
-
-	def create_rogue(self, name):
-		name = name
-		level = int(input("What level is this Rogue?\n"))
-		player = Arcane()
-		player.set_level()
-		player.set_hit_dice(level)
-		player.set_name(name)
-		player.set_max_spell_slots(level)
-		player.set_current_spell_slots(level)
-
-		print('Name:' + player.get_name(), ' Level:', player.get_level(), ' Hit Dice:', player.get_hit_dice())
-
-		return player
+	def list_options(self):
+		selection = int(input(self.rogue_options.get("0")))
+		print(selection)
+		self.rogue_options["{}".format(selection)]()
 
 
 class Arcane(Rogue, HalfCaster):
@@ -64,6 +44,7 @@ class Arcane(Rogue, HalfCaster):
 		self.spell_thief = False
 		Rogue.__init__(self)
 		HalfCaster.__init__(self)
+		self.arcane_options = {}
 
 	def use_spell_thief(self):
 		if not self.spell_thief:
@@ -79,63 +60,51 @@ class Arcane(Rogue, HalfCaster):
 		else:
 			print("Spell Thief is still good to use.")
 
-	def list_arcane_options(self):
-		selection = int(input("What action are you counting?\n" + "[1]: Use Spell Slot" + "[2]: Use Stroke of Luck" +
-				      "[3]: Reset Stroke of Luck" + "[4]: Use Spell Thief + [5]: Reset Spell Thief" +
-				      "[6]: Use Hit Dice" + "[7]: Reset Hit Dice" + "[8]: Change Level" + "[9]: Exit"))
+	def create_arcane_options(self):
+		self.arcane_options['0'] = "[5]: Use Spell Thief + [6]: Reset Spell Thief" + "[7]: Change Level" + "[8]: Exit"
+		self.arcane_options['5'] = self.use_spell_thief
+		self.arcane_options['6'] = self.reset_spell_thief
+		self.arcane_options['7'] = self.change_half_caster_level
+		self.arcane_options['8'] = leave
+		return self.arcane_options
 
-		if selection == 1:
-			self.use_cur_spell_slot()
-		if selection == 2:
-			self.use_stroke_of_luck()
-		if selection == 3:
-			self.reset_stroke_of_luck()
-		if selection == 4:
-			self.use_spell_thief()
-		if selection == 5:
-			self.reset_spell_thief()
-		if selection == 6:
-			self.use_hit_dice()
-		if selection == 7:
-			self.reset_current_hit_dice()
-		if selection == 8:
-			self.set_level()
-			self.set_hit_dice(self.get_level())
-			self.set_max_spell_slots(self.get_level())
-			self.set_current_spell_slots(self.get_level())
 
-		if selection == 9:
-			print("Leaving")
-			return
+def merge_base_fighter_dicts(player):
+	player_class = player.create_player_character_options()
+	rogue_opts = player.create_fighter_options()
+	merge_dicts(player_class, rogue_opts)
+	return rogue_opts
 
-	def create_arcane_rogue(self, name):
-		name = name
-		player = Arcane()
-		player.set_level()
-		player.set_hit_dice(player.get_level())
-		player.set_name(name)
-		player.set_max_spell_slots(player.get_level())
-		player.set_current_spell_slots(player.get_level())
 
-		print('Name:' + player.get_name(), ' Level:', player.get_level(), ' Hit Dice:', player.get_hit_dice())
+def create(name, subclass):
+	player = subclass()
+	player.set_name(name)
+	return player
 
-		return player
+
+def create_rogue(name):
+	player = create(name, Rogue)
+	player.base_change_level()
+	merge_dicts(player.create_player_character_options(), player.create_rogue_options())
+	return player
+
+
+def create_arcane_rogue(name):
+	player = create(name, Arcane)
+	player.change_half_caster_level()
+	merge_dicts(merge_base_fighter_dicts(player), player.create_arcane_options())
+	return player
+
 
 def main_rogue_making(name, dictionary):
 	name = name
 	player_subclass = input("What is their subclass?")
 	player_subclass = player_subclass.capitalize()
 	if player_subclass == "Arcane":
-		p1 = Arcane()
-		p1 = p1.create_arcane_rogue(name)
-		class_options = Arcane.list_arcane_options
+		p1 = create(name, Arcane)
+		class_options = Arcane.list_options
 	else:
-		p1 = Rogue()
-		p1 = p1.create_rogue(name)
-		class_options = Rogue.list_rogue_options
+		p1 = create(name, Rogue)
+		class_options = Rogue.list_options
 
-	rogue_dict[f'{p1.get_name()}'] = {"character": p1, "subclass": player_subclass,
-					 "options": class_options}
-
-	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass,
-				 "options": class_options}
+	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass, "options": class_options}

@@ -120,3 +120,8 @@ class FullCaster(PlayerCharacter):
 		spell_opts = self.create_fullcaster_character_options()
 		merge_dicts(player_class, spell_opts)
 		return spell_opts
+
+	def change_fullcaster_level(self):
+		self.base_change_level()
+		self.set_max_list_spell_slots(self.get_level())
+		self.set_current_list_spell_slots()
