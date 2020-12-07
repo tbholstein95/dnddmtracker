@@ -26,7 +26,7 @@ class Wizard(FullCaster):
 		return self.wizard_options
 
 	def list_options(self):
-		selection = int(input(self.wizard_options.get("0")))
+		selection = int_checker(self.wizard_options.get("0"))
 		print(selection)
 		self.wizard_options["{}".format(selection)]()
 
@@ -58,7 +58,7 @@ class Abjuration(Wizard):
 		return self.abjuration_options
 
 	def list_options(self):
-		selection = int(input(self.abjuration_options.get("0")))
+		selection = int_checker(self.abjuration_options.get("0"))
 		print(selection)
 		self.abjuration_options["{}".format(selection)]()
 
@@ -74,7 +74,7 @@ class Divination(Wizard):
 	def use_expert_divination(self):
 		if self.get_level() >= 6:
 			spell_level = self.use_cur_spell_slot()
-			restore_slot = int(input("What spell slot would they like to restore?"))
+			restore_slot = int_checker("What spell slot would they like to restore?")
 			if restore_slot < 6 and restore_slot < spell_level:
 				self.add_spell_slot(restore_slot)
 			else:
@@ -126,7 +126,7 @@ class Divination(Wizard):
 		return self.divination_options
 
 	def list_options(self):
-		selection = int(input(self.divination_options.get("0")))
+		selection = int_checker(self.divination_options.get("0"))
 		print(selection)
 		self.divination_options["{}".format(selection)]()
 
@@ -181,7 +181,7 @@ class Enchantment(Wizard):
 		return self.enchantment_options
 
 	def list_options(self):
-		selection = int(input(self.enchantment_options.get("0")))
+		selection = int_checker(self.enchantment_options.get("0"))
 		print(selection)
 		self.enchantment_options["{}".format(selection)]()
 
@@ -216,7 +216,7 @@ class Illusion(Wizard):
 		return self.illusion_options
 
 	def list_options(self):
-		selection = int(input(self.illusion_options.get("0")))
+		selection = int_checker(self.illusion_options.get("0"))
 		print(selection)
 		self.illusion_options["{}".format(selection)]()
 
@@ -269,7 +269,7 @@ class Transmutation(Wizard):
 		return self.transmutation_options
 
 	def list_options(self):
-		selection = int(input(self.transmutation_options.get("0")))
+		selection = int_checker(self.transmutation_options.get("0"))
 		print(selection)
 		self.transmutation_options["{}".format(selection)]()
 

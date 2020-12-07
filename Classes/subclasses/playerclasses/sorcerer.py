@@ -39,7 +39,7 @@ class Sorcerer(FullCaster):
 			print("Sorcerer does not have that many sorcery points right now")
 
 	def create_spell_slot(self):
-		slot = int(input("What spell slot does the sorcerer want?"))
+		slot = int_checker("What spell slot does the sorcerer want?")
 		point_cost = 0
 		if slot == 1:
 			point_cost = 2
@@ -60,7 +60,7 @@ class Sorcerer(FullCaster):
 			print("Added one slot to level {} spells.".format(slot))
 
 	def create_sorcery_points(self):
-		points = int(input("What level spell is the Sorcerer spending for this?"))
+		points = int_checker("What level spell is the Sorcerer spending for this?")
 		slots = self.get_current_spell_slot(points)
 		if slots >= 0:
 			self.add_sorcery_points(points)
@@ -96,7 +96,7 @@ class Sorcerer(FullCaster):
 		print("Spent one sorcery point")
 
 	def use_twinned_spell(self):
-		spell_level = int(input("What is the spell level?"))
+		spell_level = int_checker("What is the spell level?")
 		if self.get_current_spell_slot(spell_level) > 0:
 			self.use_sorcery_point(spell_level)
 			print("Spend {} sorcery point(s)".format(spell_level))
@@ -131,7 +131,7 @@ class Sorcerer(FullCaster):
 		self.reset_current_sorcery_points()
 
 	def list_options(self):
-		selection = int(input(self.sorcerer_options.get("0")))
+		selection = int_checker(self.sorcerer_options.get("0"))
 		print(selection)
 		self.sorcerer_options["{}".format(selection)]()
 
@@ -165,7 +165,7 @@ class Draconic(Sorcerer):
 		return self.draconic_options
 
 	def list_options(self):
-		selection = int(input(self.draconic_options.get("0")))
+		selection = int_checker(self.draconic_options.get("0"))
 		print(selection)
 		self.draconic_options["{}".format(selection)]()
 
@@ -206,7 +206,7 @@ class WildMagic(Sorcerer):
 		return self.wildmagic_options
 
 	def list_options(self):
-		selection = int(input(self.wildmagic_options.get("0")))
+		selection = int_checker(self.wildmagic_options.get("0"))
 		print(selection)
 		self.wildmagic_options["{}".format(selection)]()
 

@@ -23,7 +23,7 @@ class Bard(FullCaster):
 		return self.charisma
 
 	def set_charisma(self):
-		self.charisma = int(input("What should this Bard's charisma be?"))
+		self.charisma = int_checker("What should this Bard's charisma be?")
 
 	def set_max_bardic_inspiration(self):
 		cur_charisma = self.get_charisma()
@@ -72,7 +72,7 @@ class Bard(FullCaster):
 		return self.default_bard_options
 
 	def list_options(self):
-		selection = int(input(self.default_bard_options.get("0")))
+		selection = int_checker(self.default_bard_options.get("0"))
 		print(selection)
 		self.default_bard_options["{}".format(selection)]()
 
@@ -141,7 +141,7 @@ class Glamour(Bard):
 		return self.glamour_options
 
 	def list_options(self):
-		selection = int(input(self.glamour_options.get("0")))
+		selection = int_checker(self.glamour_options.get("0"))
 		print(selection)
 		self.glamour_options["{}".format(selection)]()
 
@@ -176,7 +176,7 @@ class Swords(Bard):
 		return self.sword_options
 
 	def list_options(self):
-		selection = int(input(self.sword_options.get("0")))
+		selection = int_checker(self.sword_options.get("0"))
 		print(selection)
 		self.sword_options["{}".format(selection)]()
 
@@ -284,7 +284,7 @@ class Whispers(Bard):
 		return self.whispers_options
 
 	def list_options(self):
-		selection = int(input(self.whispers_options.get("0")))
+		selection = int_checker(self.whispers_options.get("0"))
 		print(selection)
 		self.whispers_options["{}".format(selection)]()
 

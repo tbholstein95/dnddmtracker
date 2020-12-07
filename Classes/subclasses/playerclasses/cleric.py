@@ -95,7 +95,7 @@ class Cleric(FullCaster):
 		self.reset_channel_divinity()
 
 	def list_options(self):
-		selection = int(input(self.default_cleric_options.get("0")))
+		selection = int_checker(self.default_cleric_options.get("0"))
 		print(selection)
 		self.default_cleric_options["{}".format(selection)]()
 
@@ -132,7 +132,7 @@ class Knowledge(Cleric):
 		self.knowledge_options['12'] = leave
 
 	def list_options(self):
-		selection = int(input(self.knowledge_options.get("0")))
+		selection = int_checker(self.knowledge_options.get("0"))
 		print(selection)
 		self.knowledge_options["{}".format(selection)]()
 
@@ -149,7 +149,7 @@ class Light(Cleric):
 		return self.wisdom
 
 	def set_wisdom(self):
-		wis = int(input("What is this Cleric's Wisdom?"))
+		wis = int_checker("What is this Cleric's Wisdom?")
 		self.wisdom = wis
 
 	def set_max_warding_flare(self):
@@ -189,7 +189,7 @@ class Light(Cleric):
 		return self.light_options
 
 	def list_options(self):
-		selection = int(input(self.light_options.get("0")))
+		selection = int_checker(self.light_options.get("0"))
 		print(selection)
 		self.light_options["{}".format(selection)]()
 
@@ -207,7 +207,7 @@ class Tempest(Cleric):
 		return self.wisdom
 
 	def set_wisdom(self):
-		wis = int(input("What is this Cleric's Wisdom?"))
+		wis = int_checker("What is this Cleric's Wisdom?")
 		self.wisdom = wis
 
 	def set_max_wrath_of_the_storm(self):
@@ -249,7 +249,7 @@ class Tempest(Cleric):
 		return self.tempest_options
 
 	def list_options(self):
-		selection = int(input(self.tempest_options.get("0")))
+		selection = int_checker(self.tempest_options.get("0"))
 		print(selection)
 		self.tempest_options["{}".format(selection)]()
 
@@ -267,7 +267,7 @@ class War(Cleric):
 		return self.wisdom
 
 	def set_wisdom(self):
-		wis = int(input("What is this Cleric's Wisdom?"))
+		wis = int_checker("What is this Cleric's Wisdom?")
 		self.wisdom = wis
 
 	def set_max_bonus_attack(self):
@@ -310,7 +310,7 @@ class War(Cleric):
 		return self.war_options
 
 	def list_options(self):
-		selection = int(input(self.war_options.get("0")))
+		selection = int_checker(self.war_options.get("0"))
 		print(selection)
 		self.war_options["{}".format(selection)]()
 
@@ -330,7 +330,7 @@ class Grave(Cleric):
 		return self.wisdom
 
 	def set_wisdom(self):
-		wis = int(input("What is this Cleric's Wisdom?"))
+		wis = int_checker("What is this Cleric's Wisdom?")
 		self.wisdom = wis
 
 	def set_max_eyes_of_the_grave(self):
@@ -395,7 +395,7 @@ class Grave(Cleric):
 		return self.grave_options
 
 	def list_options(self):
-		selection = int(input(self.grave_options.get("0")))
+		selection = int_checker(self.grave_options.get("0"))
 		print(selection)
 		self.grave_options["{}".format(selection)]()
 

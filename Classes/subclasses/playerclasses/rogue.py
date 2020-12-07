@@ -34,7 +34,7 @@ class Rogue(PlayerCharacter):
 		return self.rogue_options
 
 	def list_options(self):
-		selection = int(input(self.rogue_options.get("0")))
+		selection = int_checker(self.rogue_options.get("0"))
 		print(selection)
 		self.rogue_options["{}".format(selection)]()
 
@@ -67,6 +67,11 @@ class Arcane(Rogue, HalfCaster):
 		self.arcane_options['7'] = self.change_half_caster_level
 		self.arcane_options['8'] = leave
 		return self.arcane_options
+
+	def list_options(self):
+		selection = int_checker(self.arcane_options.get("0"))
+		print(selection)
+		self.arcane_options["{}".format(selection)]()
 
 
 def merge_base_fighter_dicts(player):

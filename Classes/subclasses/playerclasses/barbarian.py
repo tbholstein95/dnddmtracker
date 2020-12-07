@@ -149,7 +149,7 @@ class AncestralGuardian(Barbarian):
 		return self.ancestral_options
 
 	def list_options(self):
-		selection = int(input(self.ancestral_options.get("0")))
+		selection = int_checker(self.ancestral_options.get("0"))
 		print(selection)
 		self.ancestral_options["{}".format(selection)]()
 
@@ -208,7 +208,7 @@ class Zealot(Barbarian):
 		return self.zealot_options
 
 	def list_options(self):
-		selection = int(input(self.zealot_options.get("0")))
+		selection = int_checker(self.zealot_options.get("0"))
 		print(selection)
 		self.zealot_options["{}".format(selection)]()
 

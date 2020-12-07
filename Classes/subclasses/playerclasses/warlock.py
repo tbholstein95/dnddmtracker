@@ -112,7 +112,7 @@ class Warlock(PlayerCharacter):
 		return self.warlock_options
 
 	def list_options(self):
-		selection = int(input(self.warlock_options.get("0")))
+		selection = int_checker(self.warlock_options.get("0"))
 		print(selection)
 		self.warlock_options["{}".format(selection)]()
 
@@ -199,7 +199,7 @@ class Archfey(Warlock):
 		return self.archfey_options
 
 	def list_options(self):
-		selection = int(input(self.archfey_options.get("0")))
+		selection = int_checker(self.archfey_options.get("0"))
 		print(selection)
 		self.archfey_options["{}".format(selection)]()
 
@@ -260,7 +260,7 @@ class Fiend(Warlock):
 		self.fiend_options['14'] = leave
 
 	def list_options(self):
-		selection = int(input(self.fiend_options.get("0")))
+		selection = int_checker(self.fiend_options.get("0"))
 		print(selection)
 		self.fiend_options["{}".format(selection)]()
 
@@ -298,7 +298,7 @@ class Old(Warlock):
 		return self.old_options
 
 	def list_options(self):
-		selection = int(input(self.old_options.get("0")))
+		selection = int_checker(self.old_options.get("0"))
 		print(selection)
 		self.old_options["{}".format(selection)]()
 

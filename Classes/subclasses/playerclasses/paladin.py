@@ -16,7 +16,7 @@ class Paladin(HalfCaster):
 		super().__init__()
 
 	def set_charisma(self):
-		char = int(input("What is this Paladin's charisma modifier?"))
+		char = int_checker("What is this Paladin's charisma modifier?")
 		self.charisma = char
 
 	def get_charisma(self):
@@ -52,7 +52,7 @@ class Paladin(HalfCaster):
 		return self.current_lay_on_hands
 
 	def use_lay_on_hands_to_heal(self):
-		amount = int(input("How many points would the Paladin like to use?"))
+		amount = int_checker("How many points would the Paladin like to use?")
 		if amount <= self.get_current_lay_on_hands():
 			self.current_lay_on_hands -= amount
 		else:
@@ -128,7 +128,7 @@ class Paladin(HalfCaster):
 		self.set_current_divine_sense()
 
 	def list_options(self):
-		selection = int(input(self.paladin_options.get("0")))
+		selection = int_checker(self.paladin_options.get("0"))
 		print(selection)
 		self.paladin_options["{}".format(selection)]()
 
@@ -163,7 +163,7 @@ class Devotion(Paladin):
 		return self.devotion_options
 
 	def list_options(self):
-		selection = int(input(self.devotion_options.get("0")))
+		selection = int_checker(self.devotion_options.get("0"))
 		print(selection)
 		self.devotion_options["{}".format(selection)]()
 
@@ -198,7 +198,7 @@ class Ancient(Paladin):
 		return self.ancient_options
 
 	def list_options(self):
-		selection = int(input(self.ancient_options.get("0")))
+		selection = int_checker(self.ancient_options.get("0"))
 		print(selection)
 		self.ancient_options["{}".format(selection)]()
 
@@ -233,7 +233,7 @@ class Vengeance(Paladin):
 		return self.vengeance_options
 
 	def list_options(self):
-		selection = int(input(self.vengeance_options.get("0")))
+		selection = int_checker(self.vengeance_options.get("0"))
 		print(selection)
 		self.vengeance_options["{}".format(selection)]()
 

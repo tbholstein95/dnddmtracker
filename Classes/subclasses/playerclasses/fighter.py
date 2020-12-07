@@ -93,7 +93,7 @@ class Fighter(PlayerCharacter):
 		self.set_current_indomitable()
 
 	def list_options(self):
-		selection = int(input(self.fighter_options.get("0")))
+		selection = int_checker(self.fighter_options.get("0"))
 		print(selection)
 		self.fighter_options["{}".format(selection)]()
 
@@ -150,7 +150,7 @@ class BattleMaster(Fighter):
 		return self.battlemaster_options
 
 	def list_options(self):
-		selection = int(input(self.battlemaster_options.get("0")))
+		selection = int_checker(self.battlemaster_options.get("0"))
 		print(selection)
 		self.battlemaster_options["{}".format(selection)]()
 
@@ -180,7 +180,7 @@ class Eldritch(Fighter, HalfCaster):
 		self.eldritch_options['12'] = leave
 
 	def list_options(self):
-		selection = int(input(self.eldritch_options.get("0")))
+		selection = int_checker(self.eldritch_options.get("0"))
 		print(selection)
 		self.eldritch_options["{}".format(selection)]()
 
