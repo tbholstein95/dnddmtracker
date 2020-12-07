@@ -111,7 +111,7 @@ class Berserker(Barbarian):
 		return self.berserker_options
 
 	def list_options(self):
-		selection = int(input(self.berserker_options.get("0")))
+		selection = int_checker(self.berserker_options.get("0"))
 		print(selection)
 		self.berserker_options["{}".format(selection)]()
 
