@@ -325,7 +325,7 @@ def create_swords_bard(name):
 def create_whispers_bard(name):
 	player = create(name, Whispers)
 	player.change_level_option()
-	merge_dicts(merge_base_bard_dicts(player), player.create_swords_options())
+	merge_dicts(merge_base_bard_dicts(player), player.create_whispers_options())
 	return player
 
 
