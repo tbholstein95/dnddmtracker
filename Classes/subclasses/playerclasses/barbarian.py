@@ -102,7 +102,7 @@ class Berserker(Barbarian):
 	def create_berserker_options(self):
 		# Options 3-5 taken by default barb. Don't use those as keys.
 		self.berserker_options['0'] = "[6]: Use Frenzy\n[7]: Use Reckless Strikes\n[8]: Reset Reckless Strikes\n" \
-					"[9]: Set Barbarian Level\n[10]: Leave"
+					"[9]: Set Barbarian Level\n[10]: Leave\n"
 		self.berserker_options['6'] = self.use_frenzy
 		self.berserker_options['7'] = self.use_reckless_strikes
 		self.berserker_options['8'] = self.reset_reckless_strikes
@@ -258,14 +258,14 @@ def create_zealot_barbarian(name):
 
 
 def main_barb_making(name, dictionary):
-	player_subclass = input("What is their subclass?").capitalize()
-	if player_subclass == "Berserker":
+	player_subclass = int_checker("What is their subclass?\n[1]: Berserker\n[2]: Ancestral\n[3]:Zealot[4]: Other\n")
+	if player_subclass == "1":
 		p1 = create_berserker_barbarian(name)
 		new_options = Berserker.list_options
-	elif player_subclass == "Ancestral":
+	elif player_subclass == "2":
 		p1 = create_ancestral_barbarian(name)
 		new_options = AncestralGuardian.list_options
-	elif player_subclass == "Zealot":
+	elif player_subclass == "3":
 		p1 = create_zealot_barbarian(name)
 		new_options = Zealot.list_options
 	else:

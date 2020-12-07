@@ -344,14 +344,14 @@ def create_old_warlock(name):
 
 
 def main_warlock_making(name, dictionary):
-	player_subclass = input("What is their subclass?").capitalize()
-	if player_subclass == "Archfey":
+	player_subclass = int_checker("What is their subclass?\n[1]: Archfey\n[2]: Fiend\n[3]: Old\n[4]: Other\n")
+	if player_subclass == "1":
 		p1 = create_archfey_warlock(name)
 		class_options = Archfey.list_options
-	elif player_subclass == "Fiend":
+	elif player_subclass == "2":
 		p1 = create_fiend_warlock(name)
 		class_options = Fiend.list_options
-	elif player_subclass == "Old":
+	elif player_subclass == "3":
 		p1 = create_old_warlock(name)
 		class_options = Old.list_options
 	else:

@@ -279,15 +279,15 @@ def create_vengeance_paladin(name):
 
 def main_paladin_making(name, dictionary):
 	name = name
-	player_subclass = input("What is their subclass?")
+	player_subclass = int_checker("What is their subclass?\n[1]: Devotion\n[2]: Ancient\n[3]: Vengenace\n[4]: Other\n")
 	player_subclass = player_subclass.capitalize()
-	if player_subclass == "Devotion":
+	if player_subclass == "1":
 		p1 = create_devotion_paladin(name)
 		class_options = Devotion.list_options
-	elif player_subclass == "Ancient":
+	elif player_subclass == "2":
 		p1 = create_ancients_paladin(name)
 		class_options = Ancient.list_options
-	elif player_subclass == "Vengeance":
+	elif player_subclass == "3":
 		p1 = create_vengeance_paladin(name)
 		class_options = Vengeance.list_options
 	else:

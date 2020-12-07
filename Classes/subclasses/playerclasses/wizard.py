@@ -329,20 +329,21 @@ def create_transmutation_wizard(name):
 
 
 def main_wizard_making(name, dictionary):
-	player_subclass = input("What is their subclass?").capitalize()
-	if player_subclass == "Abjuration":
+	player_subclass = int_checker("What is their subclass?\n[1]: Abjuration\n[2]: Divination\n[3]: Enchantment\n"
+				"[4]: Illusion\n[5]: Transmutation\n[6]: Other")
+	if player_subclass == "1":
 		p1 = create_abjuration_wizard(name)
 		class_options = Abjuration.list_options
-	elif player_subclass == "Divination":
+	elif player_subclass == "2":
 		p1 = create_divination_wizard(name)
 		class_options = Divination.list_options
-	elif player_subclass == "Enchantment":
+	elif player_subclass == "3":
 		p1 = create_enchantment_wizard(name)
 		class_options = Enchantment.list_options
-	elif player_subclass == "Illusion":
+	elif player_subclass == "4":
 		p1 = create_illusion_wizard(name)
 		class_options = Illusion.list_options
-	elif player_subclass == "Transmutation":
+	elif player_subclass == "5":
 		p1 = create_transmutation_wizard(name)
 		class_options = Transmutation.list_options
 	else:

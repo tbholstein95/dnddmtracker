@@ -29,7 +29,6 @@ def main():
 		current_player = list(player_dictionary.keys())[current_player_index]
 		if current_player == "exit":
 			print("Stopping")
-			running = False
 			break
 		# set current player
 		current_mod = player_dictionary[f'{current_player}']["character"]

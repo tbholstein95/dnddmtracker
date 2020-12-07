@@ -184,11 +184,11 @@ def create_four_elements_monk(name):
 
 def main_monk_making(name, dictionary):
 	name = name
-	player_subclass = input("What is their subclass?").capitalize()
-	if player_subclass == "Open Hand":
+	player_subclass = int_checker("What is their subclass?\n[1]: Open Hand\n[2]: Four Elements\n[3]: Other\n")
+	if player_subclass == "1":
 		p1 = create_open_hand_monk(name)
 		new_options = OpenHand.list_options
-	elif player_subclass == "Four Elements":
+	elif player_subclass == "2":
 		p1 = create(name, FourElements)
 		new_options = FourElements.list_options
 	else:

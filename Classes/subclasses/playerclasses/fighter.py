@@ -221,11 +221,11 @@ def create_eldritch_fighter(name):
 
 
 def main_fighter_making(name, dictionary):
-	player_subclass = input("What is their subclass?").capitalize()
-	if player_subclass == "BattleMaster":
+	player_subclass = input("What is their subclass?\n[1]: Battlemaster\n[2]: Eldritch\n[3]: Other\n")
+	if player_subclass == "1":
 		p1 = create_battlemaster_fighter(name)
 		new_options = BattleMaster.list_options
-	elif player_subclass == "Eldritch":
+	elif player_subclass == "2":
 		p1 = create_eldritch_fighter(name)
 		new_options = Eldritch.list_options
 	else:

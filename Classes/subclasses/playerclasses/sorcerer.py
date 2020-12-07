@@ -246,12 +246,12 @@ def create_wild_magic_sorcerer(name):
 
 def main_sorcerer_making(name, dictionary):
 	name = name
-	player_subclass = input("What is their subclass?")
+	player_subclass = int_checker("What is their subclass?\n[1]:Draconic\n[2]:Wild Magic\n[3]: Other")
 	player_subclass = player_subclass.capitalize()
-	if player_subclass == "Draconic":
+	if player_subclass == "1":
 		p1 = create_draconic_sorcerer(name)
 		class_options = Draconic.list_options
-	elif player_subclass == "Wild Magic":
+	elif player_subclass == "2":
 		p1 = create_wild_magic_sorcerer(name)
 		class_options = WildMagic.list_options
 	else:

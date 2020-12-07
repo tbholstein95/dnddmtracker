@@ -225,7 +225,7 @@ class Whispers(Bard):
 
 	def use_words_of_terror(self):
 		if self.get_words_of_terror():
-			print("Already used Words of Terror this awake cycle")
+			print("Already used Words of Terror this rest cycle")
 			return
 		else:
 			self.words_of_terror = True
@@ -330,14 +330,14 @@ def create_whispers_bard(name):
 
 
 def main_bard_making(name, dictionary):
-	player_subclass = input("What is their subclass?").capitalize()
-	if player_subclass == "Glamour":
+	player_subclass = int_checker("What is their subclass?\n[1]: Glamour\n[2]:Swords\n[3]:Whispers\n[4]: Other\n")
+	if player_subclass == "1":
 		p1 = create_glamour_bard(name)
 		new_options = Glamour.list_options
-	elif player_subclass == "Swords":
+	elif player_subclass == "2":
 		p1 = create_swords_bard(name)
 		new_options = Swords.list_options
-	elif player_subclass == "Whispers":
+	elif player_subclass == "3":
 		p1 = create_whispers_bard(name)
 		new_options = Whispers.list_options
 	else:

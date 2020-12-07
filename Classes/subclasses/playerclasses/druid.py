@@ -80,7 +80,7 @@ class Land(Druid):
 				if restoring == 0:
 					return
 				else:
-					quant_restoring = int(input("How many of these spell slots?"))
+					quant_restoring = int_checker("How many of these spell slots?")
 					if quant_restoring * restoring > restore_up_to or quant_restoring * restoring > \
 						self.max_slots[restoring]:
 						print("This is too many")
@@ -349,17 +349,17 @@ def create_moon_druid(name):
 
 
 def main_druid_making(name, dictionary):
-	player_subclass = input("What is their subclass?").capitalize()
-	if player_subclass == "Land":
+	player_subclass = int_checker("What is their subclass?\n[1]: Land\n[2]: Moon\n[3]: Dream\n[4]: Shepherd\n[5]: Other")
+	if player_subclass == "1":
 		p1 = create_land_druid(name)
 		new_options = Land.list_options
-	elif player_subclass == "Moon":
+	elif player_subclass == "2":
 		p1 = create_moon_druid(name)
 		new_options = Moon.list_options
-	elif player_subclass == "Dream":
+	elif player_subclass == "3":
 		p1 = create_dream_druid(name)
 		new_options = Dream.list_options
-	elif player_subclass == "Shepherd":
+	elif player_subclass == "4":
 		p1 = create_shepherd_druid(name)
 		new_options = Shepherd.list_options
 	else:

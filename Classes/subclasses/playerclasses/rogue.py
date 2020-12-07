@@ -103,9 +103,9 @@ def create_arcane_rogue(name):
 
 def main_rogue_making(name, dictionary):
 	name = name
-	player_subclass = input("What is their subclass?")
+	player_subclass = int_checker("What is their subclass?\n[1]: Arcane\n[2]: Other")
 	player_subclass = player_subclass.capitalize()
-	if player_subclass == "Arcane":
+	if player_subclass == "1":
 		p1 = create(name, Arcane)
 		class_options = Arcane.list_options
 	else:
