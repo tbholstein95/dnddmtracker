@@ -93,7 +93,7 @@ class Fighter(PlayerCharacter):
 		self.set_current_indomitable()
 
 	def list_options(self):
-		selection = int(input(self.fighter_options.get("0")))
+		selection = int_checker(self.fighter_options.get("0"))
 		print(selection)
 		self.fighter_options["{}".format(selection)]()
 
@@ -150,7 +150,7 @@ class BattleMaster(Fighter):
 		return self.battlemaster_options
 
 	def list_options(self):
-		selection = int(input(self.battlemaster_options.get("0")))
+		selection = int_checker(self.battlemaster_options.get("0"))
 		print(selection)
 		self.battlemaster_options["{}".format(selection)]()
 
@@ -180,7 +180,7 @@ class Eldritch(Fighter, HalfCaster):
 		self.eldritch_options['12'] = leave
 
 	def list_options(self):
-		selection = int(input(self.eldritch_options.get("0")))
+		selection = int_checker(self.eldritch_options.get("0"))
 		print(selection)
 		self.eldritch_options["{}".format(selection)]()
 
@@ -221,11 +221,11 @@ def create_eldritch_fighter(name):
 
 
 def main_fighter_making(name, dictionary):
-	player_subclass = input("What is their subclass?").capitalize()
-	if player_subclass == "BattleMaster":
+	player_subclass = input("What is their subclass?\n[1]: Battlemaster\n[2]: Eldritch\n[3]: Other\n")
+	if player_subclass == "1":
 		p1 = create_battlemaster_fighter(name)
 		new_options = BattleMaster.list_options
-	elif player_subclass == "Eldritch":
+	elif player_subclass == "2":
 		p1 = create_eldritch_fighter(name)
 		new_options = Eldritch.list_options
 	else:

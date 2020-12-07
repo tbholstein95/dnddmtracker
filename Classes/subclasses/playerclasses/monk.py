@@ -41,7 +41,7 @@ class Monk(PlayerCharacter):
 
 	def use_ki_point(self):
 		current_ki = self.get_current_ki_points()
-		ki_to_use = int(input("How many ki points is the monk using?"))
+		ki_to_use = int_checker("How many ki points is the monk using?")
 		if current_ki - ki_to_use <= 0:
 			print("The monk has 0 ki points")
 		else:
@@ -61,7 +61,7 @@ class Monk(PlayerCharacter):
 		self.reset_current_ki_points()
 
 	def list_options(self):
-		selection = int(input(self.monk_options.get("0")))
+		selection = int_checker(self.monk_options.get("0"))
 		print(selection)
 		self.monk_options["{}".format(selection)]()
 
@@ -106,7 +106,7 @@ class OpenHand(Monk):
 		return self.open_hand_options
 
 	def list_options(self):
-		selection = int(input(self.open_hand_options.get("0")))
+		selection = int_checker(self.open_hand_options.get("0"))
 		print(selection)
 		self.open_hand_options["{}".format(selection)]()
 
@@ -117,7 +117,7 @@ class FourElements(Monk):
 		super().__init__()
 
 	def use_elemental_discipline(self):
-		amount = int(input("How many ki points?"))
+		amount = int_checker("How many ki points?")
 		maximum_ki_expend = 0
 		if 5 <= self.get_level() <= 8:
 			maximum_ki_expend = 3
@@ -128,7 +128,7 @@ class FourElements(Monk):
 		elif 17 <= self.get_level() <= 20:
 			maximum_ki_expend = 6
 
-		spell_level = int(input("What level are they casting this spell at?"))
+		spell_level = int_checker("What level are they casting this spell at?")
 		if amount + spell_level > maximum_ki_expend:
 			print("Monk can't spend that much at once")
 		else:
@@ -143,7 +143,7 @@ class FourElements(Monk):
 		return self.elements_options
 
 	def list_options(self):
-		selection = int(input(self.elements_options.get("0")))
+		selection = int_checker(self.elements_options.get("0"))
 		print(selection)
 		self.elements_options["{}".format(selection)]()
 
@@ -184,11 +184,11 @@ def create_four_elements_monk(name):
 
 def main_monk_making(name, dictionary):
 	name = name
-	player_subclass = input("What is their subclass?").capitalize()
-	if player_subclass == "Open Hand":
+	player_subclass = int_checker("What is their subclass?\n[1]: Open Hand\n[2]: Four Elements\n[3]: Other\n")
+	if player_subclass == "1":
 		p1 = create_open_hand_monk(name)
 		new_options = OpenHand.list_options
-	elif player_subclass == "Four Elements":
+	elif player_subclass == "2":
 		p1 = create(name, FourElements)
 		new_options = FourElements.list_options
 	else:

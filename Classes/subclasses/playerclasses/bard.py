@@ -23,7 +23,7 @@ class Bard(FullCaster):
 		return self.charisma
 
 	def set_charisma(self):
-		self.charisma = int(input("What should this Bard's charisma be?"))
+		self.charisma = int_checker("What should this Bard's charisma be?")
 
 	def set_max_bardic_inspiration(self):
 		cur_charisma = self.get_charisma()
@@ -72,7 +72,7 @@ class Bard(FullCaster):
 		return self.default_bard_options
 
 	def list_options(self):
-		selection = int(input(self.default_bard_options.get("0")))
+		selection = int_checker(self.default_bard_options.get("0"))
 		print(selection)
 		self.default_bard_options["{}".format(selection)]()
 
@@ -141,7 +141,7 @@ class Glamour(Bard):
 		return self.glamour_options
 
 	def list_options(self):
-		selection = int(input(self.glamour_options.get("0")))
+		selection = int_checker(self.glamour_options.get("0"))
 		print(selection)
 		self.glamour_options["{}".format(selection)]()
 
@@ -176,7 +176,7 @@ class Swords(Bard):
 		return self.sword_options
 
 	def list_options(self):
-		selection = int(input(self.sword_options.get("0")))
+		selection = int_checker(self.sword_options.get("0"))
 		print(selection)
 		self.sword_options["{}".format(selection)]()
 
@@ -225,7 +225,7 @@ class Whispers(Bard):
 
 	def use_words_of_terror(self):
 		if self.get_words_of_terror():
-			print("Already used Words of Terror this awake cycle")
+			print("Already used Words of Terror this rest cycle")
 			return
 		else:
 			self.words_of_terror = True
@@ -284,7 +284,7 @@ class Whispers(Bard):
 		return self.whispers_options
 
 	def list_options(self):
-		selection = int(input(self.whispers_options.get("0")))
+		selection = int_checker(self.whispers_options.get("0"))
 		print(selection)
 		self.whispers_options["{}".format(selection)]()
 
@@ -325,19 +325,19 @@ def create_swords_bard(name):
 def create_whispers_bard(name):
 	player = create(name, Whispers)
 	player.change_level_option()
-	merge_dicts(merge_base_bard_dicts(player), player.create_swords_options())
+	merge_dicts(merge_base_bard_dicts(player), player.create_whispers_options())
 	return player
 
 
 def main_bard_making(name, dictionary):
-	player_subclass = input("What is their subclass?").capitalize()
-	if player_subclass == "Glamour":
+	player_subclass = int_checker("What is their subclass?\n[1]: Glamour\n[2]:Swords\n[3]:Whispers\n[4]: Other\n")
+	if player_subclass == "1":
 		p1 = create_glamour_bard(name)
 		new_options = Glamour.list_options
-	elif player_subclass == "Swords":
+	elif player_subclass == "2":
 		p1 = create_swords_bard(name)
 		new_options = Swords.list_options
-	elif player_subclass == "Whispers":
+	elif player_subclass == "3":
 		p1 = create_whispers_bard(name)
 		new_options = Whispers.list_options
 	else:

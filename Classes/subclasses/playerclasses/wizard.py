@@ -26,7 +26,7 @@ class Wizard(FullCaster):
 		return self.wizard_options
 
 	def list_options(self):
-		selection = int(input(self.wizard_options.get("0")))
+		selection = int_checker(self.wizard_options.get("0"))
 		print(selection)
 		self.wizard_options["{}".format(selection)]()
 
@@ -58,7 +58,7 @@ class Abjuration(Wizard):
 		return self.abjuration_options
 
 	def list_options(self):
-		selection = int(input(self.abjuration_options.get("0")))
+		selection = int_checker(self.abjuration_options.get("0"))
 		print(selection)
 		self.abjuration_options["{}".format(selection)]()
 
@@ -74,7 +74,7 @@ class Divination(Wizard):
 	def use_expert_divination(self):
 		if self.get_level() >= 6:
 			spell_level = self.use_cur_spell_slot()
-			restore_slot = int(input("What spell slot would they like to restore?"))
+			restore_slot = int_checker("What spell slot would they like to restore?")
 			if restore_slot < 6 and restore_slot < spell_level:
 				self.add_spell_slot(restore_slot)
 			else:
@@ -126,7 +126,7 @@ class Divination(Wizard):
 		return self.divination_options
 
 	def list_options(self):
-		selection = int(input(self.divination_options.get("0")))
+		selection = int_checker(self.divination_options.get("0"))
 		print(selection)
 		self.divination_options["{}".format(selection)]()
 
@@ -181,7 +181,7 @@ class Enchantment(Wizard):
 		return self.enchantment_options
 
 	def list_options(self):
-		selection = int(input(self.enchantment_options.get("0")))
+		selection = int_checker(self.enchantment_options.get("0"))
 		print(selection)
 		self.enchantment_options["{}".format(selection)]()
 
@@ -216,7 +216,7 @@ class Illusion(Wizard):
 		return self.illusion_options
 
 	def list_options(self):
-		selection = int(input(self.illusion_options.get("0")))
+		selection = int_checker(self.illusion_options.get("0"))
 		print(selection)
 		self.illusion_options["{}".format(selection)]()
 
@@ -269,7 +269,7 @@ class Transmutation(Wizard):
 		return self.transmutation_options
 
 	def list_options(self):
-		selection = int(input(self.transmutation_options.get("0")))
+		selection = int_checker(self.transmutation_options.get("0"))
 		print(selection)
 		self.transmutation_options["{}".format(selection)]()
 
@@ -329,20 +329,21 @@ def create_transmutation_wizard(name):
 
 
 def main_wizard_making(name, dictionary):
-	player_subclass = input("What is their subclass?").capitalize()
-	if player_subclass == "Abjuration":
+	player_subclass = int_checker("What is their subclass?\n[1]: Abjuration\n[2]: Divination\n[3]: Enchantment\n"
+				"[4]: Illusion\n[5]: Transmutation\n[6]: Other")
+	if player_subclass == "1":
 		p1 = create_abjuration_wizard(name)
 		class_options = Abjuration.list_options
-	elif player_subclass == "Divination":
+	elif player_subclass == "2":
 		p1 = create_divination_wizard(name)
 		class_options = Divination.list_options
-	elif player_subclass == "Enchantment":
+	elif player_subclass == "3":
 		p1 = create_enchantment_wizard(name)
 		class_options = Enchantment.list_options
-	elif player_subclass == "Illusion":
+	elif player_subclass == "4":
 		p1 = create_illusion_wizard(name)
 		class_options = Illusion.list_options
-	elif player_subclass == "Transmutation":
+	elif player_subclass == "5":
 		p1 = create_transmutation_wizard(name)
 		class_options = Transmutation.list_options
 	else:

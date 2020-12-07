@@ -112,7 +112,7 @@ class Warlock(PlayerCharacter):
 		return self.warlock_options
 
 	def list_options(self):
-		selection = int(input(self.warlock_options.get("0")))
+		selection = int_checker(self.warlock_options.get("0"))
 		print(selection)
 		self.warlock_options["{}".format(selection)]()
 
@@ -199,7 +199,7 @@ class Archfey(Warlock):
 		return self.archfey_options
 
 	def list_options(self):
-		selection = int(input(self.archfey_options.get("0")))
+		selection = int_checker(self.archfey_options.get("0"))
 		print(selection)
 		self.archfey_options["{}".format(selection)]()
 
@@ -260,7 +260,7 @@ class Fiend(Warlock):
 		self.fiend_options['14'] = leave
 
 	def list_options(self):
-		selection = int(input(self.fiend_options.get("0")))
+		selection = int_checker(self.fiend_options.get("0"))
 		print(selection)
 		self.fiend_options["{}".format(selection)]()
 
@@ -298,7 +298,7 @@ class Old(Warlock):
 		return self.old_options
 
 	def list_options(self):
-		selection = int(input(self.old_options.get("0")))
+		selection = int_checker(self.old_options.get("0"))
 		print(selection)
 		self.old_options["{}".format(selection)]()
 
@@ -344,14 +344,14 @@ def create_old_warlock(name):
 
 
 def main_warlock_making(name, dictionary):
-	player_subclass = input("What is their subclass?").capitalize()
-	if player_subclass == "Archfey":
+	player_subclass = int_checker("What is their subclass?\n[1]: Archfey\n[2]: Fiend\n[3]: Old\n[4]: Other\n")
+	if player_subclass == "1":
 		p1 = create_archfey_warlock(name)
 		class_options = Archfey.list_options
-	elif player_subclass == "Fiend":
+	elif player_subclass == "2":
 		p1 = create_fiend_warlock(name)
 		class_options = Fiend.list_options
-	elif player_subclass == "Old":
+	elif player_subclass == "3":
 		p1 = create_old_warlock(name)
 		class_options = Old.list_options
 	else:

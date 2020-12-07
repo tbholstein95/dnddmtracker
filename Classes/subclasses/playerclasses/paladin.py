@@ -16,7 +16,7 @@ class Paladin(HalfCaster):
 		super().__init__()
 
 	def set_charisma(self):
-		char = int(input("What is this Paladin's charisma modifier?"))
+		char = int_checker("What is this Paladin's charisma modifier?")
 		self.charisma = char
 
 	def get_charisma(self):
@@ -52,7 +52,7 @@ class Paladin(HalfCaster):
 		return self.current_lay_on_hands
 
 	def use_lay_on_hands_to_heal(self):
-		amount = int(input("How many points would the Paladin like to use?"))
+		amount = int_checker("How many points would the Paladin like to use?")
 		if amount <= self.get_current_lay_on_hands():
 			self.current_lay_on_hands -= amount
 		else:
@@ -128,7 +128,7 @@ class Paladin(HalfCaster):
 		self.set_current_divine_sense()
 
 	def list_options(self):
-		selection = int(input(self.paladin_options.get("0")))
+		selection = int_checker(self.paladin_options.get("0"))
 		print(selection)
 		self.paladin_options["{}".format(selection)]()
 
@@ -163,7 +163,7 @@ class Devotion(Paladin):
 		return self.devotion_options
 
 	def list_options(self):
-		selection = int(input(self.devotion_options.get("0")))
+		selection = int_checker(self.devotion_options.get("0"))
 		print(selection)
 		self.devotion_options["{}".format(selection)]()
 
@@ -198,7 +198,7 @@ class Ancient(Paladin):
 		return self.ancient_options
 
 	def list_options(self):
-		selection = int(input(self.ancient_options.get("0")))
+		selection = int_checker(self.ancient_options.get("0"))
 		print(selection)
 		self.ancient_options["{}".format(selection)]()
 
@@ -233,7 +233,7 @@ class Vengeance(Paladin):
 		return self.vengeance_options
 
 	def list_options(self):
-		selection = int(input(self.vengeance_options.get("0")))
+		selection = int_checker(self.vengeance_options.get("0"))
 		print(selection)
 		self.vengeance_options["{}".format(selection)]()
 
@@ -279,15 +279,15 @@ def create_vengeance_paladin(name):
 
 def main_paladin_making(name, dictionary):
 	name = name
-	player_subclass = input("What is their subclass?")
+	player_subclass = int_checker("What is their subclass?\n[1]: Devotion\n[2]: Ancient\n[3]: Vengenace\n[4]: Other\n")
 	player_subclass = player_subclass.capitalize()
-	if player_subclass == "Devotion":
+	if player_subclass == "1":
 		p1 = create_devotion_paladin(name)
 		class_options = Devotion.list_options
-	elif player_subclass == "Ancient":
+	elif player_subclass == "2":
 		p1 = create_ancients_paladin(name)
 		class_options = Ancient.list_options
-	elif player_subclass == "Vengeance":
+	elif player_subclass == "3":
 		p1 = create_vengeance_paladin(name)
 		class_options = Vengeance.list_options
 	else:

@@ -1,5 +1,6 @@
 from Classes.playercharacter import *
 half_caster_dict = {}
+
 class HalfCaster(PlayerCharacter):
 	def __init__(self):
 		self.max_slots = [0] * 10
@@ -55,7 +56,7 @@ class HalfCaster(PlayerCharacter):
 		return self.current_slots[level]
 
 	def use_cur_spell_slot(self):
-		level = int(input("What level spell slot is being used?"))
+		level = int_checker("What level spell slot is being used?")
 		check = self.get_current_spell_slot(level)
 		if check == 0:
 			print(f"Out of slots for Level {level} levels")
@@ -82,7 +83,7 @@ class HalfCaster(PlayerCharacter):
 
 	def change_half_caster_level(self):
 		self.base_change_level()
-		self.set_max_spell_slots()
-		self.set_current_spell_slots()
+		self.set_max_spell_slots(self.get_level())
+		self.set_current_spell_slots(self.get_level())
 
 

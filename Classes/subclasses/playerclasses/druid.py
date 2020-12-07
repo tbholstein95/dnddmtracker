@@ -47,7 +47,7 @@ class Druid(FullCaster):
 		self.set_hit_dice(self.get_level())
 
 	def list_druid_options(self):
-		selection = int(input(self.default_druid_options.get("0")))
+		selection = int_checker(self.default_druid_options.get("0"))
 		print(selection)
 		self.default_druid_options["{}".format(selection)]()
 
@@ -74,13 +74,13 @@ class Land(Druid):
 			temp_restore_up_to = restore_up_to
 			print(f"Player can restore up to {restore_up_to} combined spell slot levels")
 			while temp_restore_up_to > 0:
-				restoring = int(input("What level spell is player recovering? Type '0' to stop early"))
+				restoring = int_checker("What level spell is player recovering? Type '0' to stop early")
 				if restoring > restore_up_to or restoring >= 6:
 					print("Spell slot too great")
 				if restoring == 0:
 					return
 				else:
-					quant_restoring = int(input("How many of these spell slots?"))
+					quant_restoring = int_checker("How many of these spell slots?")
 					if quant_restoring * restoring > restore_up_to or quant_restoring * restoring > \
 						self.max_slots[restoring]:
 						print("This is too many")
@@ -108,7 +108,7 @@ class Land(Druid):
 		return self.land_options
 
 	def list_options(self):
-		selection = int(input(self.land_options.get("0")))
+		selection = int_checker(self.land_options.get("0"))
 		print(selection)
 		self.land_options["{}".format(selection)]()
 
@@ -119,7 +119,7 @@ class Moon(Druid):
 		super().__init__()
 
 	def use_combat_wildshape_heal(self):
-		to_use = int(input("What level spell slot is the player using?"))
+		to_use = int_checker("What level spell slot is the player using?")
 		current_slot = self.get_current_spell_slot(to_use)
 		if current_slot == 0:
 			print("No remaining slots of this level")
@@ -135,7 +135,7 @@ class Moon(Druid):
 		return self.moon_options
 
 	def list_options(self):
-		selection = int(input(self.moon_options.get("0")))
+		selection = int_checker(self.moon_options.get("0"))
 		print(selection)
 		self.moon_options["{}".format(selection)]()
 
@@ -152,7 +152,7 @@ class Dream(Druid):
 		super().__init__()
 
 	def set_wisdom(self):
-		amount = int(input("What is this Druid's wisdom modifier?"))
+		amount = int_checker("What is this Druid's wisdom modifier?")
 		self.wisdom = amount
 
 	def set_max_summer_court_dice(self):
@@ -195,9 +195,9 @@ class Dream(Druid):
 			print("No more dice to spend")
 			return
 		else:
-			amount_to_use = int(input(f"Player can use {self.get_current_summer_court_dice()}" + (
+			amount_to_use = int_checker(f"Player can use {self.get_current_summer_court_dice()}" + (
 
-				"Summer Court Dice. How many dice did they use?")))
+				"Summer Court Dice. How many dice did they use?"))
 			self.use_current_summer_court_dice(amount_to_use)
 
 	def use_hidden_paths(self):
@@ -236,7 +236,7 @@ class Dream(Druid):
 		return self.dream_options
 
 	def list_options(self):
-		selection = int(input(self.dream_options.get("0")))
+		selection = int_checker(self.dream_options.get("0"))
 		print(selection)
 		self.dream_options["{}".format(selection)]()
 
@@ -296,7 +296,7 @@ class Shepherd(Druid):
 		return self.shepherd_options
 
 	def list_options(self):
-		selection = int(input(self.shepherd_options.get("0")))
+		selection = int_checker(self.shepherd_options.get("0"))
 		print(selection)
 		self.shepherd_options["{}".format(selection)]()
 
@@ -349,17 +349,17 @@ def create_moon_druid(name):
 
 
 def main_druid_making(name, dictionary):
-	player_subclass = input("What is their subclass?").capitalize()
-	if player_subclass == "Land":
+	player_subclass = int_checker("What is their subclass?\n[1]: Land\n[2]: Moon\n[3]: Dream\n[4]: Shepherd\n[5]: Other")
+	if player_subclass == "1":
 		p1 = create_land_druid(name)
 		new_options = Land.list_options
-	elif player_subclass == "Moon":
+	elif player_subclass == "2":
 		p1 = create_moon_druid(name)
 		new_options = Moon.list_options
-	elif player_subclass == "Dream":
+	elif player_subclass == "3":
 		p1 = create_dream_druid(name)
 		new_options = Dream.list_options
-	elif player_subclass == "Shepherd":
+	elif player_subclass == "4":
 		p1 = create_shepherd_druid(name)
 		new_options = Shepherd.list_options
 	else:

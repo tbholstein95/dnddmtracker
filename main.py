@@ -10,59 +10,58 @@ from Classes.subclasses.playerclasses.rogue import *
 from Classes.subclasses.playerclasses.sorcerer import *
 from Classes.subclasses.playerclasses.warlock import *
 from Classes.subclasses.playerclasses.wizard import *
-# TODO: Have options stored in a dictionary.  Called by keys.  Create a generic dictionary for each class.
-#  Merge the dictionaries at creation.
+from Classes.playercharacter import *
 
 # VAR
 player_dictionary = {}
 
-# TODO create a making function or class to handle all of the player creations. Maybe factory?
 
 def main():
-	running = True
-	number_of_players = int(input("How many players are in your party?"))
+	number_of_players = int_checker("How many players are in this party?")
 	for x in range(number_of_players):
 		player_name = input("What is this player's name?")
-		player_class = input("What is this player's class?")
-		player_class = player_class.capitalize()
-		if player_class == "Barbarian":
-			main_barb_making(player_name, player_dictionary)
-		if player_class == "Bard":
-			main_bard_making(player_name, player_dictionary)
-		if player_class == "Cleric":
-			main_cleric_making(player_name, player_dictionary)
-		if player_class == "Druid":
-			main_druid_making(player_name, player_dictionary)
-		if player_class == "Fighter":
-			main_fighter_making(player_name, player_dictionary)
-		if player_class == "Monk":
-			main_monk_making(player_name, player_dictionary)
-		if player_class == "Paladin":
-			main_paladin_making(player_name, player_dictionary)
-		if player_class == "Ranger":
-			main_ranger_making(player_name, player_dictionary)
-		if player_class == "Rogue":
-			main_rogue_making(player_name, player_dictionary)
-		if player_class == "Sorcerer":
-			main_sorcerer_making(player_name, player_dictionary)
-		if player_class == "Warlock":
-			main_warlock_making(player_name, player_dictionary)
-		if player_class == "Wizard":
-			main_wizard_making(player_name, player_dictionary)
+		character_class_select(player_name, player_dictionary)
 
-
-	while running:
-		current_player = input("Who are you modifying?\n")
+	while True:
+		for x in range(len(player_dictionary)):
+			print("[{}]:".format(x), list(player_dictionary.keys())[x])
+		current_player_index = int_checker("Who are you modifying? ('Enter number')\n")
+		current_player = list(player_dictionary.keys())[current_player_index]
 		if current_player == "exit":
 			print("Stopping")
-			running = False
 			break
 		# set current player
 		current_mod = player_dictionary[f'{current_player}']["character"]
-		# print(current_mod, "CURRENT MOD")
-		# print(player_dictionary, "PLAYER DICT")
-		# get current player's options
 		player_dictionary[f'{current_player}']['new_options'](current_mod)
+
+
+def character_class_select(player_name, player_dict):
+	while True:
+		player_class = input("What is this player's class?").capitalize()
+		if player_class == "Barbarian":
+			return main_barb_making(player_name, player_dict)
+		if player_class == "Bard":
+			return main_bard_making(player_name, player_dict)
+		if player_class == "Cleric":
+			return main_cleric_making(player_name, player_dict)
+		if player_class == "Druid":
+			return main_druid_making(player_name, player_dict)
+		if player_class == "Fighter":
+			return main_fighter_making(player_name, player_dict)
+		if player_class == "Monk":
+			return main_monk_making(player_name, player_dict)
+		if player_class == "Paladin":
+			return main_paladin_making(player_name, player_dict)
+		if player_class == "Ranger":
+			return main_ranger_making(player_name, player_dict)
+		if player_class == "Rogue":
+			return main_rogue_making(player_name, player_dict)
+		if player_class == "Sorcerer":
+			return main_sorcerer_making(player_name, player_dict)
+		if player_class == "Warlock":
+			return main_warlock_making(player_name, player_dict)
+		if player_class == "Wizard":
+			return main_wizard_making(player_name, player_dict)
 
 
 if __name__ == '__main__':

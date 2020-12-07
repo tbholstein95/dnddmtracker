@@ -34,7 +34,7 @@ class Rogue(PlayerCharacter):
 		return self.rogue_options
 
 	def list_options(self):
-		selection = int(input(self.rogue_options.get("0")))
+		selection = int_checker(self.rogue_options.get("0"))
 		print(selection)
 		self.rogue_options["{}".format(selection)]()
 
@@ -68,6 +68,11 @@ class Arcane(Rogue, HalfCaster):
 		self.arcane_options['8'] = leave
 		return self.arcane_options
 
+	def list_options(self):
+		selection = int_checker(self.arcane_options.get("0"))
+		print(selection)
+		self.arcane_options["{}".format(selection)]()
+
 
 def merge_base_fighter_dicts(player):
 	player_class = player.create_player_character_options()
@@ -98,9 +103,9 @@ def create_arcane_rogue(name):
 
 def main_rogue_making(name, dictionary):
 	name = name
-	player_subclass = input("What is their subclass?")
+	player_subclass = int_checker("What is their subclass?\n[1]: Arcane\n[2]: Other")
 	player_subclass = player_subclass.capitalize()
-	if player_subclass == "Arcane":
+	if player_subclass == "1":
 		p1 = create(name, Arcane)
 		class_options = Arcane.list_options
 	else:

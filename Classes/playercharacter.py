@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+
 options_dict = {}
 
 
@@ -12,6 +13,20 @@ def merge_dicts(higher, deeper):
 def leave():
 	print("Leaving")
 	return 0
+
+
+def int_checker(asking):
+	new_number = 0
+	while True:
+		numbers = input(asking)
+		try:
+			new_number = int(numbers)
+			break
+		except:
+			print("Must enter an integer\n")
+			continue
+
+	return new_number
 
 
 class PlayerCharacter:
@@ -69,6 +84,3 @@ class PlayerCharacter:
 		options_dict['1'] = self.use_hit_dice
 		options_dict['2'] = self.reset_current_hit_dice
 		return options_dict
-
-
-

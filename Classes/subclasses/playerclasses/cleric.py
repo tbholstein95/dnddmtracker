@@ -62,9 +62,8 @@ class Cleric(FullCaster):
 			days_left = self.get_divine_intervention_day_timer()
 			print(f"There are {days_left} before Cleric can use Divine Intervention again")
 		else:
-			intervene = input("Did the Deity intervene?")
-			intervene.capitalize()
-			if intervene == "Yes":
+			intervene = int_checker("Did the Deity intervene?\n[1]: Yes\n[2]: No")
+			if intervene == 1:
 				self.set_divine_intervention_seven_days(True)
 			else:
 				self.set_divine_intervention(True)
@@ -95,7 +94,7 @@ class Cleric(FullCaster):
 		self.reset_channel_divinity()
 
 	def list_options(self):
-		selection = int(input(self.default_cleric_options.get("0")))
+		selection = int_checker(self.default_cleric_options.get("0"))
 		print(selection)
 		self.default_cleric_options["{}".format(selection)]()
 
@@ -132,7 +131,7 @@ class Knowledge(Cleric):
 		self.knowledge_options['12'] = leave
 
 	def list_options(self):
-		selection = int(input(self.knowledge_options.get("0")))
+		selection = int_checker(self.knowledge_options.get("0"))
 		print(selection)
 		self.knowledge_options["{}".format(selection)]()
 
@@ -149,7 +148,7 @@ class Light(Cleric):
 		return self.wisdom
 
 	def set_wisdom(self):
-		wis = int(input("What is this Cleric's Wisdom?"))
+		wis = int_checker("What is this Cleric's Wisdom?")
 		self.wisdom = wis
 
 	def set_max_warding_flare(self):
@@ -189,7 +188,7 @@ class Light(Cleric):
 		return self.light_options
 
 	def list_options(self):
-		selection = int(input(self.light_options.get("0")))
+		selection = int_checker(self.light_options.get("0"))
 		print(selection)
 		self.light_options["{}".format(selection)]()
 
@@ -207,7 +206,7 @@ class Tempest(Cleric):
 		return self.wisdom
 
 	def set_wisdom(self):
-		wis = int(input("What is this Cleric's Wisdom?"))
+		wis = int_checker("What is this Cleric's Wisdom?")
 		self.wisdom = wis
 
 	def set_max_wrath_of_the_storm(self):
@@ -249,7 +248,7 @@ class Tempest(Cleric):
 		return self.tempest_options
 
 	def list_options(self):
-		selection = int(input(self.tempest_options.get("0")))
+		selection = int_checker(self.tempest_options.get("0"))
 		print(selection)
 		self.tempest_options["{}".format(selection)]()
 
@@ -267,7 +266,7 @@ class War(Cleric):
 		return self.wisdom
 
 	def set_wisdom(self):
-		wis = int(input("What is this Cleric's Wisdom?"))
+		wis = int_checker("What is this Cleric's Wisdom?")
 		self.wisdom = wis
 
 	def set_max_bonus_attack(self):
@@ -310,7 +309,7 @@ class War(Cleric):
 		return self.war_options
 
 	def list_options(self):
-		selection = int(input(self.war_options.get("0")))
+		selection = int_checker(self.war_options.get("0"))
 		print(selection)
 		self.war_options["{}".format(selection)]()
 
@@ -330,7 +329,7 @@ class Grave(Cleric):
 		return self.wisdom
 
 	def set_wisdom(self):
-		wis = int(input("What is this Cleric's Wisdom?"))
+		wis = int_checker("What is this Cleric's Wisdom?")
 		self.wisdom = wis
 
 	def set_max_eyes_of_the_grave(self):
@@ -395,7 +394,7 @@ class Grave(Cleric):
 		return self.grave_options
 
 	def list_options(self):
-		selection = int(input(self.grave_options.get("0")))
+		selection = int_checker(self.grave_options.get("0"))
 		print(selection)
 		self.grave_options["{}".format(selection)]()
 
@@ -456,20 +455,21 @@ def create_war_cleric(name):
 
 
 def main_cleric_making(name, dictionary):
-	player_subclass = input("What is their subclass?").capitalize()
-	if player_subclass == "Knowledge":
+	player_subclass = int_checker("What is their subclass?\n[1]: Knowledge\n[2]: Light\n[3]:Tempest\n" +
+				"[4]: War\n[5]: Grave\n[6]: Other\n")
+	if player_subclass == "1":
 		p1 = create_knowledge_cleric(name)
 		new_options = Knowledge.list_options
-	elif player_subclass == "Light":
+	elif player_subclass == "2":
 		p1 = create_light_cleric(name)
 		new_options = Light.list_options
-	elif player_subclass == "Tempest":
+	elif player_subclass == "3":
 		p1 = create_tempest_cleric(name)
 		new_options = Tempest.list_options
-	elif player_subclass == "War":
+	elif player_subclass == "4":
 		p1 = create_war_cleric(name)
 		new_options = War.list_options
-	elif player_subclass == "Grave":
+	elif player_subclass == "5":
 		p1 = create_grave_cleric(name)
 		new_options = Grave.list_options
 	else:

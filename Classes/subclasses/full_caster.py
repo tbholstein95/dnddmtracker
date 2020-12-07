@@ -76,7 +76,7 @@ class FullCaster(PlayerCharacter):
 		return self.current_slots[1:level]
 
 	def use_cur_spell_slot(self):
-		level = int(input("What level spell slot is being used?"))
+		level = int_checker("What level spell slot is being used?")
 		check = self.get_current_spell_slot(level)
 		if check == 0:
 			print(f"Out of slots for Level {level} levels")

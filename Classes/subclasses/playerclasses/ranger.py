@@ -13,7 +13,7 @@ class Ranger(HalfCaster):
 		return self.ranger_options
 
 	def list_options(self):
-		selection = int(input(self.ranger_options.get("0")))
+		selection = int_checker(self.ranger_options.get("0"))
 		print(selection)
 		self.ranger_options["{}".format(selection)]()
 
