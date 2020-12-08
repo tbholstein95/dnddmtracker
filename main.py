@@ -11,16 +11,37 @@ from Classes.subclasses.playerclasses.sorcerer import *
 from Classes.subclasses.playerclasses.warlock import *
 from Classes.subclasses.playerclasses.wizard import *
 from Classes.playercharacter import *
+import pickle
 
 # VAR
 player_dictionary = {}
+lists = []
+
+
 
 
 def main():
-	number_of_players = int_checker("How many players are in this party?")
-	for x in range(number_of_players):
-		player_name = input("What is this player's name?")
-		character_class_select(player_name, player_dictionary)
+	campaign_list = {}
+	try:
+		infile = open('campaigns', 'rb')
+	except:
+		create_campaign(campaign_list)
+
+	else:
+		campaign_list = pickle.load(infile)
+		new_game_check = int_checker("[1]: New Party or [2]: Load Campaign")
+		if new_game_check == 1:
+			create_campaign(campaign_list)
+		if new_game_check == 2:
+			infile = open('campaigns', 'rb')
+			new_dict = pickle.load(infile)
+			infile.close()
+			keys_list = list(campaign_list)
+			print(keys_list)
+			select = int_checker("What campaign to load?")
+			values = campaign_list.values()
+			values_list = list(values)
+			player_dictionary = values_list[select - 1]
 
 	while True:
 		for x in range(len(player_dictionary)):
@@ -62,6 +83,21 @@ def character_class_select(player_name, player_dict):
 			return main_warlock_making(player_name, player_dict)
 		if player_class == "Wizard":
 			return main_wizard_making(player_name, player_dict)
+
+
+def create_campaign(campaign_list):
+	campaign_name = input("What is the name of your campaign?")
+	filename = 'campaigns'
+	outfile_campaign_list = open(filename, 'wb')
+	number_of_players = int_checker("How many players are in this party?")
+	for x in range(number_of_players):
+		player_name = input("What is this player's name?")
+		character_class_select(player_name, player_dictionary)
+	campaign_list[
+		('[{}]: '.format(len(campaign_list) + 1) + '{}'.format(campaign_name))] = player_dictionary
+
+	pickle.dump(campaign_list, outfile_campaign_list)
+	outfile_campaign_list.close()
 
 
 if __name__ == '__main__':
