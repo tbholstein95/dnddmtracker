@@ -55,6 +55,9 @@ class PlayerCharacter:
 		number = int(input("What level should this character be?"))
 		self.level = int(number)
 
+	def app_set_level(self, level):
+		self.level = int(level)
+
 	def set_hit_dice(self, level):
 		self.hit_dice = level
 

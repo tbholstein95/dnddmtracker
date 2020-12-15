@@ -12,15 +12,19 @@ from Classes.subclasses.playerclasses.warlock import *
 from Classes.subclasses.playerclasses.wizard import *
 from Classes.playercharacter import *
 import pickle
+from PyQt5.QtWidgets import QApplication, QMainWindow , QPushButton , QWidget, QGridLayout, QAction, QLineEdit, QMessageBox, QLabel, QComboBox
+from PyQt5.QtCore import pyqtSlot
+from PyQt5 import QtCore, QtGui
+import sys
+
 
 # VAR
 player_dictionary = {}
 lists = []
 
 
-
-
 def main():
+	global player_dictionary
 	campaign_list = {}
 	try:
 		infile = open('campaigns', 'rb')
@@ -100,5 +104,226 @@ def create_campaign(campaign_list):
 	outfile_campaign_list.close()
 
 
+def app_create_campaign(campaign_list, campaign_name):
+	filename = 'campaigns'
+	outfile_campaign_list = open(filename, 'wb')
+	campaign_list[
+		('[{}]: '.format(len(campaign_list) + 1) + '{}'.format(campaign_name))] = player_dictionary
+
+	pickle.dump(campaign_list, outfile_campaign_list)
+	outfile_campaign_list.close()
+
+
+class CharacterGenerationWindow(QWidget):
+	def __init__(self, parent=None):
+		super(CharacterGenerationWindow, self).__init__(parent)
+		self.setLayout(QGridLayout())
+		self.campaign_dict = {}
+		self.campaign_name = ''
+		self.campaign_label = QLabel(self)
+		self.no_players = QLabel(self)
+
+		self.layout().addWidget(self.campaign_label, 1,0,)
+		self.layout().addWidget(self.no_players, 1,1)
+
+		self.character_name_label = QLabel(self)
+		self.character_name_label.setText("Character: Name")
+		self.character_name_box = QLineEdit(self)
+
+		self.layout().addWidget(self.character_name_label, 1, 0, 1, 1)
+		self.layout().addWidget(self.character_name_box, 1, 1, 1, 1)
+
+		self.character_class_label = QLabel(self)
+		self.character_class_label.setText('Class Select')
+		self.character_class_drop = QComboBox(self)
+		self.character_class_drop.addItem("Select Player's Class")
+		self.character_class_drop.addItem("Barbarian")
+		self.character_class_drop.addItem("Bard")
+		self.character_class_drop.addItem("Cleric")
+
+		self.level_drop_label = QLabel(self)
+		self.level_drop_label.setText('Set Level')
+		self.level_drop = QComboBox(self)
+		for x in range(1, 21):
+			self.level_drop.addItem(str(x))
+
+
+		self.save_character_button = QPushButton("Save Character", self)
+		self.finish_button = QPushButton("Finish", self)
+		self.layout().addWidget(self.save_character_button, 3,1,1,2)
+		self.layout().addWidget(self.finish_button, 3,5,1,1)
+		self.layout().addWidget(self.character_class_label,2,0,1,1)
+		self.layout().addWidget(self.character_class_drop,2,1,1,3)
+		self.layout().addWidget(self.level_drop_label, 2,4,1,1)
+		self.layout().addWidget(self.level_drop, 2,5,1,1)
+
+
+
+
+		self.character_class_drop.currentIndexChanged.connect(self.on_Changed)
+
+		self.save_character_button.clicked.connect(self.submit_character)
+		self.finish_button.clicked.connect(self.submit_campaign)
+
+		self.subclass = ''
+
+	def on_Changed(self, i):
+		if self.character_class_drop.currentText() == "Barbarian":
+			barbarian_label = QLabel(self)
+			barbarian_label.setText = "Choose Barbarian SubClass"
+			barbarian_drop = QComboBox(self)
+			barbarian_drop.addItem("Berserker")
+			self.subclass = 'Berserker'
+			self.layout().addWidget(barbarian_label,3,0)
+			self.layout().addWidget(barbarian_drop,3,0)
+
+		print("Items in the list are :")
+		for count in range(self.character_class_drop.count()):
+			print(self.character_class_drop.itemText(count))
+		print("Current index", i, "selection changed ", self.character_class_drop.currentText())
+
+	def submit_character(self):
+		if self.character_class_drop.currentText() == "Barbarian":
+			app_main_barb_making(self.character_name_box.text(), player_dictionary, self.subclass, int(self.level_drop.currentText()))
+		print(player_dictionary)
+
+	def submit_campaign(self):
+		campaign_list = {}
+		try:
+			infile = open('campaigns', 'rb')
+		except:
+			print("excepted submit campaign")
+			campaign_name = self.newCampaignWindow.campaignNameBox.text()
+			app_create_campaign(self.campaign_dict, self.campaign_name)
+
+		else:
+			print(self.campaign_name)
+			app_create_campaign(self.campaign_dict, self.campaign_name)
+
+
+class CampaignOverviewWindow(QWidget):
+	def __init__(self, parent=None):
+		super(CampaignOverviewWindow, self).__init__(parent)
+		self.setLayout(QGridLayout())
+		self.dicti = get_campaign_list()
+		keys_list = list(self.dicti)
+		z = 0
+		for x in keys_list:
+			print(x)
+			campaign_label = QPushButton('{}'.format(x))
+			self.layout().addWidget(campaign_label, z, 1)
+			z += 3
+
+
+class SelectedCampaignWindow(QWidget):
+	def __init__(self, parent=None):
+		super(SelectedCampaignWindow, self).__init__(parent)
+
+
+class NewCampaignWindow(QWidget):
+
+	def __init__(self, parent=None):
+		super(NewCampaignWindow, self).__init__(parent)
+		self.setLayout(QGridLayout())
+
+		self.backBTN = QPushButton('Back', self)
+		self.backBTN.move(50, 350)
+
+		self.nameLabel_campaignName = QLabel(self)
+		self.nameLabel_campaignName.setText('Campaign Name:')
+		self.campaignNameBox = QLineEdit(self)
+		self.submit_CampaignName = QPushButton("Submit")
+
+
+		self.layout().addWidget(self.nameLabel_campaignName, 1,0,1,1)
+		self.layout().addWidget(self.campaignNameBox, 1,1,1,1)
+
+
+		self.layout().addWidget(self.submit_CampaignName,3,2,1,1)
+
+		self.layout().addWidget(self.backBTN, 3,0,1,1)
+
+
+class CampaignMenu(QWidget):
+	def __init__(self, parent=None):
+		super(CampaignMenu, self).__init__(parent)
+		self.new_campaign_button = QPushButton("New Campaign", self)
+		self.load_campaign_button = QPushButton("Load Campaign", self)
+		self.setLayout(QGridLayout())
+		self.layout().addWidget(self.new_campaign_button, 1,0,1,1)
+		self.layout().addWidget(self.load_campaign_button, 2,0,1,1)
+
+
+class MainWindow(QMainWindow):
+	def __init__(self, parent=None):
+		super(MainWindow, self).__init__(parent)
+		self.setGeometry(50, 50, 400, 450)
+		self.setFixedSize(1000, 1000)
+		self.campaign_list = {}
+		try:
+			infile = open('campaigns', 'rb')
+			self.campaign_list = pickle.load(infile)
+			print("Loaded")
+			keys_list = list(self.campaign_list)
+			print(keys_list)
+			values = self.campaign_list.values()
+			values_list = list(values)
+			print(values_list)
+			infile.close()
+		except:
+			filename = 'campaigns'
+			infile = open('campaigns', 'rb')
+			self.campaign_list = pickle.load(infile)
+			print("Excepted in main")
+
+		self.startcampaignmenu()
+
+
+
+	def startcampaignmenu(self):
+		self.campaignMenu = CampaignMenu(self)
+		self.setWindowTitle("DNDMTracker")
+		self.setCentralWidget(self.campaignMenu)
+		self.campaignMenu.new_campaign_button.clicked.connect(self.startNewCampaignWindow)
+		self.campaignMenu.load_campaign_button.clicked.connect(self.startCampaignOverviewWindow)
+		self.show()
+
+	def startNewCampaignWindow(self):
+		self.newCampaignWindow = NewCampaignWindow(self)
+		self.setWindowTitle("New Campaign")
+		self.setCentralWidget(self.newCampaignWindow)
+		self.newCampaignWindow.backBTN.clicked.connect(self.startcampaignmenu)
+		self.newCampaignWindow.submit_CampaignName.clicked.connect(self.startCharacterGenerationWindow)
+		self.show()
+
+	def startCharacterGenerationWindow(self):
+		self.charactergenerationwindow = CharacterGenerationWindow(self)
+		campaign_name = self.newCampaignWindow.campaignNameBox.text()
+		self.charactergenerationwindow.campaign_name = campaign_name
+		self.charactergenerationwindow.campaign_dict = self.campaign_list
+		self.setWindowTitle("Characters in the {} campaign".format(campaign_name))
+		self.setCentralWidget(self.charactergenerationwindow)
+		self.charactergenerationwindow.finish_button.clicked.connect(self.startCampaignOverviewWindow)
+		self.show()
+
+	def startCampaignOverviewWindow(self):
+		self.campaign_overview_window = CampaignOverviewWindow(self)
+		self.setCentralWidget(self.campaign_overview_window)
+		self.show()
+
+
+def get_campaign_list():
+	infile = open('campaigns', 'rb')
+	franklin = pickle.load(infile)
+	infile.close()
+	chooch = list(franklin)
+	print(franklin)
+	return franklin
+
+
+
 if __name__ == '__main__':
+	app = QApplication(sys.argv)
+	w = MainWindow()
+	sys.exit(app.exec_())
 	main()

@@ -73,6 +73,12 @@ class Barbarian(PlayerCharacter):
 		self.set_max_hit_dice(self.get_level())
 		self.set_hit_dice(self.get_level())
 
+	def app_change_barb_level(self, level):
+		self.app_set_level(level)
+		self.set_rage(self.get_level())
+		self.set_max_hit_dice(self.get_level())
+		self.set_hit_dice(self.get_level())
+
 	def list_options(self):
 		selection = int(input(self.default_barb_options.get("0")))
 		print(selection)
@@ -240,6 +246,13 @@ def create_berserker_barbarian(name):
 	merge_dicts(merge_base_barb_dicts(player), player.berserker_options)
 	return player
 
+def app_create_berserker_barbarian(name, level):
+	player = create(name, Berserker)
+	player.app_change_barb_level(level)
+	player.create_berserker_options()
+	merge_dicts(merge_base_barb_dicts(player), player.berserker_options)
+	return player
+
 
 def create_ancestral_barbarian(name):
 	player = create(name, AncestralGuardian)
@@ -275,3 +288,22 @@ def main_barb_making(name, dictionary):
 	print('Name:' + p1.get_name(), ' Level:', p1.get_level(), ' Rage:', p1.get_rage, ' Hit Dice:', p1.get_hit_dice())
 
 	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass, "new_options": new_options}
+
+
+def app_main_barb_making(name, dictionary, player_subclass, level):
+	if player_subclass == 'Berserker':
+		p1 = app_create_berserker_barbarian(name, level)
+		new_options = Berserker.list_options
+
+	# elif player_subclass == "Ancestral":
+	# 	p1 = create_ancestral_barbarian(name)
+	# 	new_options = AncestralGuardian.list_options
+	# elif player_subclass == "Zealot":
+	# 	p1 = create_zealot_barbarian(name)
+	# 	new_options = Zealot.list_options
+	else:
+		p1 = create_barbarian(name)
+		new_options = Barbarian.list_options
+
+	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass, "new_options": new_options}
+
