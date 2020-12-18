@@ -183,7 +183,13 @@ class CharacterGenerationWindow(QWidget):
 		print("Current index", i, "selection changed ", self.character_class_drop.currentText())
 
 	def submit_character(self):
+		print("did i do it")
 		if self.character_class_drop.currentText() == "Barbarian":
+			print("hey man")
+			print(self.character_name_box.text())
+			print(player_dictionary)
+			print(self.subclass)
+			print(self.level_drop.currentText())
 			app_main_barb_making(self.character_name_box.text(), player_dictionary, self.subclass, int(self.level_drop.currentText()))
 		print(player_dictionary)
 
@@ -203,21 +209,57 @@ class CharacterGenerationWindow(QWidget):
 
 class CampaignOverviewWindow(QWidget):
 	def __init__(self, parent=None):
+		global player_dictionary
 		super(CampaignOverviewWindow, self).__init__(parent)
 		self.setLayout(QGridLayout())
 		self.dicti = get_campaign_list()
-		keys_list = list(self.dicti)
+		self.keys_list = list(self.dicti)
 		z = 0
-		for x in keys_list:
-			print(x)
-			campaign_label = QPushButton('{}'.format(x))
-			self.layout().addWidget(campaign_label, z, 1)
+		for i in range(len(self.keys_list)):
+			self.btn = QPushButton('{}'.format(self.keys_list[i]), self)
+			text = self.btn.text()
+			# self.btn.clicked.connect(lambda ch, text=text: print("\n{}".format(text)))
+			ind = self.keys_list.index(text)
+			val = self.dicti.values()
+			self.values_list = list(val)
+			# self.btn.clicked.connect(lambda ch, ind=ind: print("\n{}".format(ind + 1)))
+			self.btn.clicked.connect(lambda ch, ind=ind: self.set_player_dict(self.values_list[ind]))
+			self.layout().addWidget(self.btn, z, 1)
 			z += 3
+		self.submit_button = QPushButton("Select", self)
+		self.layout().addWidget(self.submit_button, 100, 1)
+
+	def set_player_dict(self, item):
+		global player_dictionary
+		player_dictionary = item
+		print(player_dictionary)
 
 
 class SelectedCampaignWindow(QWidget):
 	def __init__(self, parent=None):
 		super(SelectedCampaignWindow, self).__init__(parent)
+		self.setLayout(QGridLayout())
+		z = 0
+		for k, v in player_dictionary.items():
+			print(k, "hey big man")
+			print(player_dictionary['{}'.format(k)]['new_options'])
+			character_name = QLabel('{}'.format(k))
+
+			current_mod = player_dictionary[f'{k}']["character"]
+			print("fraklin the tophat wearin turtle")
+			print(current_mod, current_mod)
+			print(player_dictionary[f'{k}']['new_options'])
+			x = player_dictionary[f'{k}']['new_options']()
+			for a in x:
+				print(a, x[a])
+
+
+			# current_mod = player_dictionary[f'{current_player}']["character"]
+			# player_dictionary[f'{current_player}']['new_options'](current_mod)
+
+
+			self.layout().addWidget(character_name, 0, z, 1, 1)
+			z += 3
 
 
 class NewCampaignWindow(QWidget):
@@ -258,7 +300,7 @@ class MainWindow(QMainWindow):
 	def __init__(self, parent=None):
 		super(MainWindow, self).__init__(parent)
 		self.setGeometry(50, 50, 400, 450)
-		self.setFixedSize(1000, 1000)
+		self.setFixedSize(900, 900)
 		self.campaign_list = {}
 		try:
 			infile = open('campaigns', 'rb')
@@ -309,6 +351,12 @@ class MainWindow(QMainWindow):
 	def startCampaignOverviewWindow(self):
 		self.campaign_overview_window = CampaignOverviewWindow(self)
 		self.setCentralWidget(self.campaign_overview_window)
+		self.campaign_overview_window.submit_button.clicked.connect(self.startSelectedCampaignWindow)
+		self.show()
+
+	def startSelectedCampaignWindow(self):
+		self.selected_campaign_window = SelectedCampaignWindow(self)
+		self.setCentralWidget(self.selected_campaign_window)
 		self.show()
 
 

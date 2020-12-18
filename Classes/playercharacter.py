@@ -9,6 +9,10 @@ def merge_dicts(higher, deeper):
 	deeper['0'] = concat_string
 	return deeper
 
+def app_merge_dicts(higher, deeper):
+	deeper.update(higher)
+	return deeper
+
 
 def leave():
 	print("Leaving")
@@ -84,6 +88,11 @@ class PlayerCharacter:
 	def create_player_character_options(self):
 		# First 3 options, do not use 0-2 in other classes.
 		options_dict['0'] = "What action are you counting?\n[1]: Use Hit Dice\n[2]: Reset Hit Dice\n"
+		options_dict['1'] = self.use_hit_dice
+		options_dict['2'] = self.reset_current_hit_dice
+		return options_dict
+
+	def app_create_player_character_options(self):
 		options_dict['1'] = self.use_hit_dice
 		options_dict['2'] = self.reset_current_hit_dice
 		return options_dict

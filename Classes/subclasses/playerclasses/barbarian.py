@@ -67,6 +67,12 @@ class Barbarian(PlayerCharacter):
 		self.default_barb_options['5'] = self.reset_reckless_strikes
 		return self.default_barb_options
 
+	def app_create_default_barb_options(self):
+		self.default_barb_options['3'] = self.use_rage
+		self.default_barb_options['4'] = self.use_reckless_strikes
+		self.default_barb_options['5'] = self.reset_reckless_strikes
+		return self.default_barb_options
+
 	def change_barb_level(self):
 		self.set_level()
 		self.set_rage(self.get_level())
@@ -116,10 +122,22 @@ class Berserker(Barbarian):
 		self.berserker_options['10'] = leave()
 		return self.berserker_options
 
+	def app_create_berserker_options(self):
+		# Options 3-5 taken by default barb. Don't use those as keys.
+		self.berserker_options['6'] = self.use_frenzy
+		self.berserker_options['7'] = self.use_reckless_strikes
+		self.berserker_options['8'] = self.reset_reckless_strikes
+		self.berserker_options['9'] = self.change_barb_level
+		self.berserker_options['10'] = leave()
+		return self.berserker_options
+
 	def list_options(self):
 		selection = int_checker(self.berserker_options.get("0"))
 		print(selection)
 		self.berserker_options["{}".format(selection)]()
+
+	def give_options(self):
+		return self.berserker_options
 
 
 class AncestralGuardian(Barbarian):
@@ -226,6 +244,16 @@ def merge_base_barb_dicts(player):
 	return barb_opts
 
 
+def app_merge_base_barb_dicts(player):
+	print("app merge base step 1")
+	x = player.app_create_player_character_options()
+	barb = player.app_create_default_barb_options()
+	print("step 2")
+	app_merge_dicts(x, barb)
+	print("app merge base barb dicts ok")
+	return barb
+
+
 def create(name, subclass):
 	player = subclass()
 	player.set_name(name)
@@ -239,6 +267,13 @@ def create_barbarian(name):
 	return player
 
 
+def app_create_barbarian(name):
+	player = create(name, Barbarian)
+	player.change_barb_level()
+	app_merge_base_barb_dicts(player)
+	return player
+
+
 def create_berserker_barbarian(name):
 	player = create(name, Berserker)
 	player.change_barb_level()
@@ -246,11 +281,16 @@ def create_berserker_barbarian(name):
 	merge_dicts(merge_base_barb_dicts(player), player.berserker_options)
 	return player
 
+
 def app_create_berserker_barbarian(name, level):
 	player = create(name, Berserker)
+	print("Player")
 	player.app_change_barb_level(level)
-	player.create_berserker_options()
-	merge_dicts(merge_base_barb_dicts(player), player.berserker_options)
+	print("Changed Level")
+	player.app_create_berserker_options()
+	print("Created options")
+	app_merge_dicts(app_merge_base_barb_dicts(player), player.berserker_options)
+	print("merged dicts")
 	return player
 
 
@@ -292,8 +332,11 @@ def main_barb_making(name, dictionary):
 
 def app_main_barb_making(name, dictionary, player_subclass, level):
 	if player_subclass == 'Berserker':
+		print("Hey big man I'm a Berserker")
 		p1 = app_create_berserker_barbarian(name, level)
-		new_options = Berserker.list_options
+		print("choochoo")
+		print(p1.berserker_options)
+		new_options = p1.give_options
 
 	# elif player_subclass == "Ancestral":
 	# 	p1 = create_ancestral_barbarian(name)
@@ -302,8 +345,9 @@ def app_main_barb_making(name, dictionary, player_subclass, level):
 	# 	p1 = create_zealot_barbarian(name)
 	# 	new_options = Zealot.list_options
 	else:
-		p1 = create_barbarian(name)
-		new_options = Barbarian.list_options
+		print("Heck")
+		p1 = app_create_berserker_barbarian(name, level)
+		new_options = p1.give_options
 
 	dictionary[f'{name}'] = {"character": p1, "subclass": player_subclass, "new_options": new_options}
 
